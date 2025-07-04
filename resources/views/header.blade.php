@@ -205,99 +205,56 @@
             </svg>
         </div>
         
-       <a href="/" class="logo flex items-center group" aria-label="EMAX - Премиальные автомобили из Китая">
-    <div class="logo-mark mr-3 relative">
-        <svg class="w-10 h-10 chinese-character-logo" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- Фон в форме колеса/шестерни -->
-            <circle cx="25" cy="25" r="20" fill="url(#logo-bg)" stroke="var(--emax-red)" stroke-width="0.8"/>
-            
-            <!-- Китайский иероглиф 车 (chē - автомобиль) с автомобильными элементами -->
-            <g transform="translate(10 10) scale(0.6)">
-                <!-- Верхняя часть иероглифа (стилизованная под капот) -->
-                <path d="M15 5L35 5L40 15L10 15Z" 
-                      fill="none" 
-                      stroke="var(--emax-gold)" 
-                      stroke-width="2.5"
-                      stroke-linecap="round"/>
-                
-                <!-- Центральная часть (стилизованная под салон) -->
-                <rect x="15" y="15" width="20" height="15" 
-                      fill="none" 
-                      stroke="var(--emax-gold)" 
-                      stroke-width="2.5"
-                      rx="2"/>
-                
-                <!-- Нижняя часть (стилизованная под колеса) -->
-                <circle cx="20" cy="35" r="5" 
-                        fill="none" 
-                        stroke="var(--emax-gold)" 
-                        stroke-width="2"/>
-                <circle cx="30" cy="35" r="5" 
-                        fill="none" 
-                        stroke="var(--emax-gold)" 
-                        stroke-width="2"/>
-                
-                <!-- Детали колес (спицы) -->
-                <line x1="20" y1="35" x2="20" y2="30" stroke="var(--emax-gold)" stroke-width="1.5"/>
-                <line x1="20" y1="35" x2="25" y2="35" stroke="var(--emax-gold)" stroke-width="1.5"/>
-                <line x1="30" y1="35" x2="30" y2="30" stroke="var(--emax-gold)" stroke-width="1.5"/>
-                <line x1="30" y1="35" x2="35" y2="35" stroke="var(--emax-gold)" stroke-width="1.5"/>
-            </g>
-            
-            <!-- Стилизованное кольцо (как обод колеса) -->
-            <circle cx="25" cy="25" r="18" 
-                    fill="none" 
-                    stroke="var(--emax-gold)" 
-                    stroke-width="1" 
-                    stroke-dasharray="2,2"
-                    opacity="0.7"/>
-            
-            <!-- Анимация движения -->
-            <circle cx="25" cy="25" r="22" 
-                    fill="none" 
-                    stroke="var(--emax-red)" 
-                    stroke-width="0.8" 
-                    stroke-dasharray="5,2"
-                    class="group-hover:rotate-180 transition-transform duration-1000"/>
-            
-            <defs>
-                <radialGradient id="logo-bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(25 25) rotate(90) scale(20)">
-                    <stop offset="0.1" stop-color="var(--emax-dark)"/>
-                    <stop offset="0.9" stop-color="#1a1a2e"/>
-                </radialGradient>
-            </defs>
-        </svg>
-    </div>
-    <span class="text-2xl md:text-3xl font-bold font-exo">
-        <span class="text-gradient">EMAX</span>
-    </span>
-</a>
+        <div class="container mx-auto px-6 h-full flex items-center justify-between">
+            <!-- Логотип - глаз дракона -->
+            <a href="/" class="logo flex items-center group" aria-label="EMAX - Премиальные автомобили из Китая">
+                <div class="logo-mark mr-3 relative">
+                    <svg class="w-10 h-10 dragon-eye animate-eye-glow" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Внешний круг глаза -->
+                        <circle cx="25" cy="25" r="18" fill="url(#eye-outer)" stroke="var(--emax-blue)" stroke-width="1.2"/>
+                        
+                        <!-- Средний круг глаза -->
+                        <circle cx="25" cy="25" r="12" fill="url(#eye-middle)"/>
+                        
+                        <!-- Зрачок -->
+                        <circle cx="25" cy="25" r="6" fill="var(--emax-dark)" class="dark:fill-emax-light"/>
+                        
+                        <!-- Блики -->
+                        <circle cx="28" cy="22" r="1.5" fill="var(--emax-white)"/>
+                        <circle cx="23" cy="19" r="0.8" fill="var(--emax-white)" opacity="0.8"/>
+                        
+                        <!-- Эффект сияния -->
+                        <circle cx="25" cy="25" r="18" fill="none" stroke="url(#eye-glow)" stroke-width="2" stroke-opacity="0.3" stroke-dasharray="0, 200" class="group-hover:stroke-dasharray-200,0 transition-all duration-1000"/>
+                        
+                        <!-- Чешуйки вокруг глаза -->
+                        <path d="M5 25Q10 10 25 5Q40 10 45 25Q40 40 25 45Q10 40 5 25Z" 
+                              stroke="var(--emax-blue)" 
+                              stroke-width="0.8" 
+                              fill="none"
+                              stroke-dasharray="0, 150"
+                              class="group-hover:stroke-dasharray-150,0 transition-all duration-700"/>
+                        
+                        <defs>
+                            <radialGradient id="eye-outer" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(25 25) rotate(90) scale(18)">
+                                <stop offset="0.3" stop-color="var(--emax-purple)"/>
+                                <stop offset="1" stop-color="#4c1d95"/>
+                            </radialGradient>
+                            <radialGradient id="eye-middle" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(25 25) rotate(90) scale(12)">
+                                <stop offset="0.4" stop-color="#8b5cf6"/>
+                                <stop offset="1" stop-color="#5b21b6"/>
+                            </radialGradient>
+                            <radialGradient id="eye-glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(25 25) rotate(90) scale(18)">
+                                <stop offset="0.5" stop-color="var(--emax-blue)"/>
+                                <stop offset="1" stop-color="var(--emax-purple)"/>
+                            </radialGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="text-2xl md:text-3xl font-bold font-exo">
+                    <span class="text-gradient">EMAX</span>
+                </span>
+            </a>
 
-<style>
-    /* Добавьте эти переменные в ваш CSS */
-    :root {
-        --emax-red: #e63946;
-        --emax-gold: #ffd700;
-        --emax-dark: #121212;
-        --emax-white: #ffffff;
-    }
-    
-    .chinese-character-logo {
-        transition: all 0.3s ease;
-    }
-    
-    .logo:hover .chinese-character-logo {
-        transform: scale(1.05);
-        filter: drop-shadow(0 0 5px rgba(230, 57, 70, 0.5));
-    }
-    
-    .text-gradient {
-        background: linear-gradient(135deg, var(--emax-red), var(--emax-gold));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-</style>
             <!-- Основная навигация (десктоп) -->
             <nav class="hidden lg:flex items-center space-x-8">
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
