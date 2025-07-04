@@ -1012,5 +1012,121 @@
         // modelViewer.src = 'path/to/your/model.glb';
     });
 </script>
+<style>
+    /* Адаптация для мобильных устройств */
+    @media (max-width: 768px) {
+        .cta-section {
+            padding: 40px 0 30px;
+        }
+        
+        .cta-container {
+            flex-direction: column;
+            padding: 0 15px;
+        }
+        
+        .cta-content {
+            padding-right: 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .cta-text {
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .cta-button {
+            width: 100%;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+        }
+        
+        .cta-icon {
+            width: 16px;
+            height: 16px;
+        }
+        
+        .cta-3d-container {
+            height: 250px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .3d-placeholder-text {
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+        
+        .section-divider {
+            margin: 40px auto 0;
+        }
+        
+        .section-divider::after {
+            width: 80px;
+            height: 5px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .cta-title {
+            font-size: 1.6rem;
+        }
+        
+        .cta-text {
+            font-size: 0.95rem;
+        }
+        
+        .cta-3d-container {
+            height: 220px;
+        }
+        
+        .car-illustration {
+            height: 150px;
+        }
+    }
+
+    /* Особые стили для очень маленьких экранов */
+    @media (max-width: 360px) {
+        .cta-title {
+            font-size: 1.4rem;
+        }
+        
+        .cta-button {
+            padding: 10px 12px;
+            font-size: 0.9rem;
+        }
+    }
+</style>
+
+<script>
+    // Адаптация скриптов для мобильных устройств
+    document.addEventListener('DOMContentLoaded', function() {
+        // Оптимизация для мобильных устройств - отключаем тяжелые эффекты
+        if (window.innerWidth <= 768) {
+            const modelViewer = document.getElementById('car-model-viewer');
+            if (modelViewer) {
+                // Упрощаем 3D модель для мобильных устройств
+                modelViewer.setAttribute('interaction-prompt', 'none');
+                modelViewer.setAttribute('disable-zoom', '');
+                modelViewer.setAttribute('camera-orbit', '0deg 75deg 105%');
+            }
+            
+            // Упрощаем анимации
+            document.querySelectorAll('.cta-button').forEach(button => {
+                button.style.transition = 'none';
+            });
+        }
+    });
+</script>
 @include('footer')
 </html>
