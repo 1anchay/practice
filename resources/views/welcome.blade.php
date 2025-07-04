@@ -431,7 +431,7 @@
             </div>
             <div class="modal-body">
                 <div class="car-gallery">
-                    <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Zeekr 7X" class="main-image">
+                    <img src="images/zeekr7x/1.jpg" alt="Zeekr 7X" class="main-image">
                     <div class="thumbnails">
                         <img src="images/zeekr7x/1.jpg" alt="Zeekr 7X" class="thumbnail active">
                         <img src="images/zeekr7x/2.png" alt="Zeekr 7X Interior" class="thumbnail">
@@ -489,7 +489,7 @@
             </div>
             <div class="modal-body">
                 <div class="car-gallery">
-                    <img src="https://cdn.motor1.com/images/mgl/4MqAe/s1/byd-yangwang-u8.webp" alt="BYD Yangwang U8" class="main-image">
+                    <img src="images/byd_yangwang_u8/1.png" alt="BYD Yangwang U8" class="main-image">
                     <div class="thumbnails">
                         <img src="images/byd_yangwang_u8/1.png" alt="BYD Yangwang U8" class="thumbnail active">
                         <img src="images/byd_yangwang_u8/2.png" alt="BYD Yangwang U8 Interior" class="thumbnail">
@@ -547,7 +547,7 @@
             </div>
             <div class="modal-body">
                 <div class="car-gallery">
-                    <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Changan UNI-K" class="main-image">
+                    <img src="images/Changan UNI-K/1.png" alt="Changan UNI-K" class="main-image">
                     <div class="thumbnails">
                         <img src="images/Changan UNI-K/1.png" alt="Changan UNI-K" class="thumbnail active">
                         <img src="images/Changan UNI-K/2.png" alt="Changan UNI-K Interior" class="thumbnail">
