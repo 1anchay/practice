@@ -405,7 +405,7 @@
                     </svg>
                 </div>
             </a>
-            <a href="/about" class="mobile-menu-item text-xl font-medium text-white hover:text-emax-lightpurple">
+            <a href="/onas" class="mobile-menu-item text-xl font-medium text-white hover:text-emax-lightpurple">
                 <div class="flex items-center justify-between">
                     <span>О компании</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
