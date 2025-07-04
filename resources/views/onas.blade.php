@@ -619,7 +619,7 @@
                 { number: 24, suffix: '/7', text: 'Поддержка клиентов', color: 'bg-green-500' },
                 { number: 15, suffix: '+', text: 'Брендов в каталоге', color: 'bg-yellow-500' }
             ],
-            animatedNumbers: [0, 0, 0, 0],
+            animatedNumbers: [1, 2, 3, 4],
             animate() {
                 this.stats.forEach((stat, index) => {
                     const target = stat.number;
@@ -651,11 +651,11 @@
         <h3 class="text-center mt-20 text-xl text-gray-300 font-medium">Мы официальные дилеры ведущих китайских брендов:</h3>
         <div class="mt-8 flex flex-wrap justify-center gap-8 md:gap-12" x-data="{
             brands: [
-                { name: 'Chery', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Chery_Logo.svg/1200px-Chery_Logo.svg.png' },
-                { name: 'Geely', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Geely_Logo.svg/1200px-Geely_Logo.svg.png' },
-                { name: 'Haval', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Haval_Logo.svg/1200px-Haval_Logo.svg.png' },
-                { name: 'JAC', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/JAC_Motors_logo.svg/1200px-JAC_Motors_logo.svg.png' },
-                { name: 'Changan', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Changan_Automobile_Logo.svg/1200px-Changan_Automobile_Logo.svg.png' }
+                { name: 'Chery', logo: 'images/chery.png' },
+                { name: 'Geely', logo: 'images/geely.png' },
+                { name: 'Haval', logo: 'images/haval.png' },
+                { name: 'JAC', logo: 'images/jac.png' },
+                { name: 'Changan', logo: 'images/changan.png' }
             ]
         }">
             <template x-for="brand in brands" :key="brand.name">
@@ -776,27 +776,27 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" x-data="{
             team: [
                 { 
-                    name: 'Алексей Петров', 
+                    name: 'Гринченко Евгений', 
                     position: 'Основатель, генеральный директор', 
-                    photo: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80',
+                    photo: 'images/person/evgen.jpg',
                     social: ['facebook', 'twitter', 'linkedin']
                 },
                 { 
-                    name: 'Елена Смирнова', 
+                    name: 'Живоглядов Иван', 
                     position: 'Финансовый директор', 
-                    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80',
+                    photo: 'images/person/ivan.jfif',
                     social: ['instagram', 'twitter', 'linkedin']
                 },
                 { 
-                    name: 'Дмитрий Иванов', 
+                    name: 'Максим ', 
                     position: 'Технический специалист', 
-                    photo: 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80',
+                    photo: 'images/person/max.jpg',
                     social: ['github', 'twitter', 'linkedin']
                 },
                 { 
-                    name: 'Ольга Кузнецова', 
+                    name: 'Евгений Белоконов', 
                     position: 'Менеджер по продажам', 
-                    photo: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80',
+                    photo: 'images/person/evgen2.jpg',
                     social: ['instagram', 'facebook', 'linkedin']
                 }
             ],
