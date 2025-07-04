@@ -433,9 +433,9 @@
                 <div class="car-gallery">
                     <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Zeekr 7X" class="main-image">
                     <div class="thumbnails">
-                        <img src="images/zeekrzx/1.jpg" alt="Zeekr 7X" class="thumbnail active">
-                        <img src="images/zeekrzx/2.png" alt="Zeekr 7X Interior" class="thumbnail">
-                        <img src="images/zeekrzx/3.png" alt="Zeekr 7X Rear" class="thumbnail">
+                        <img src="images/zeekr7x/1.jpg" alt="Zeekr 7X" class="thumbnail active">
+                        <img src="images/zeekr7x/2.png" alt="Zeekr 7X Interior" class="thumbnail">
+                        <img src="images/zeekr7x/3.png" alt="Zeekr 7X Rear" class="thumbnail">
                     </div>
                 </div>
                 <div class="car-specs">
