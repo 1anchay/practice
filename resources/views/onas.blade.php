@@ -785,36 +785,212 @@
         </div>
     </section>
 
-    <!-- Галерея -->
-    <section class="section">
-        <div class="container">
-            <h2 class="section-title fade-in">Наш шоурум</h2>
-            <p class="fade-in delay-1" style="max-width: 800px; margin-bottom: 50px; font-size: 1.1rem;">
-                Посмотрите, где вы можете ознакомиться с автомобилями лично.
+    <!-- Галерея с китайской эстетикой (облегченная версия) -->
+<section class="section relative py-16 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4 relative">
+        <!-- Заголовок с китайским акцентом -->
+        <div class="text-center mb-12">
+            <h2 class="text-4xl font-bold mb-4 relative inline-block">
+                <span class="relative z-10">Наш шоурум</span>
+                <span class="absolute bottom-0 left-0 w-full h-1 bg-red-300 opacity-50 transform -translate-y-1"></span>
+            </h2>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Посмотрите, где вы можете ознакомиться с автомобилями лично. 
+                <span class="text-red-400 font-medium">传统与现代的结合</span> (традиция и современность)
             </p>
+        </div>
+        
+        <!-- Интерактивная галерея -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Карточка 1 с эффектом при наведении -->
+            <div class="relative group overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1583&q=80" 
+                     alt="Шоурум EMAX" 
+                     class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500">
+                
+                <!-- Легкий SVG фон -->
+                <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
+                    <path fill="none" stroke="#ef4444" stroke-width="2" 
+                          d="M20,100 Q100,20 180,100 Q100,180 20,100 Z" 
+                          class="transform group-hover:rotate-180 transition duration-1000"/>
+                </svg>
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                    <div>
+                        <h3 class="text-white text-lg font-bold mb-1">Премиум салон</h3>
+                        <p class="text-gray-200 text-sm">Изысканный интерьер в восточном стиле</p>
+                    </div>
+                </div>
+            </div>
             
-            <div class="gallery-grid">
-                <div class="gallery-item fade-in">
-                    <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1583&q=80" alt="Шоурум EMAX" class="gallery-img">
+            <!-- Карточка 2 с модальным окном -->
+            <div x-data="{ open: false }" class="relative group overflow-hidden rounded-lg shadow-md">
+                <button @click="open = true" class="w-full h-full focus:outline-none">
+                    <img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" 
+                         alt="Автомобили в шоуруме" 
+                         class="w-full h-64 object-cover">
+                    
+                    <!-- Китайский узор SVG -->
+                    <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
+                        <path fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,5"
+                              d="M10,10 L190,10 L190,190 L10,190 Z M30,30 L170,30 L170,170 L30,170 Z" 
+                              class="transform group-hover:scale-110 transition duration-700"/>
+                    </svg>
+                    
+                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-0 group-hover:opacity-100 transform group-hover:scale-110 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </button>
+                
+                <!-- Модальное окно -->
+                <div x-show="open" x-transition class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+                    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                        <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" 
+                             x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" 
+                             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
+                             class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="open = false"></div>
+
+                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+
+                        <div x-show="open" x-transition:enter="ease-out duration-300" 
+                             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+                             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" 
+                             x-transition:leave="ease-in duration-200" 
+                             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
+                             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
+                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
+                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                <div class="sm:flex sm:items-start">
+                                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
+                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-title">
+                                            Автомобили в нашем шоуруме
+                                        </h3>
+                                        <img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" 
+                                             alt="Автомобили в шоуруме" class="w-full rounded-lg mb-4">
+                                        <p class="text-gray-600">
+                                            Наш шоурум сочетает в себе современные технологии и традиционный китайский дизайн. 
+                                            Каждый автомобиль представлен с особым вниманием к деталям.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                                <button type="button" 
+                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-400 text-white text-base font-medium hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
+                                        @click="open = false">
+                                    关闭 (Закрыть)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="gallery-item fade-in delay-1">
-                    <img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" alt="Автомобили в шоуруме" class="gallery-img">
+            </div>
+            
+            <!-- Карточка 3 с параллакс-эффектом -->
+            <div class="relative overflow-hidden rounded-lg shadow-md h-64" x-data="parallax()" x-bind:style="style">
+                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Клиенты в шоуруме" 
+                     class="absolute w-full h-full object-cover transform scale-110">
+                
+                <!-- Простой китайский узор -->
+                <svg viewBox="0 0 200 200" class="w-full h-full opacity-10 absolute inset-0">
+                    <path fill="none" stroke="#ef4444" stroke-width="1" 
+                          d="M50,50 C100,0 100,100 150,50 C200,0 100,200 50,150 C0,100 0,0 50,50 Z"/>
+                </svg>
+                
+                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                    <div class="text-center px-6">
+                        <h3 class="text-white text-xl font-bold mb-2">Клиентский сервис</h3>
+                        <p class="text-gray-200 text-sm">Восточное гостеприимство для каждого</p>
+                    </div>
                 </div>
-                <div class="gallery-item fade-in delay-2">
-                    <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Клиенты в шоуруме" class="gallery-img">
+            </div>
+            
+            <!-- Карточка 4 с китайским узором -->
+            <div class="relative overflow-hidden rounded-lg shadow-md h-64 group">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Автомобиль на дороге" 
+                     class="w-full h-full object-cover">
+                
+                <!-- Инь-Янь символ (упрощенный) -->
+                <svg viewBox="0 0 200 200" class="w-full h-full opacity-10 group-hover:opacity-20 transition duration-500 absolute inset-0">
+                    <circle cx="100" cy="100" r="90" fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                    <path d="M100,10 A90,90 0 0,0 100,190 A45,45 0 0,1 100,100 A45,45 0 0,0 100,10 Z" 
+                          fill="none" stroke="#ef4444" stroke-width="1.5"/>
+                </svg>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                    <h3 class="text-white font-medium">Автомобили премиум-класса</h3>
                 </div>
-                <div class="gallery-item fade-in delay-3">
-                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Автомобиль на дороге" class="gallery-img">
+            </div>
+            
+            <!-- Карточка 5 -->
+            <div class="relative overflow-hidden rounded-lg shadow-md h-64 group">
+                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
+                     alt="Тест-драйв" 
+                     class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
+                
+                <!-- Китайский узор облаков -->
+                <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-15 transition duration-500 absolute inset-0">
+                    <path fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,3"
+                          d="M30,50 Q50,30 70,50 Q90,30 110,50 Q130,30 150,50 Q170,30 190,50"/>
+                </svg>
+                
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 bg-black/30">
+                    <span class="text-white font-medium text-lg">Тест-драйв</span>
                 </div>
-                <div class="gallery-item fade-in delay-1">
-                    <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" alt="Тест-драйв" class="gallery-img">
-                </div>
-                <div class="gallery-item fade-in delay-2">
-                    <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Сервисный центр" class="gallery-img">
+            </div>
+            
+            <!-- Карточка 6 -->
+            <div class="relative overflow-hidden rounded-lg shadow-md h-64 group">
+                <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Сервисный центр" 
+                     class="w-full h-full object-cover">
+                
+                <!-- Китайский иероглиф "автомобиль" (车) -->
+                <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
+                    <path fill="none" stroke="#ef4444" stroke-width="2"
+                          d="M50,60 L150,60 M70,60 L70,120 M130,60 L130,120 M50,120 L150,120 M50,140 L70,120 M150,140 L130,120"/>
+                </svg>
+                
+                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                    <h3 class="text-white font-medium">Сервисный центр</h3>
+                    <p class="text-gray-200 text-sm">Профессиональное обслуживание</p>
                 </div>
             </div>
         </div>
-    </section>
+        
+        <!-- Кнопка "Показать еще" -->
+        <div class="text-center mt-12 fade-in delay-3">
+            <button class="px-6 py-3 bg-red-400 text-white rounded-lg shadow hover:bg-red-500 transition duration-300 flex items-center mx-auto">
+                <span>Показать больше</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Декоративный разделитель -->
+    <div class="mt-16 py-8 border-t border-gray-100"></div>
+</section>
+
+<!-- Alpine JS для параллакс-эффекта -->
+<script>
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('parallax', () => ({
+            style: '',
+            init() {
+                window.addEventListener('scroll', () => {
+                    const yPos = window.scrollY * 0.3;
+                    this.style = `transform: translate3d(0, ${yPos}px, 0);`;
+                });
+            }
+        }));
+    });
+</script>
 
   
 
