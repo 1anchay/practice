@@ -433,9 +433,9 @@
                 <div class="car-gallery">
                     <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Zeekr 7X" class="main-image">
                     <div class="thumbnails">
-                        <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Zeekr 7X" class="thumbnail active">
-                        <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s3/zeekr-7x-interior.webp" alt="Zeekr 7X Interior" class="thumbnail">
-                        <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s2/zeekr-7x-rear.webp" alt="Zeekr 7X Rear" class="thumbnail">
+                        <img src="images/zeekrzx/1.jpg" alt="Zeekr 7X" class="thumbnail active">
+                        <img src="images/zeekrzx/2.png" alt="Zeekr 7X Interior" class="thumbnail">
+                        <img src="images/zeekrzx/3.png" alt="Zeekr 7X Rear" class="thumbnail">
                     </div>
                 </div>
                 <div class="car-specs">
@@ -491,9 +491,9 @@
                 <div class="car-gallery">
                     <img src="https://cdn.motor1.com/images/mgl/4MqAe/s1/byd-yangwang-u8.webp" alt="BYD Yangwang U8" class="main-image">
                     <div class="thumbnails">
-                        <img src="https://cdn.motor1.com/images/mgl/4MqAe/s1/byd-yangwang-u8.webp" alt="BYD Yangwang U8" class="thumbnail active">
-                        <img src="https://cdn.motor1.com/images/mgl/4MqAe/s3/byd-yangwang-u8-interior.webp" alt="BYD Yangwang U8 Interior" class="thumbnail">
-                        <img src="https://cdn.motor1.com/images/mgl/4MqAe/s2/byd-yangwang-u8-rear.webp" alt="BYD Yangwang U8 Rear" class="thumbnail">
+                        <img src="images/byd_yangwang_u8/1.png" alt="BYD Yangwang U8" class="thumbnail active">
+                        <img src="images/byd_yangwang_u8/2.png" alt="BYD Yangwang U8 Interior" class="thumbnail">
+                        <img src="images/byd_yangwang_u8/3.png" alt="BYD Yangwang U8 Rear" class="thumbnail">
                     </div>
                 </div>
                 <div class="car-specs">
@@ -549,9 +549,9 @@
                 <div class="car-gallery">
                     <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Changan UNI-K" class="main-image">
                     <div class="thumbnails">
-                        <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s1/zeekr-7x.webp" alt="Changan UNI-K" class="thumbnail active">
-                        <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s3/zeekr-7x-interior.webp" alt="Changan UNI-K Interior" class="thumbnail">
-                        <img src="https://cdn.motor1.com/images/mgl/6ZZv2O/s2/zeekr-7x-rear.webp" alt="Changan UNI-K Rear" class="thumbnail">
+                        <img src="images/Changan UNI-K/1.png" alt="Changan UNI-K" class="thumbnail active">
+                        <img src="images/Changan UNI-K/2.png" alt="Changan UNI-K Interior" class="thumbnail">
+                        <img src="images/Changan UNI-K/3.png" alt="Changan UNI-K Rear" class="thumbnail">
                     </div>
                 </div>
                 <div class="car-specs">
