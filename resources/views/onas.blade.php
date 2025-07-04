@@ -616,10 +616,10 @@
             stats: [
                 { number: 5, suffix: '+', text: 'Лет на рынке', color: 'bg-red-500' },
                 { number: 1000, suffix: '+', text: 'Проданных авто', color: 'bg-blue-500' },
-                { number: 24, suffix: '/7', text: 'Поддержка клиентов', color: 'bg-green-500' },
+                { number: 24, suffix: '/10', text: 'Поддержка клиентов', color: 'bg-green-500' },
                 { number: 15, suffix: '+', text: 'Брендов в каталоге', color: 'bg-yellow-500' }
             ],
-            animatedNumbers: [1, 2, 3, 4],
+            animatedNumbers: [5, 589, 9, 42],
             animate() {
                 this.stats.forEach((stat, index) => {
                     const target = stat.number;
@@ -655,7 +655,7 @@
                 { name: 'Geely', logo: 'images/geely.png' },
                 { name: 'Haval', logo: 'images/haval.png' },
                 { name: 'JAC', logo: 'images/jac.png' },
-                { name: 'Changan', logo: 'images/changan.png' }
+                { name: 'Changan', logo: 'images/changan.jpg' }
             ]
         }">
             <template x-for="brand in brands" :key="brand.name">
@@ -1127,7 +1127,7 @@
             <div class="w-24 h-1 bg-red-500 rounded-full"></div>
             
             <p class="mt-6 text-gray-300 text-lg max-w-3xl">
-                Более 1000 довольных клиентов по всей России. Вот что они говорят о нас.
+                Более 500 довольных клиентов по всей России. Вот что они говорят о нас.
             </p>
         </div>
 
@@ -1410,33 +1410,65 @@ document.addEventListener('alpine:init', () => {
     }));
 });
 </script>
-  <!-- Темная галерея с улучшенным просмотром -->
-<section class="relative py-16 bg-gray-900">
-    <!-- Декоративные элементы -->
-    <div class="absolute inset-0 overflow-hidden opacity-10 pointer-events-none">
-        <div class="absolute top-20 left-10 w-32 h-32 border border-red-500 transform rotate-45"></div>
-        <div class="absolute bottom-10 right-10 w-24 h-24 border border-red-500 transform rotate-12"></div>
+  <!-- Улучшенная галерея с эффектами -->
+<section class="relative py-16 bg-gray-900 overflow-hidden">
+    <!-- Анимированный фон -->
+    <div class="absolute inset-0 opacity-10 pointer-events-none">
+        <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyMzksNjgsNjgsMC4wNSkiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjcGF0dGVybikiLz48L3N2Zz4=')]"></div>
     </div>
     
     <div class="container mx-auto px-4 relative z-10">
-        <!-- Заголовок -->
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold text-white mb-4 relative inline-block">
-                <span class="relative z-10">Наш шоурум</span>
-                <span class="absolute bottom-0 left-0 w-full h-1 bg-red-500 transform -translate-y-1"></span>
-            </h2>
-            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
-                Погрузитесь в мир элегантности и технологий
-                <span class="text-red-400 font-medium">优雅与科技的结合</span>
+        <!-- Заголовок с анимацией -->
+        <div class="text-center mb-12" x-data="{ 
+            title: 'Галерея шоурума', 
+            displayedTitle: '', 
+            index: 0,
+            animateTitle() {
+                if (this.index < this.title.length) {
+                    this.displayedTitle += this.title.charAt(this.index);
+                    this.index++;
+                    setTimeout(() => this.animateTitle(), 100);
+                }
+            }
+        }" x-init="animateTitle()">
+            <h2 class="text-4xl font-bold text-white mb-4" x-text="displayedTitle"></h2>
+            <div class="w-24 h-1 bg-red-500 rounded-full mx-auto"></div>
+            <p class="mt-6 text-gray-300 text-lg max-w-2xl mx-auto">
+                Исследуйте наш премиальный шоурум и коллекцию автомобилей
+                <span class="text-red-400 font-medium">探索我们的豪华展厅</span>
             </p>
         </div>
         
-        <!-- Основная галерея -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="main-gallery">
+        <!-- Фильтры галереи -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8" x-data="{ activeFilter: 'all' }">
+            <button @click="activeFilter = 'all'" 
+                    :class="{ 'bg-red-600 text-white': activeFilter === 'all', 'bg-gray-800 text-gray-300': activeFilter !== 'all' }"
+                    class="px-4 py-2 rounded-full transition-all duration-300 hover:bg-red-700">
+                Все
+            </button>
+            <button @click="activeFilter = 'showroom'" 
+                    :class="{ 'bg-red-600 text-white': activeFilter === 'showroom', 'bg-gray-800 text-gray-300': activeFilter !== 'showroom' }"
+                    class="px-4 py-2 rounded-full transition-all duration-300 hover:bg-red-700">
+                Шоурум
+            </button>
+            <button @click="activeFilter = 'cars'" 
+                    :class="{ 'bg-red-600 text-white': activeFilter === 'cars', 'bg-gray-800 text-gray-300': activeFilter !== 'cars' }"
+                    class="px-4 py-2 rounded-full transition-all duration-300 hover:bg-red-700">
+                Автомобили
+            </button>
+            <button @click="activeFilter = 'service'" 
+                    :class="{ 'bg-red-600 text-white': activeFilter === 'service', 'bg-gray-800 text-gray-300': activeFilter !== 'service' }"
+                    class="px-4 py-2 rounded-full transition-all duration-300 hover:bg-red-700">
+                Сервис
+            </button>
+        </div>
+        
+        <!-- Основная галерея с masonry-эффектом -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="main-gallery">
             <!-- Карточки будут добавляться здесь -->
         </div>
         
-        <!-- Кнопка "Показать еще" -->
+        <!-- Кнопка "Показать еще" с анимацией -->
         <div class="text-center mt-12">
             <button id="load-more" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center mx-auto group">
                 <span>Показать больше</span>
@@ -1447,11 +1479,13 @@ document.addEventListener('alpine:init', () => {
         </div>
     </div>
     
-    <!-- Декоративный разделитель -->
-    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-30"></div>
+    <!-- Декоративный разделитель с анимацией -->
+    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-30">
+        <div class="absolute top-0 left-0 h-full w-32 bg-red-500 animate-marquee"></div>
+    </div>
 </section>
 
-<!-- Модальное окно для увеличения изображения -->
+<!-- Модальное окно для увеличения изображения с улучшенным управлением -->
 <div x-data="{ 
     isOpen: false, 
     currentImage: null, 
@@ -1460,7 +1494,54 @@ document.addEventListener('alpine:init', () => {
     zoomLevel: 1,
     position: { x: 0, y: 0 },
     isDragging: false,
-    startPos: { x: 0, y: 0 }
+    startPos: { x: 0, y: 0 },
+    touchStart: { x: 0, y: 0 },
+    currentIndex: 0,
+    images: [],
+    openModal(index) {
+        this.currentIndex = index;
+        this.currentImage = this.images[index].img;
+        this.currentTitle = this.images[index].title;
+        this.currentDesc = this.images[index].desc;
+        this.isOpen = true;
+        this.zoomLevel = 1;
+        this.position = { x: 0, y: 0 };
+    },
+    nextImage() {
+        this.currentIndex = (this.currentIndex + 1) % this.images.length;
+        this.currentImage = this.images[this.currentIndex].img;
+        this.currentTitle = this.images[this.currentIndex].title;
+        this.currentDesc = this.images[this.currentIndex].desc;
+        this.zoomLevel = 1;
+        this.position = { x: 0, y: 0 };
+    },
+    prevImage() {
+        this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+        this.currentImage = this.images[this.currentIndex].img;
+        this.currentTitle = this.images[this.currentIndex].title;
+        this.currentDesc = this.images[this.currentIndex].desc;
+        this.zoomLevel = 1;
+        this.position = { x: 0, y: 0 };
+    },
+    handleTouchStart(e) {
+        this.touchStart.x = e.touches[0].clientX;
+        this.touchStart.y = e.touches[0].clientY;
+    },
+    handleTouchMove(e) {
+        if (this.zoomLevel > 1) return;
+        
+        const touchX = e.touches[0].clientX;
+        const deltaX = touchX - this.touchStart.x;
+        
+        if (Math.abs(deltaX) > 50) {
+            if (deltaX > 0) {
+                this.prevImage();
+            } else {
+                this.nextImage();
+            }
+            this.touchStart.x = touchX;
+        }
+    }
 }" 
 x-cloak
 @keyup.escape="isOpen = false">
@@ -1472,7 +1553,7 @@ x-cloak
          x-transition:leave="ease-in duration-200"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4"
+         class="fixed inset-0 bg-black bg-opacity-95 z-50 flex items-center justify-center p-4"
          @click="isOpen = false">
          
         <!-- Контент модального окна -->
@@ -1487,29 +1568,53 @@ x-cloak
              @click.stop>
             
             <!-- Кнопка закрытия -->
-            <button @click="isOpen = false" class="absolute top-4 right-4 bg-gray-900 hover:bg-gray-700 text-white p-2 rounded-full z-20">
+            <button @click="isOpen = false" 
+                    class="absolute top-4 right-4 bg-gray-900 hover:bg-gray-700 text-white p-2 rounded-full z-20 transition-transform duration-300 hover:scale-110">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
             
+            <!-- Навигация между изображениями -->
+            <button @click="prevImage" 
+                    class="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-900/80 hover:bg-gray-700/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            
+            <button @click="nextImage" 
+                    class="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-900/80 hover:bg-gray-700/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+            
             <!-- Контролы масштабирования -->
-            <div class="absolute top-4 left-4 bg-gray-900 rounded-lg shadow-lg z-20 flex divide-x divide-gray-700">
-                <button @click="zoomLevel = Math.min(zoomLevel + 0.2, 3)" class="p-2 text-white hover:bg-gray-700">
+            <div class="absolute top-4 left-4 bg-gray-900 rounded-lg shadow-lg z-20 flex divide-x divide-gray-700 overflow-hidden">
+                <button @click="zoomLevel = Math.min(zoomLevel + 0.2, 3)" 
+                        class="p-3 text-white hover:bg-gray-700 transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                     </svg>
                 </button>
-                <button @click="zoomLevel = Math.max(zoomLevel - 0.2, 1)" class="p-2 text-white hover:bg-gray-700">
+                <button @click="zoomLevel = Math.max(zoomLevel - 0.2, 1)" 
+                        class="p-3 text-white hover:bg-gray-700 transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
                     </svg>
                 </button>
-                <button @click="zoomLevel = 1; position = { x: 0, y: 0 }" class="p-2 text-white hover:bg-gray-700">
+                <button @click="zoomLevel = 1; position = { x: 0, y: 0 }" 
+                        class="p-3 text-white hover:bg-gray-700 transition-colors duration-300">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                     </svg>
                 </button>
+            </div>
+            
+            <!-- Индикатор текущего изображения -->
+            <div class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-gray-900/80 text-white px-3 py-1 rounded-full text-sm z-20">
+                <span x-text="currentIndex + 1"></span>/<span x-text="images.length"></span>
             </div>
             
             <!-- Изображение с возможностью масштабирования и перетаскивания -->
@@ -1522,124 +1627,201 @@ x-cloak
                      position.x = $event.clientX - startPos.x; 
                      position.y = $event.clientY - startPos.y 
                  }"
-                 @wheel.prevent="$event.deltaY < 0 ? zoomLevel = Math.min(zoomLevel + 0.1, 3) : zoomLevel = Math.max(zoomLevel - 0.1, 1)">
-                <img x-bind:src="currentImage" alt="" 
-                     class="absolute max-w-none transform origin-center transition-transform duration-200"
-                     :style="`transform: translate(${position.x}px, ${position.y}px) scale(${zoomLevel});`">
+                 @wheel.prevent="$event.deltaY < 0 ? zoomLevel = Math.min(zoomLevel + 0.1, 3) : zoomLevel = Math.max(zoomLevel - 0.1, 1)"
+                 @touchstart="handleTouchStart($event)"
+                 @touchmove="handleTouchMove($event)">
+                <img x-bind:src="currentImage" :alt="currentTitle" 
+                     class="absolute max-w-none transform origin-center transition-transform duration-200 select-none"
+                     :style="`transform: translate(${position.x}px, ${position.y}px) scale(${zoomLevel}); touch-action: none;`">
             </div>
             
-            <!-- Описание изображения -->
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-6 z-10">
+            <!-- Описание изображения с анимацией появления -->
+            <div x-show="zoomLevel <= 1.2"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 translate-y-4"
+                 class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/70 to-transparent p-6 z-10">
                 <h3 x-text="currentTitle" class="text-white text-xl font-bold mb-1"></h3>
                 <p x-text="currentDesc" class="text-gray-300"></p>
+                <div class="flex items-center mt-3">
+                    <div class="flex space-x-1">
+                        <template x-for="i in 5" :key="i">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </template>
+                    </div>
+                    <span class="text-gray-400 text-sm ml-2">Фото <span x-text="currentIndex + 1"></span> из <span x-text="images.length"></span></span>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Скрипты -->
+<!-- Скрипты для галереи -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Данные для галереи
+    // Данные для галереи с категориями
     const galleryData = [
         {
             img: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1583&q=80",
-            title: "Премиум салон",
-            desc: "Роскошь в восточном стиле"
+            title: "Премиум салон EMAX",
+            desc: "Эксклюзивный интерьер нашего шоурума в восточном стиле",
+            category: "showroom",
+            featured: true
         },
         {
             img: "https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
-            title: "Выставка",
-            desc: "Современные технологии"
+            title: "Выставка новинок",
+            desc: "Последние модели китайского автопрома в нашем шоуруме",
+            category: "showroom",
+            featured: false
         },
         {
             img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-            title: "Клиентский сервис",
-            desc: "Восточное гостеприимство"
+            title: "Профессиональный сервис",
+            desc: "Наши специалисты всегда готовы помочь с выбором автомобиля",
+            category: "service",
+            featured: true
         },
         {
             img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-            title: "Автомобили",
-            desc: "Мощь и элегантность"
+            title: "Geely Coolray 2023",
+            desc: "Флагманский кроссовер с современным дизайном и технологиями",
+            category: "cars",
+            featured: true
         },
         {
             img: "https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80",
             title: "Тест-драйв",
-            desc: "Испытайте мощь"
+            desc: "Испытайте мощь и комфорт наших автомобилей лично",
+            category: "service",
+            featured: false
         },
         {
             img: "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-            title: "Сервис",
-            desc: "Профессиональный уход"
+            title: "Сервисный центр",
+            desc: "Профессиональное обслуживание и ремонт автомобилей",
+            category: "service",
+            featured: false
         },
         {
             img: "https://images.unsplash.com/photo-1549317661-bd32f8d27f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
-            title: "Интерьер",
-            desc: "Изысканный дизайн"
+            title: "Chery Tiggo 8 Pro",
+            desc: "Роскошный интерьер премиального кроссовера",
+            category: "cars",
+            featured: true
         },
         {
             img: "https://images.unsplash.com/photo-1494976388901-750342ad5436?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
-            title: "Мощь",
-            desc: "Современные двигатели"
+            title: "Haval Jolion",
+            desc: "Динамичный дизайн и современные технологии",
+            category: "cars",
+            featured: false
         },
         {
             img: "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
-            title: "Путешествия",
-            desc: "Комфорт на дорогах"
+            title: "Путешествия с комфортом",
+            desc: "Наши автомобили созданы для дальних поездок",
+            category: "cars",
+            featured: false
+        },
+        {
+            img: "https://images.unsplash.com/photo-1494972308805-463bc619d34e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80",
+            title: "Зона отдыха",
+            desc: "Комфортная атмосфера для наших клиентов",
+            category: "showroom",
+            featured: false
+        },
+        {
+            img: "https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
+            title: "Выставочный зал",
+            desc: "Просторная площадка для демонстрации автомобилей",
+            category: "showroom",
+            featured: true
+        },
+        {
+            img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            title: "Консультации специалистов",
+            desc: "Наши менеджеры помогут с выбором автомобиля",
+            category: "service",
+            featured: false
         }
     ];
 
     const gallery = document.getElementById('main-gallery');
     const loadMoreBtn = document.getElementById('load-more');
-    let visibleItems = 3;
+    let visibleItems = 6;
+    let currentFilter = 'all';
 
     // Инициализация галереи
     function initGallery() {
-        renderItems(0, visibleItems);
-        if (visibleItems >= galleryData.length) {
+        // Устанавливаем данные для модального окна
+        Alpine.store('galleryData', galleryData);
+        
+        // Рендерим первые элементы
+        renderItems(0, visibleItems, currentFilter);
+        
+        // Скрываем кнопку, если все элементы показаны
+        if (visibleItems >= getFilteredItems(currentFilter).length) {
             loadMoreBtn.style.display = 'none';
         }
     }
 
-    // Рендер элементов
-    function renderItems(start, end) {
-        for (let i = start; i < end && i < galleryData.length; i++) {
-            const item = galleryData[i];
-            const delay = (i % 3) * 100;
+    // Получение отфильтрованных элементов
+    function getFilteredItems(filter) {
+        if (filter === 'all') return galleryData;
+        return galleryData.filter(item => item.category === filter);
+    }
+
+    // Рендер элементов с учетом фильтра
+    function renderItems(start, end, filter) {
+        const filteredItems = getFilteredItems(filter);
+        const itemsToRender = filteredItems.slice(start, Math.min(end, filteredItems.length));
+        
+        itemsToRender.forEach((item, index) => {
+            const delay = (index % 3) * 100;
+            const cardHeight = item.featured ? 'h-80' : 'h-64';
             
             const card = document.createElement('div');
-            card.className = `gallery-item opacity-0 translate-y-10 transition-all duration-500 ease-out`;
+            card.className = `gallery-item opacity-0 translate-y-10 transition-all duration-500 ease-out ${item.category}`;
             card.style.transitionDelay = `${delay}ms`;
             
             card.innerHTML = `
-                <div class="relative group overflow-hidden rounded-xl shadow-xl h-64 transform hover:-translate-y-2 transition-all duration-300">
+                <div class="relative group overflow-hidden rounded-xl shadow-xl ${cardHeight} transform hover:-translate-y-2 transition-all duration-300 hover:shadow-red-500/20">
                     <img src="${item.img}" alt="${item.title}" 
                          class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
                     
-                    <!-- SVG узор -->
+                    <!-- Анимированный SVG узор -->
                     <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
                         <path fill="none" stroke="#ef4444" stroke-width="1.5" 
                               d="M20,100 Q100,20 180,100 Q100,180 20,100 Z" 
                               class="transform group-hover:rotate-180 transition duration-1000"/>
                     </svg>
                     
-                    <!-- Затемненный фон для текста -->
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-80 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                    <!-- Затемненный фон для текста с анимацией -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-80 group-hover:opacity-100 transition duration-300 flex items-end p-4">
                         <div>
                             <h3 class="text-white text-xl font-bold mb-1 drop-shadow-md">${item.title}</h3>
-                            <p class="text-gray-200 text-sm drop-shadow-md">${item.desc}</p>
+                            <p class="text-gray-200 text-sm drop-shadow-md line-clamp-2">${item.desc}</p>
                         </div>
+                    </div>
+                    
+                    <!-- Бейдж категории -->
+                    <div class="absolute top-4 left-4 bg-red-600 text-white text-xs uppercase font-bold px-2 py-1 rounded">
+                        ${item.category === 'showroom' ? 'Шоурум' : 
+                          item.category === 'cars' ? 'Автомобиль' : 'Сервис'}
                     </div>
                     
                     <!-- Кнопка увеличения -->
                     <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition duration-300">
-                        <button @click="$dispatch('open-modal', { 
-                            img: '${item.img}', 
-                            title: '${item.title}', 
-                            desc: '${item.desc}' 
-                        })" class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transform hover:scale-110 transition">
+                        <button @click="$dispatch('open-modal', { index: ${galleryData.findIndex(i => i.img === item.img)} })" 
+                                class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transform hover:scale-110 transition">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
                             </svg>
                         </button>
                     </div>
@@ -1648,42 +1830,74 @@ document.addEventListener('DOMContentLoaded', function() {
             
             gallery.appendChild(card);
             
+            // Анимация появления
             setTimeout(() => {
                 card.classList.remove('opacity-0', 'translate-y-10');
             }, 50);
-        }
+        });
     }
 
     // Загрузка дополнительных элементов
     loadMoreBtn.addEventListener('click', function() {
         const prevItems = visibleItems;
-        visibleItems += 3;
+        visibleItems += 6;
         
-        renderItems(prevItems, visibleItems);
+        renderItems(prevItems, visibleItems, currentFilter);
         
-        if (visibleItems >= galleryData.length) {
+        // Скрываем кнопку, если достигнут конец списка
+        if (visibleItems >= getFilteredItems(currentFilter).length) {
             this.style.display = 'none';
         }
+    });
+
+    // Фильтрация галереи
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('galleryData', []);
+        
+        Alpine.data('galleryFilter', () => ({
+            filter: 'all',
+            applyFilter(newFilter) {
+                this.filter = newFilter;
+                currentFilter = newFilter;
+                
+                // Анимация исчезновения
+                const items = document.querySelectorAll('.gallery-item');
+                items.forEach((item, index) => {
+                    item.style.transitionDelay = `${index * 50}ms`;
+                    item.classList.add('opacity-0', 'translate-y-10');
+                });
+                
+                // Очистка и перерисовка
+                setTimeout(() => {
+                    gallery.innerHTML = '';
+                    visibleItems = 6;
+                    renderItems(0, visibleItems, currentFilter);
+                    
+                    // Показываем кнопку, если есть еще элементы
+                    loadMoreBtn.style.display = 
+                        visibleItems < getFilteredItems(currentFilter).length ? 'flex' : 'none';
+                }, 500);
+            }
+        }));
     });
 
     // Инициализация
     initGallery();
 });
 
-// Инициализация Alpine.js
-document.addEventListener('alpine:init', () => {
-    Alpine.data('galleryModal', () => ({
-        openModal(event) {
-            this.currentImage = event.detail.img;
-            this.currentTitle = event.detail.title;
-            this.currentDesc = event.detail.desc;
-            this.isOpen = true;
-            this.zoomLevel = 1;
-            this.position = { x: 0, y: 0 };
-        }
-    }));
-});
-</script> 
+// Анимация для декоративного элемента
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes marquee {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(calc(100vw + 100%)); }
+    }
+    .animate-marquee {
+        animation: marquee 15s linear infinite;
+    }
+`;
+document.head.appendChild(style);
+</script>
 
 
   
