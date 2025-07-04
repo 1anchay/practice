@@ -736,246 +736,553 @@
         </div>
     </section>
 
-    <!-- Отзывы -->
-    <section class="section reviews">
-        <div class="container">
-            <h2 class="section-title fade-in">Отзывы клиентов</h2>
-            <p class="fade-in delay-1" style="max-width: 800px; margin-bottom: 50px; font-size: 1.1rem;">
+    <section class="bg-gray-900 py-20 px-4 relative overflow-hidden">
+    <!-- Китайские декоративные элементы -->
+    <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+        <div class="absolute top-10 left-10 text-red-500 text-6xl">龍</div>
+        <div class="absolute bottom-20 right-20 text-red-500 text-6xl">福</div>
+        <div class="absolute top-1/2 left-1/4 text-red-500 text-8xl">車</div>
+    </div>
+    
+    <div class="container mx-auto max-w-7xl relative z-10">
+        <!-- Заголовок с анимацией -->
+        <div x-data="{ title: 'Отзывы клиентов', displayedTitle: '', index: 0 }" 
+             x-init="() => {
+                 const animateTitle = () => {
+                     if (this.index < this.title.length) {
+                         this.displayedTitle += this.title.charAt(this.index);
+                         this.index++;
+                         setTimeout(animateTitle, 100);
+                     }
+                 }
+                 animateTitle();
+             }" 
+             class="mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" x-text="displayedTitle"></h2>
+            <div class="w-24 h-1 bg-red-500 rounded-full"></div>
+            
+            <p class="mt-6 text-gray-300 text-lg max-w-3xl">
                 Более 1000 довольных клиентов по всей России. Вот что они говорят о нас.
             </p>
+        </div>
+
+        <!-- Карусель отзывов -->
+        <div x-data="{
+            activeReview: 0,
+            reviews: [
+                {
+                    text: 'Покупал Chery Tiggo 8 Pro через EMAX. Отличный сервис, все четко по договору. Машина приехала даже раньше обещанного срока. Отдельное спасибо менеджеру Ольге за терпение и ответы на все мои вопросы.',
+                    author: 'Игорь С.',
+                    car: 'Chery Tiggo 8 Pro',
+                    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                },
+                {
+                    text: 'Долго сомневался насчет китайских авто, но команда EMAX подробно все объяснила, помогла с выбором. Взяли Geely Coolray - не нарадуемся! Качество на уровне, сервис отличный. Теперь только к ним!',
+                    author: 'Антон М.',
+                    car: 'Geely Coolray',
+                    photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80'
+                },
+                {
+                    text: 'Работаем с EMAX уже третий год. Закупаем авто для нашего таксопарка. Ни разу не подвели, все машины в идеальном состоянии, документы чистые. Цены ниже, чем у официальных дилеров. Рекомендую!',
+                    author: 'Елена К.',
+                    car: 'Haval Jolion',
+                    photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80'
+                }
+            ],
+            next() {
+                this.activeReview = (this.activeReview + 1) % this.reviews.length;
+            },
+            prev() {
+                this.activeReview = (this.activeReview - 1 + this.reviews.length) % this.reviews.length;
+            }
+        }" class="relative">
+            <!-- Основной отзыв -->
+            <div class="bg-gray-800 rounded-xl p-8 shadow-2xl transform transition-all duration-500 hover:scale-[1.02] hover:shadow-red-500/20 relative overflow-hidden">
+                <!-- Китайский узор -->
+                <div class="absolute top-0 right-0 w-32 h-32 bg-red-500 opacity-10 -rotate-45 translate-x-16 -translate-y-16"></div>
+                
+                <div x-show.transition.opacity="activeReview === 0" class="flex flex-col h-full">
+                    <div class="flex-1">
+                        <div class="text-white text-lg mb-6" x-text="reviews[0].text"></div>
+                    </div>
+                    <div class="flex items-center mt-6">
+                        <img :src="reviews[0].photo" alt="" class="w-14 h-14 rounded-full object-cover border-2 border-red-500">
+                        <div class="ml-4">
+                            <div class="text-white font-medium" x-text="reviews[0].author"></div>
+                            <div class="text-gray-400 text-sm" x-text="reviews[0].car"></div>
+                        </div>
+                        <div class="ml-auto text-red-500 text-4xl">”</div>
+                    </div>
+                </div>
+                
+                <div x-show.transition.opacity="activeReview === 1" class="flex flex-col h-full">
+                    <div class="flex-1">
+                        <div class="text-white text-lg mb-6" x-text="reviews[1].text"></div>
+                    </div>
+                    <div class="flex items-center mt-6">
+                        <img :src="reviews[1].photo" alt="" class="w-14 h-14 rounded-full object-cover border-2 border-red-500">
+                        <div class="ml-4">
+                            <div class="text-white font-medium" x-text="reviews[1].author"></div>
+                            <div class="text-gray-400 text-sm" x-text="reviews[1].car"></div>
+                        </div>
+                        <div class="ml-auto text-red-500 text-4xl">”</div>
+                    </div>
+                </div>
+                
+                <div x-show.transition.opacity="activeReview === 2" class="flex flex-col h-full">
+                    <div class="flex-1">
+                        <div class="text-white text-lg mb-6" x-text="reviews[2].text"></div>
+                    </div>
+                    <div class="flex items-center mt-6">
+                        <img :src="reviews[2].photo" alt="" class="w-14 h-14 rounded-full object-cover border-2 border-red-500">
+                        <div class="ml-4">
+                            <div class="text-white font-medium" x-text="reviews[2].author"></div>
+                            <div class="text-gray-400 text-sm" x-text="reviews[2].car"></div>
+                        </div>
+                        <div class="ml-auto text-red-500 text-4xl">”</div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="reviews-slider">
-                <div class="review-card fade-in">
-                    <div class="review-text">
-                        Покупал Chery Tiggo 8 Pro через EMAX. Отличный сервис, все четко по договору. Машина приехала даже раньше обещанного срока. Отдельное спасибо менеджеру Ольге за терпение и ответы на все мои вопросы.
-                    </div>
-                    <div class="review-author">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Игорь С." class="author-photo">
-                        <div>
-                            <div class="author-name">Игорь С.</div>
-                            <div style="font-size: 0.9rem; opacity: 0.7;">Chery Tiggo 8 Pro</div>
-                        </div>
+            <!-- Навигация -->
+            <div class="flex justify-center mt-8 space-x-3">
+                <template x-for="(review, index) in reviews" :key="index">
+                    <button @click="activeReview = index" 
+                            class="w-3 h-3 rounded-full transition-all duration-300"
+                            :class="activeReview === index ? 'bg-red-500 w-6' : 'bg-gray-600 hover:bg-gray-500'"
+                            aria-label="Перейти к отзыву"></button>
+                </template>
+            </div>
+            
+            <!-- Кнопки навигации -->
+            <button @click="prev()" 
+                    class="absolute left-4 top-1/2 -translate-y-1/2 bg-gray-800/80 hover:bg-gray-700/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:text-red-400 z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            </button>
+            
+            <button @click="next()" 
+                    class="absolute right-4 top-1/2 -translate-y-1/2 bg-gray-800/80 hover:bg-gray-700/90 text-white p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 hover:text-red-400 z-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Дополнительные отзывы в виде сетки -->
+        <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-red-500/20 group">
+                <div class="text-yellow-400 mb-4 flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                </div>
+                <p class="text-gray-300 mb-4">Привезли машину точно в срок, все документы в порядке. Нашли именно ту комплектацию, которую я хотел. Буду рекомендовать друзьям!</p>
+                <div class="flex items-center">
+                    <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="" class="w-10 h-10 rounded-full object-cover border border-red-500">
+                    <div class="ml-3">
+                        <div class="text-white font-medium">Дмитрий В.</div>
+                        <div class="text-gray-400 text-sm">Changan CS35 Plus</div>
                     </div>
                 </div>
-                <div class="review-card fade-in delay-1">
-                    <div class="review-text">
-                        Долго сомневался насчет китайских авто, но команда EMAX подробно все объяснила, помогла с выбором. Взяли Geely Coolray - не нарадуемся! Качество на уровне, сервис отличный. Теперь только к ним!
-                    </div>
-                    <div class="review-author">
-                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Антон М." class="author-photo">
-                        <div>
-                            <div class="author-name">Антон М.</div>
-                            <div style="font-size: 0.9rem; opacity: 0.7;">Geely Coolray</div>
-                        </div>
+            </div>
+            
+            <div class="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-red-500/20 group">
+                <div class="text-yellow-400 mb-4 flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                </div>
+                <p class="text-gray-300 mb-4">Очень доволен сервисом! Машину пригнали быстрее, чем обещали, все проверки были проведены при мне. Цена ниже рыночной на 15%!</p>
+                <div class="flex items-center">
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" class="w-10 h-10 rounded-full object-cover border border-red-500">
+                    <div class="ml-3">
+                        <div class="text-white font-medium">Артем Л.</div>
+                        <div class="text-gray-400 text-sm">Exeed TXL</div>
                     </div>
                 </div>
-                <div class="review-card fade-in delay-2">
-                    <div class="review-text">
-                        Работаем с EMAX уже третий год. Закупаем авто для нашего таксопарка. Ни разу не подвели, все машины в идеальном состоянии, документы чистые. Цены ниже, чем у официальных дилеров. Рекомендую!
-                    </div>
-                    <div class="review-author">
-                        <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80" alt="Елена К." class="author-photo">
-                        <div>
-                            <div class="author-name">Елена К.</div>
-                            <div style="font-size: 0.9rem; opacity: 0.7;">Haval Jolion</div>
-                        </div>
+            </div>
+            
+            <div class="bg-gray-800 rounded-lg p-6 hover:bg-gray-700 transition-all duration-300 transform hover:-translate-y-2 shadow-lg hover:shadow-red-500/20 group">
+                <div class="text-yellow-400 mb-4 flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                </div>
+                <p class="text-gray-300 mb-4">Взяли Haval F7 в кредит через партнеров EMAX. Все организовали быстро, процентная ставка ниже, чем в банках. Машина - мечта!</p>
+                <div class="flex items-center">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="" class="w-10 h-10 rounded-full object-cover border border-red-500">
+                    <div class="ml-3">
+                        <div class="text-white font-medium">Светлана П.</div>
+                        <div class="text-gray-400 text-sm">Haval F7</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+        
+        <!-- Кнопка "Оставить отзыв" -->
+        <div class="mt-16 text-center">
+            <button class="relative px-8 py-3 bg-red-600 text-white font-medium rounded-full overflow-hidden group">
+                <span class="relative z-10">Оставить свой отзыв</span>
+                <span class="absolute inset-0 bg-red-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+                <span class="absolute inset-0 border-2 border-red-500 rounded-full transform scale-110 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300"></span>
+            </button>
+        </div>
+    </div>
+</section>
 
-    <!-- Галерея с китайской эстетикой (облегченная версия) -->
-<section class="section relative py-16 bg-gradient-to-b from-gray-50 to-white">
-    <div class="container mx-auto px-4 relative">
-        <!-- Заголовок с китайским акцентом -->
+<!-- Модальное окно для отзыва -->
+<div x-data="{ reviewModalOpen: false }" class="fixed inset-0 z-50 flex items-center justify-center p-4" x-show="reviewModalOpen" style="display: none;">
+    <div class="fixed inset-0 bg-black/70" @click="reviewModalOpen = false"></div>
+    
+    <div class="relative bg-gray-800 rounded-xl max-w-2xl w-full p-8 shadow-2xl transform transition-all duration-300" 
+         x-transition:enter="ease-out duration-300"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="ease-in duration-200"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95">
+        <button @click="reviewModalOpen = false" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        
+        <h3 class="text-2xl font-bold text-white mb-6">Оставить отзыв</h3>
+        
+        <form class="space-y-6">
+            <div>
+                <label for="name" class="block text-gray-300 mb-2">Ваше имя</label>
+                <input type="text" id="name" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-red-500 focus:border-transparent">
+            </div>
+            
+            <div>
+                <label for="car" class="block text-gray-300 mb-2">Модель автомобиля</label>
+                <input type="text" id="car" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-red-500 focus:border-transparent">
+            </div>
+            
+            <div>
+                <label for="rating" class="block text-gray-300 mb-2">Оценка</label>
+                <div class="flex space-x-2">
+                    <template x-for="i in 5" :key="i">
+                        <button type="button" class="text-gray-400 hover:text-yellow-400 focus:outline-none">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                        </button>
+                    </template>
+                </div>
+            </div>
+            
+            <div>
+                <label for="review" class="block text-gray-300 mb-2">Ваш отзыв</label>
+                <textarea id="review" rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-2 focus:ring-red-500 focus:border-transparent"></textarea>
+            </div>
+            
+            <div class="pt-4">
+                <button type="button" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-300 w-full">
+                    Отправить отзыв
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('alpine:init', () => {
+    // Автопрокрутка отзывов
+    Alpine.data('autoScrollReviews', () => ({
+        init() {
+            setInterval(() => {
+                this.next();
+            }, 5000);
+        },
+        next() {
+            this.activeReview = (this.activeReview + 1) % this.reviews.length;
+        },
+        prev() {
+            this.activeReview = (this.activeReview - 1 + this.reviews.length) % this.reviews.length;
+        },
+        activeReview: 0,
+        reviews: [] // Заполняется в разметке
+    }));
+});
+</script>
+    <!-- Темная галерея с китайской эстетикой -->
+<section class="relative py-16 bg-gray-900">
+    <!-- Декоративные элементы -->
+    <div class="absolute inset-0 overflow-hidden opacity-10">
+        <div class="absolute top-20 left-10 w-32 h-32 border border-red-500 transform rotate-45"></div>
+        <div class="absolute bottom-10 right-10 w-24 h-24 border border-red-500 transform rotate-12"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <!-- Заголовок -->
         <div class="text-center mb-12">
-            <h2 class="text-4xl font-bold mb-4 relative inline-block">
+            <h2 class="text-4xl font-bold text-white mb-4 relative inline-block">
                 <span class="relative z-10">Наш шоурум</span>
-                <span class="absolute bottom-0 left-0 w-full h-1 bg-red-300 opacity-50 transform -translate-y-1"></span>
+                <span class="absolute bottom-0 left-0 w-full h-1 bg-red-500 transform -translate-y-1"></span>
             </h2>
-            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-                Посмотрите, где вы можете ознакомиться с автомобилями лично. 
-                <span class="text-red-400 font-medium">传统与现代的结合</span> (традиция и современность)
+            <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                Погрузитесь в мир элегантности и технологий
+                <span class="text-red-400 font-medium">优雅与科技的结合</span>
             </p>
         </div>
         
-        <!-- Интерактивная галерея -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Карточка 1 с эффектом при наведении -->
-            <div class="relative group overflow-hidden rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1583&q=80" 
-                     alt="Шоурум EMAX" 
-                     class="w-full h-64 object-cover transform group-hover:scale-105 transition duration-500">
-                
-                <!-- Легкий SVG фон -->
-                <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
-                    <path fill="none" stroke="#ef4444" stroke-width="2" 
-                          d="M20,100 Q100,20 180,100 Q100,180 20,100 Z" 
-                          class="transform group-hover:rotate-180 transition duration-1000"/>
-                </svg>
-                
-                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
-                    <div>
-                        <h3 class="text-white text-lg font-bold mb-1">Премиум салон</h3>
-                        <p class="text-gray-200 text-sm">Изысканный интерьер в восточном стиле</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Карточка 2 с модальным окном -->
-            <div x-data="{ open: false }" class="relative group overflow-hidden rounded-lg shadow-md">
-                <button @click="open = true" class="w-full h-full focus:outline-none">
-                    <img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" 
-                         alt="Автомобили в шоуруме" 
-                         class="w-full h-64 object-cover">
-                    
-                    <!-- Китайский узор SVG -->
-                    <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
-                        <path fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="5,5"
-                              d="M10,10 L190,10 L190,190 L10,190 Z M30,30 L170,30 L170,170 L30,170 Z" 
-                              class="transform group-hover:scale-110 transition duration-700"/>
-                    </svg>
-                    
-                    <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white opacity-0 group-hover:opacity-100 transform group-hover:scale-110 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                        </svg>
-                    </div>
-                </button>
-                
-                <!-- Модальное окно -->
-                <div x-show="open" x-transition class="fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-                    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                        <div x-show="open" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" 
-                             x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" 
-                             x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" 
-                             class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" @click="open = false"></div>
-
-                        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-
-                        <div x-show="open" x-transition:enter="ease-out duration-300" 
-                             x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-                             x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100" 
-                             x-transition:leave="ease-in duration-200" 
-                             x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100" 
-                             x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95" 
-                             class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-4xl sm:w-full">
-                            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                <div class="sm:flex sm:items-start">
-                                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
-                                        <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4" id="modal-title">
-                                            Автомобили в нашем шоуруме
-                                        </h3>
-                                        <img src="https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80" 
-                                             alt="Автомобили в шоуруме" class="w-full rounded-lg mb-4">
-                                        <p class="text-gray-600">
-                                            Наш шоурум сочетает в себе современные технологии и традиционный китайский дизайн. 
-                                            Каждый автомобиль представлен с особым вниманием к деталям.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                <button type="button" 
-                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-red-400 text-white text-base font-medium hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-400 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                                        @click="open = false">
-                                    关闭 (Закрыть)
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Карточка 3 с параллакс-эффектом -->
-            <div class="relative overflow-hidden rounded-lg shadow-md h-64" x-data="parallax()" x-bind:style="style">
-                <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                     alt="Клиенты в шоуруме" 
-                     class="absolute w-full h-full object-cover transform scale-110">
-                
-                <!-- Простой китайский узор -->
-                <svg viewBox="0 0 200 200" class="w-full h-full opacity-10 absolute inset-0">
-                    <path fill="none" stroke="#ef4444" stroke-width="1" 
-                          d="M50,50 C100,0 100,100 150,50 C200,0 100,200 50,150 C0,100 0,0 50,50 Z"/>
-                </svg>
-                
-                <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <div class="text-center px-6">
-                        <h3 class="text-white text-xl font-bold mb-2">Клиентский сервис</h3>
-                        <p class="text-gray-200 text-sm">Восточное гостеприимство для каждого</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Карточка 4 с китайским узором -->
-            <div class="relative overflow-hidden rounded-lg shadow-md h-64 group">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                     alt="Автомобиль на дороге" 
-                     class="w-full h-full object-cover">
-                
-                <!-- Инь-Янь символ (упрощенный) -->
-                <svg viewBox="0 0 200 200" class="w-full h-full opacity-10 group-hover:opacity-20 transition duration-500 absolute inset-0">
-                    <circle cx="100" cy="100" r="90" fill="none" stroke="#ef4444" stroke-width="1.5"/>
-                    <path d="M100,10 A90,90 0 0,0 100,190 A45,45 0 0,1 100,100 A45,45 0 0,0 100,10 Z" 
-                          fill="none" stroke="#ef4444" stroke-width="1.5"/>
-                </svg>
-                
-                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                    <h3 class="text-white font-medium">Автомобили премиум-класса</h3>
-                </div>
-            </div>
-            
-            <!-- Карточка 5 -->
-            <div class="relative overflow-hidden rounded-lg shadow-md h-64 group">
-                <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80" 
-                     alt="Тест-драйв" 
-                     class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500">
-                
-                <!-- Китайский узор облаков -->
-                <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-15 transition duration-500 absolute inset-0">
-                    <path fill="none" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,3"
-                          d="M30,50 Q50,30 70,50 Q90,30 110,50 Q130,30 150,50 Q170,30 190,50"/>
-                </svg>
-                
-                <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition duration-300 bg-black/30">
-                    <span class="text-white font-medium text-lg">Тест-драйв</span>
-                </div>
-            </div>
-            
-            <!-- Карточка 6 -->
-            <div class="relative overflow-hidden rounded-lg shadow-md h-64 group">
-                <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
-                     alt="Сервисный центр" 
-                     class="w-full h-full object-cover">
-                
-                <!-- Китайский иероглиф "автомобиль" (车) -->
-                <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
-                    <path fill="none" stroke="#ef4444" stroke-width="2"
-                          d="M50,60 L150,60 M70,60 L70,120 M130,60 L130,120 M50,120 L150,120 M50,140 L70,120 M150,140 L130,120"/>
-                </svg>
-                
-                <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                    <h3 class="text-white font-medium">Сервисный центр</h3>
-                    <p class="text-gray-200 text-sm">Профессиональное обслуживание</p>
-                </div>
-            </div>
+        <!-- Основная галерея -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="main-gallery">
+            <!-- Карточки будут добавляться здесь -->
         </div>
         
         <!-- Кнопка "Показать еще" -->
-        <div class="text-center mt-12 fade-in delay-3">
-            <button class="px-6 py-3 bg-red-400 text-white rounded-lg shadow hover:bg-red-500 transition duration-300 flex items-center mx-auto">
+        <div class="text-center mt-12">
+            <button id="load-more" class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center mx-auto group">
                 <span>Показать больше</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:rotate-180 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
             </button>
         </div>
     </div>
     
     <!-- Декоративный разделитель -->
-    <div class="mt-16 py-8 border-t border-gray-100"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-red-500 to-transparent opacity-30"></div>
 </section>
+
+<!-- Модальное окно (Headless UI) -->
+<div x-data="{ isOpen: false, currentImage: null }" x-cloak>
+    <!-- Overlay -->
+    <div x-show="isOpen" 
+         x-transition:enter="ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4"
+         @click="isOpen = false">
+         
+        <!-- Контент модального окна -->
+        <div x-show="isOpen"
+             x-transition:enter="ease-out duration-300"
+             x-transition:enter-start="opacity-0 scale-95"
+             x-transition:enter-end="opacity-100 scale-100"
+             x-transition:leave="ease-in duration-200"
+             x-transition:leave-start="opacity-100 scale-100"
+             x-transition:leave-end="opacity-0 scale-95"
+             class="bg-gray-800 rounded-lg max-w-4xl w-full max-h-screen overflow-auto relative"
+             @click.stop>
+            
+            <!-- Кнопка закрытия -->
+            <button @click="isOpen = false" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            
+            <!-- Контент -->
+            <div class="p-6">
+                <img x-bind:src="currentImage" alt="" class="w-full h-auto rounded-lg mb-4">
+                <div class="text-white">
+                    <h3 class="text-2xl font-bold mb-2">Премиальные автомобили</h3>
+                    <p class="text-gray-300">Изысканный дизайн с элементами традиционной китайской эстетики</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Скрипты -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Данные для галереи
+    const galleryData = [
+        {
+            img: "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1583&q=80",
+            title: "Премиум салон",
+            desc: "Роскошь в восточном стиле"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1489824904134-891ab64532f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80",
+            title: "Выставка",
+            desc: "Современные технологии"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            title: "Клиентский сервис",
+            desc: "Восточное гостеприимство"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            title: "Автомобили",
+            desc: "Мощь и элегантность"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1502877338535-766e1452684a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1472&q=80",
+            title: "Тест-драйв",
+            desc: "Испытайте мощь"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            title: "Сервис",
+            desc: "Профессиональный уход"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1549317661-bd32f8d27f2a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+            title: "Интерьер",
+            desc: "Изысканный дизайн"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1494976388901-750342ad5436?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+            title: "Мощь",
+            desc: "Современные двигатели"
+        },
+        {
+            img: "https://images.unsplash.com/photo-1502161254066-6c74afbf07aa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80",
+            title: "Путешествия",
+            desc: "Комфорт на дорогах"
+        }
+    ];
+
+    const gallery = document.getElementById('main-gallery');
+    const loadMoreBtn = document.getElementById('load-more');
+    let visibleItems = 3;
+
+    // Инициализация галереи
+    function initGallery() {
+        // Показываем первые 3 элемента
+        renderItems(0, visibleItems);
+        
+        // Настройка кнопки
+        if (visibleItems >= galleryData.length) {
+            loadMoreBtn.style.display = 'none';
+        }
+    }
+
+    // Рендер элементов
+    function renderItems(start, end) {
+        for (let i = start; i < end && i < galleryData.length; i++) {
+            const item = galleryData[i];
+            const delay = (i % 3) * 100;
+            
+            const card = document.createElement('div');
+            card.className = `gallery-item opacity-0 translate-y-10 transition-all duration-500 ease-out`;
+            card.style.transitionDelay = `${delay}ms`;
+            
+            card.innerHTML = `
+                <div class="relative group overflow-hidden rounded-xl shadow-xl h-64 transform hover:-translate-y-2 transition-all duration-300">
+                    <img src="${item.img}" alt="${item.title}" 
+                         class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+                    
+                    <!-- SVG узор -->
+                    <svg viewBox="0 0 200 200" class="w-full h-full opacity-5 group-hover:opacity-20 transition duration-500 absolute inset-0">
+                        <path fill="none" stroke="#ef4444" stroke-width="1.5" 
+                              d="M20,100 Q100,20 180,100 Q100,180 20,100 Z" 
+                              class="transform group-hover:rotate-180 transition duration-1000"/>
+                    </svg>
+                    
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
+                        <div>
+                            <h3 class="text-white text-xl font-bold mb-1">${item.title}</h3>
+                            <p class="text-gray-300 text-sm">${item.desc}</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Кнопка увеличения -->
+                    <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition duration-300">
+                        <button @click="isOpen = true; currentImage = '${item.img}'" class="bg-red-600 hover:bg-red-700 text-white p-2 rounded-full shadow-lg transform hover:scale-110 transition">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            gallery.appendChild(card);
+            
+            // Анимация появления
+            setTimeout(() => {
+                card.classList.remove('opacity-0', 'translate-y-10');
+            }, 50);
+        }
+    }
+
+    // Загрузка дополнительных элементов
+    loadMoreBtn.addEventListener('click', function() {
+        const prevItems = visibleItems;
+        visibleItems += 3;
+        
+        renderItems(prevItems, visibleItems);
+        
+        // Скрыть кнопку если все элементы показаны
+        if (visibleItems >= galleryData.length) {
+            this.style.display = 'none';
+        }
+    });
+
+    // Инициализация
+    initGallery();
+});
+
+// Параллакс эффект для некоторых элементов
+document.addEventListener('alpine:init', () => {
+    Alpine.data('parallax', () => ({
+        init() {
+            this.$el.style.transform = 'translateY(0)';
+            
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                const elementTop = this.$el.getBoundingClientRect().top + scrollY;
+                const elementHeight = this.$el.offsetHeight;
+                
+                // Рассчитываем смещение только когда элемент в зоне видимости
+                if (scrollY > elementTop - window.innerHeight && scrollY < elementTop + elementHeight) {
+                    const offset = (scrollY - elementTop + window.innerHeight) * 0.1;
+                    this.$el.style.transform = `translateY(${offset}px)`;
+                }
+            });
+        }
+    }));
+});
+</script>
 
 <!-- Alpine JS для параллакс-эффекта -->
 <script>
