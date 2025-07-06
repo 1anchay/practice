@@ -1,902 +1,712 @@
 <!DOCTYPE html>
 <html lang="ru">
-    @include('header')
 <head>
+    @include('header')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог китайских автомобилей | NeoAuto</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     <style>
         :root {
             --primary: #1a1a1a;
-            --secondary: #252525;
-            --accent: #00a8ff;
-            --accent-hover: #0095e0;
-            --cta-color: #00ff88;
-            --cta-hover: #00e676;
-            --text: #333333;
-            --text-light: #ffffff;
-            --text-secondary: #777777;
-            --border: #e0e0e0;
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --card-shadow-hover: 0 8px 24px rgba(0, 168, 255, 0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
+            --secondary: #111827;
+            --accent: #dc2626;
+            --accent-hover: #b91c1c;
+            --cta-color: #f59e0b;
+            --cta-hover: #d97706;
+            --text: #e5e7eb;
+            --text-light: #f9fafb;
+            --text-secondary: #9ca3af;
+            --border: #374151;
+            --card-bg: #1f2937;
+            --card-hover: #1e40af;
+            --bg-dark: #111827;
+            --bg-darker: #0f172a;
         }
 
         body {
-            background-color: #f5f5f5;
+            background-color: var(--bg-darker);
             color: var(--text);
+            font-family: 'Inter', sans-serif;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .chinese-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23dc2626' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
 
-        /* Хедер страницы */
-        .page-header {
-            background-color: var(--text-light);
-            padding: 30px 0;
-            margin-bottom: 30px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        .drag-handle {
+            cursor: grab;
+            touch-action: none;
         }
 
-        .page-header-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+        .drag-handle:active {
+            cursor: grabbing;
         }
 
-        .page-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--primary);
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
         }
 
-        .page-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-top: 10px;
-            max-width: 700px;
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        .consult-button {
-            background-color: var(--accent);
-            color: var(--text-light);
-            border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.3s;
         }
-
-        .consult-button:hover {
-            background-color: var(--accent-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.25);
-        }
-
-        /* Основной контент */
-        .catalog-content {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-
-        /* Блок фильтров */
-        .filters-sidebar {
-            width: 280px;
-            flex-shrink: 0;
-        }
-
-        .filter-block {
-            background-color: var(--text-light);
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .filter-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .filter-reset {
-            font-size: 0.9rem;
-            color: var(--accent);
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-
-        .filter-options {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .filter-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .filter-option input {
-            width: 18px;
-            height: 18px;
-            accent-color: var(--accent);
-        }
-
-        .filter-option label {
-            font-size: 0.95rem;
-            cursor: pointer;
-        }
-
-        .filter-option-count {
-            margin-left: auto;
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .price-range {
-            width: 100%;
-            margin-top: 15px;
-        }
-
-        .price-values {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        /* Сортировка и результаты */
-        .catalog-main {
-            flex-grow: 1;
-        }
-
-        .sort-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .results-count {
-            font-size: 0.95rem;
-            color: var(--text-secondary);
-        }
-
-        .sort-select {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            background-color: var(--text-light);
-            cursor: pointer;
-        }
-
-        /* Сетка автомобилей */
-        .cars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .car-card {
-            background-color: var(--text-light);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .car-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .car-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background-color: var(--accent);
-            color: var(--text-light);
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            z-index: 2;
-        }
-
-        .car-badge.hit {
-            background-color: #ff4757;
-        }
-
-        .car-badge.new {
-            background-color: var(--cta-color);
-            color: var(--primary);
-        }
-
-        .car-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            transition: transform 0.3s ease;
-        }
-
-        .car-card:hover .car-image {
-            transform: scale(1.03);
-        }
-
-        .car-info {
-            padding: 20px;
-        }
-
-        .car-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .car-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 15px;
-        }
-
-        .car-specs {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .car-spec {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 0.9rem;
-        }
-
-        .car-spec i {
-            color: var(--accent);
-            font-size: 0.9rem;
-        }
-
-        .car-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .car-button {
-            flex: 1;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: 500;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .car-button-detail {
-            background-color: var(--text-light);
-            color: var(--accent);
-            border: 1px solid var(--accent);
-        }
-
-        .car-button-detail:hover {
-            background-color: rgba(0, 168, 255, 0.1);
-        }
-
-        .car-button-test {
-            background-color: var(--accent);
-            color: var(--text-light);
-            border: 1px solid var(--accent);
-        }
-
-        .car-button-test:hover {
-            background-color: var(--accent-hover);
-        }
-
-        /* Пагинация */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 40px;
-        }
-
-        .pagination-button {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 6px;
-            background-color: var(--text-light);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .pagination-button:hover {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-
-        .pagination-button.active {
-            background-color: var(--accent);
-            color: var(--text-light);
-            border-color: var(--accent);
-        }
-
-        /* SEO блок */
-        .seo-block {
-            background-color: var(--text-light);
-            padding: 40px;
-            border-radius: 10px;
-            margin-bottom: 50px;
-            box-shadow: var(--card-shadow);
-        }
-
-        .seo-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: var(--primary);
-        }
-
-        .seo-text {
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
-
-        .seo-highlight {
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        /* CTA блок */
-        .cta-block {
-            background: linear-gradient(135deg, #1a2a3a 0%, #0f172a 100%);
-            color: var(--text-light);
-            padding: 50px;
-            border-radius: 10px;
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .cta-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .cta-text {
-            font-size: 1.1rem;
-            opacity: 0.9;
-            margin-bottom: 25px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .cta-button {
-            background-color: var(--cta-color);
-            color: var(--primary);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .cta-button:hover {
-            background-color: var(--cta-hover);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
-        }
-
-        /* Мобильные стили */
-        @media (max-width: 1024px) {
-            .catalog-content {
-                flex-direction: column;
-            }
-
-            .filters-sidebar {
-                width: 100%;
-            }
-
-            .filter-mobile-toggle {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 12px 15px;
-                background-color: var(--text-light);
-                border-radius: 8px;
-                box-shadow: var(--card-shadow);
-                margin-bottom: 20px;
-                cursor: pointer;
-            }
-
-            .filter-mobile-toggle i {
-                transition: transform 0.3s ease;
-            }
-
-            .filter-mobile-toggle.active i {
-                transform: rotate(180deg);
-            }
-
-            .filters-container {
-                display: none;
-                background-color: var(--text-light);
-                border-radius: 8px;
-                padding: 15px;
-                box-shadow: var(--card-shadow);
-                margin-bottom: 20px;
-            }
-
-            .filters-container.active {
-                display: block;
-            }
-
-            .cars-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            }
-        }
-
-        @media (max-width: 768px) {
-            .page-header-inner {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .consult-button {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .car-specs {
-                grid-template-columns: 1fr;
-            }
-
-            .cta-block {
-                padding: 30px 20px;
-            }
-
-            .cta-title {
-                font-size: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .cars-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .car-actions {
-                flex-direction: column;
-            }
-
-            .seo-block {
-                padding: 25px;
-            }
+        .fade-enter, .fade-leave-to {
+            opacity: 0;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
     <!-- Хедер страницы -->
-    <header class="page-header">
-        <div class="container">
-            <div class="page-header-inner">
+    <header class="chinese-pattern bg-gradient-to-b from-gray-900 to-gray-800 border-b border-red-900/50">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
-                    <h1 class="page-title">Каталог автомобилей</h1>
-                    <p class="page-subtitle">Выберите подходящую модель из актуального ассортимента китайских автомобилей с гарантией, доставкой и тест-драйвом</p>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
+                        <span class="text-red-500">中国</span> 汽车
+                    </h1>
+                    <p class="text-gray-300 max-w-2xl">
+                        Выберите подходящую модель из актуального ассортимента китайских автомобилей с гарантией, доставкой и тест-драйвом
+                    </p>
                 </div>
-                <button class="consult-button">
-                    <i class="fas fa-headset"></i> Получить консультацию
+                <button class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-medium transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-red-900/30">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                        <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+                    </svg>
+                    Получить консультацию
                 </button>
             </div>
         </div>
     </header>
 
     <!-- Основной контент -->
-    <main class="container">
-        <div class="catalog-content">
+    <main class="flex-grow container mx-auto px-4 py-8">
+        <div x-data="catalog()" x-init="init()" class="flex flex-col lg:flex-row gap-8">
             <!-- Блок фильтров -->
-            <aside class="filters-sidebar">
-                <div class="filter-mobile-toggle" id="filterToggle">
-                    <span>Фильтры</span>
-                    <i class="fas fa-chevron-down"></i>
+            <aside class="w-full lg:w-80 flex-shrink-0">
+                <div class="lg:hidden mb-4">
+                    <button @click="mobileFiltersOpen = !mobileFiltersOpen" class="w-full flex justify-between items-center bg-gray-800 hover:bg-gray-700 px-4 py-3 rounded-lg border border-gray-700">
+                        <span class="font-medium">Фильтры</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-200" :class="{'rotate-180': mobileFiltersOpen}" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
                 </div>
                 
-                <div class="filters-container" id="filtersContainer">
-                    <div class="filter-block">
-                        <h3 class="filter-title">Тип кузова <button class="filter-reset">Сбросить</button></h3>
-                        <div class="filter-options">
-                            <div class="filter-option">
-                                <input type="checkbox" id="body-sedan" checked>
-                                <label for="body-sedan">Седан</label>
-                                <span class="filter-option-count">(24)</span>
+                <div x-show="mobileFiltersOpen || !isMobile()" x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-1"
+                     x-transition:enter-end="opacity-100 translate-y-0"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0"
+                     x-transition:leave-end="opacity-0 -translate-y-1"
+                     class="space-y-6 bg-gray-800 p-6 rounded-xl border border-gray-700 shadow-lg">
+                    <!-- Тип кузова -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-lg">Тип кузова</h3>
+                            <button @click="resetFilter('body_types')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
+                        </div>
+                        <div class="space-y-2">
+                            @foreach($bodyTypes as $bodyType)
+                            <div class="flex items-center">
+                                <input x-model="filters.body_types" value="{{ $bodyType->id }}" id="body-type-{{ $bodyType->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="body-type-{{ $bodyType->id }}" class="ml-3 text-sm text-gray-300">{{ $bodyType->name }} <span class="text-gray-500">({{ $bodyType->cars_count }})</span></label>
                             </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="body-crossover" checked>
-                                <label for="body-crossover">Кроссовер</label>
-                                <span class="filter-option-count">(18)</span>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Бренд -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-lg">Бренд</h3>
+                            <button @click="resetFilter('brands')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
+                        </div>
+                        <div class="space-y-2">
+                            @foreach($brands as $brand)
+                            <div class="flex items-center">
+                                <input x-model="filters.brands" value="{{ $brand->id }}" id="brand-{{ $brand->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="brand-{{ $brand->id }}" class="ml-3 text-sm text-gray-300">{{ $brand->name }} <span class="text-gray-500">({{ $brand->cars_count }})</span></label>
                             </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="body-suv">
-                                <label for="body-suv">Внедорожник</label>
-                                <span class="filter-option-count">(12)</span>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Тип двигателя -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-lg">Тип двигателя</h3>
+                            <button @click="resetFilter('engine_types')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
+                        </div>
+                        <div class="space-y-2">
+                            @foreach($engineTypes as $engineType)
+                            <div class="flex items-center">
+                                <input x-model="filters.engine_types" value="{{ $engineType->id }}" id="engine-type-{{ $engineType->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="engine-type-{{ $engineType->id }}" class="ml-3 text-sm text-gray-300">{{ $engineType->name }} <span class="text-gray-500">({{ $engineType->cars_count }})</span></label>
                             </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="body-hatchback">
-                                <label for="body-hatchback">Хэтчбек</label>
-                                <span class="filter-option-count">(8)</span>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Привод -->
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-semibold text-lg">Привод</h3>
+                            <button @click="resetFilter('drive_types')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
+                        </div>
+                        <div class="space-y-2">
+                            @foreach($driveTypes as $driveType)
+                            <div class="flex items-center">
+                                <input x-model="filters.drive_types" value="{{ $driveType->id }}" id="drive-type-{{ $driveType->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="drive-type-{{ $driveType->id }}" class="ml-3 text-sm text-gray-300">{{ $driveType->name }} <span class="text-gray-500">({{ $driveType->cars_count }})</span></label>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <!-- Цена -->
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-lg">Цена, ₽</h3>
+                        <div class="px-2">
+                            <div x-data="rangeSlider(minPrice, maxPrice)" class="space-y-4">
+                                <div class="relative h-1 bg-gray-700 rounded-full">
+                                    <div class="absolute h-1 bg-red-500 rounded-full" :style="`left: ${minPercent}%; right: ${100 - maxPercent}%`"></div>
+                                    <div class="absolute h-4 w-4 bg-red-500 rounded-full -mt-1.5 -ml-2 cursor-pointer drag-handle" 
+                                         :style="`left: ${minPercent}%`"
+                                         @mousedown="startDrag('min', $event)"></div>
+                                    <div class="absolute h-4 w-4 bg-red-500 rounded-full -mt-1.5 -ml-2 cursor-pointer drag-handle" 
+                                         :style="`left: ${maxPercent}%`"
+                                         @mousedown="startDrag('max', $event)"></div>
+                                </div>
+                                <div class="flex justify-between items-center text-sm text-gray-300">
+                                    <span x-text="formatPrice(minValue)"></span>
+                                    <span x-text="formatPrice(maxValue)"></span>
+                                </div>
+                                <input type="hidden" x-model="minValue" @change="filters.min_price = minValue">
+                                <input type="hidden" x-model="maxValue" @change="filters.max_price = maxValue">
                             </div>
                         </div>
                     </div>
 
-                    <div class="filter-block">
-                        <h3 class="filter-title">Бренд</h3>
-                        <div class="filter-options">
-                            <div class="filter-option">
-                                <input type="checkbox" id="brand-chery" checked>
-                                <label for="brand-chery">Chery</label>
-                                <span class="filter-option-count">(15)</span>
+                    <!-- Статус -->
+                    <div class="space-y-3">
+                        <h3 class="font-semibold text-lg">Статус</h3>
+                        <div class="space-y-2">
+                            <div class="flex items-center">
+                                <input x-model="filters.status" value="new" id="status-new" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="status-new" class="ml-3 text-sm text-gray-300">Новинка</label>
                             </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="brand-geely" checked>
-                                <label for="brand-geely">Geely</label>
-                                <span class="filter-option-count">(14)</span>
+                            <div class="flex items-center">
+                                <input x-model="filters.status" value="in_stock" id="status-instock" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="status-instock" class="ml-3 text-sm text-gray-300">В наличии</label>
                             </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="brand-byd" checked>
-                                <label for="brand-byd">BYD</label>
-                                <span class="filter-option-count">(10)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="brand-haval" checked>
-                                <label for="brand-haval">Haval</label>
-                                <span class="filter-option-count">(8)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="brand-zeekr">
-                                <label for="brand-zeekr">Zeekr</label>
-                                <span class="filter-option-count">(5)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="brand-exeed">
-                                <label for="brand-exeed">Exeed</label>
-                                <span class="filter-option-count">(4)</span>
+                            <div class="flex items-center">
+                                <input x-model="filters.status" value="on_order" id="status-order" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="status-order" class="ml-3 text-sm text-gray-300">Под заказ</label>
                             </div>
                         </div>
                     </div>
 
-                    <div class="filter-block">
-                        <h3 class="filter-title">Тип двигателя</h3>
-                        <div class="filter-options">
-                            <div class="filter-option">
-                                <input type="checkbox" id="engine-gasoline" checked>
-                                <label for="engine-gasoline">Бензин</label>
-                                <span class="filter-option-count">(32)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="engine-hybrid" checked>
-                                <label for="engine-hybrid">Гибрид</label>
-                                <span class="filter-option-count">(18)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="engine-electric">
-                                <label for="engine-electric">Электромобиль</label>
-                                <span class="filter-option-count">(12)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="filter-block">
-                        <h3 class="filter-title">Привод</h3>
-                        <div class="filter-options">
-                            <div class="filter-option">
-                                <input type="checkbox" id="drive-front" checked>
-                                <label for="drive-front">Передний</label>
-                                <span class="filter-option-count">(28)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="drive-all">
-                                <label for="drive-all">Полный</label>
-                                <span class="filter-option-count">(24)</span>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="drive-rear">
-                                <label for="drive-rear">Задний</label>
-                                <span class="filter-option-count">(10)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="filter-block">
-                        <h3 class="filter-title">Цена, ₽</h3>
-                        <input type="range" class="price-range" min="1000000" max="10000000" step="100000" value="2000000">
-                        <input type="range" class="price-range" min="1000000" max="10000000" step="100000" value="5000000">
-                        <div class="price-values">
-                            <span>1 000 000</span>
-                            <span>10 000 000</span>
-                        </div>
-                    </div>
-
-                    <div class="filter-block">
-                        <h3 class="filter-title">Статус</h3>
-                        <div class="filter-options">
-                            <div class="filter-option">
-                                <input type="checkbox" id="status-new" checked>
-                                <label for="status-new">Новинка</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="status-instock" checked>
-                                <label for="status-instock">В наличии</label>
-                            </div>
-                            <div class="filter-option">
-                                <input type="checkbox" id="status-order">
-                                <label for="status-order">Под заказ</label>
-                            </div>
-                        </div>
-                    </div>
+                    <button @click="applyFilters" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-medium transition-colors duration-300">
+                        Применить фильтры
+                    </button>
                 </div>
             </aside>
 
             <!-- Основной каталог -->
-            <div class="catalog-main">
-                <div class="sort-row">
-                    <div class="results-count">Найдено 42 автомобиля</div>
-                    <select class="sort-select">
-                        <option value="price-asc">По цене (дешевые сначала)</option>
-                        <option value="price-desc">По цене (дорогие сначала)</option>
-                        <option value="popular">По популярности</option>
-                        <option value="year-desc">По году (новые сначала)</option>
-                        <option value="year-asc">По году (старые сначала)</option>
-                    </select>
+            <div class="flex-grow">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div class="text-gray-300">
+                        Найдено <span x-text="totalCars" class="font-semibold text-white"></span> автомобилей
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <span class="text-sm text-gray-400">Сортировка:</span>
+                        <select x-model="sortBy" @change="applyFilters" class="bg-gray-800 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-red-500 focus:border-red-500">
+                            <option value="price_asc">По цене (дешевые сначала)</option>
+                            <option value="price_desc">По цене (дорогие сначала)</option>
+                            <option value="year_desc">По году (новые сначала)</option>
+                            <option value="year_asc">По году (старые сначала)</option>
+                            <option value="popular">По популярности</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="cars-grid">
-                    <!-- Карточка автомобиля 1 -->
-                    <div class="car-card">
-                        <div class="car-badge new">Новинка</div>
-                        <img src="https://via.placeholder.com/600x400/1a2a3a/ffffff?text=Geely+Atlas+Pro" alt="Geely Atlas Pro" class="car-image">
-                        <div class="car-info">
-                            <h3 class="car-title">Geely Atlas Pro 2024</h3>
-                            <div class="car-price">от 2 390 000 ₽</div>
-                            <div class="car-specs">
-                                <div class="car-spec"><i class="fas fa-gas-pump"></i> 1.5 л, 177 л.с.</div>
-                                <div class="car-spec"><i class="fas fa-cog"></i> Гибрид</div>
-                                <div class="car-spec"><i class="fas fa-tachometer-alt"></i> Автомат</div>
-                                <div class="car-spec"><i class="fas fa-car"></i> Полный привод</div>
-                            </div>
-                            <div class="car-actions">
-                                <a href="/catalog/geely-atlas-pro" class="car-button car-button-detail">Подробнее</a>
-                                <button class="car-button car-button-test">Тест-драйв</button>
-                            </div>
-                        </div>
+                <!-- Карточки автомобилей -->
+                <template x-if="loading">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="animate-pulse bg-gray-800 rounded-xl h-96"></div>
+                        <div class="animate-pulse bg-gray-800 rounded-xl h-96"></div>
+                        <div class="animate-pulse bg-gray-800 rounded-xl h-96"></div>
                     </div>
+                </template>
 
-                    <!-- Карточка автомобиля 2 -->
-                    <div class="car-card">
-                        <div class="car-badge hit">Хит</div>
-                        <img src="https://via.placeholder.com/600x400/1a2a3a/ffffff?text=Chery+Tiggo+8" alt="Chery Tiggo 8" class="car-image">
-                        <div class="car-info">
-                            <h3 class="car-title">Chery Tiggo 8 Pro</h3>
-                            <div class="car-price">от 2 890 000 ₽</div>
-                            <div class="car-specs">
-                                <div class="car-spec"><i class="fas fa-gas-pump"></i> 2.0 л, 254 л.с.</div>
-                                <div class="car-spec"><i class="fas fa-cog"></i> Бензин</div>
-                                <div class="car-spec"><i class="fas fa-tachometer-alt"></i> Автомат</div>
-                                <div class="car-spec"><i class="fas fa-car"></i> Полный привод</div>
-                            </div>
-                            <div class="car-actions">
-                                <a href="/catalog/chery-tiggo-8" class="car-button car-button-detail">Подробнее</a>
-                                <button class="car-button car-button-test">Тест-драйв</button>
-                            </div>
-                        </div>
+                <template x-if="!loading && cars.length === 0">
+                    <div class="bg-gray-800 rounded-xl p-8 text-center border border-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <h3 class="mt-4 text-lg font-medium text-gray-300">Ничего не найдено</h3>
+                        <p class="mt-2 text-gray-500">Попробуйте изменить параметры фильтрации</p>
+                        <button @click="resetAllFilters" class="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
+                            Сбросить фильтры
+                        </button>
                     </div>
+                </template>
 
-                    <!-- Карточка автомобиля 3 -->
-                    <div class="car-card">
-                        <img src="https://via.placeholder.com/600x400/1a2a3a/ffffff?text=BYD+Song+Plus" alt="BYD Song Plus" class="car-image">
-                        <div class="car-info">
-                            <h3 class="car-title">BYD Song Plus EV</h3>
-                            <div class="car-price">от 3 490 000 ₽</div>
-                            <div class="car-specs">
-                                <div class="car-spec"><i class="fas fa-bolt"></i> Электромотор</div>
-                                <div class="car-spec"><i class="fas fa-car-battery"></i> 510 км заряд</div>
-                                <div class="car-spec"><i class="fas fa-tachometer-alt"></i> Автомат</div>
-                                <div class="car-spec"><i class="fas fa-car"></i> Передний привод</div>
+                <div x-show="!loading && cars.length > 0" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <template x-for="car in cars" :key="car.id">
+                        <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-red-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-red-900/10 group">
+                            <div class="relative overflow-hidden">
+                                <img :src="car.image_url || 'https://via.placeholder.com/600x400/1f2937/9ca3af?text=' + car.name" :alt="car.name" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                                <template x-if="car.status === 'new'">
+                                    <div class="absolute top-3 left-3 bg-yellow-500 text-gray-900 px-2 py-1 rounded text-xs font-bold">
+                                        新
+                                    </div>
+                                </template>
+                                <template x-if="car.status === 'in_stock'">
+                                    <div class="absolute top-3 left-3 bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
+                                        有
+                                    </div>
+                                </template>
+                                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                                <div class="absolute bottom-0 left-0 p-4">
+                                    <h3 class="text-xl font-bold text-white" x-text="car.name"></h3>
+                                    <div class="text-red-400 font-semibold text-lg" x-text="'от ' + formatPrice(car.price) + ' ₽'"></div>
+                                </div>
                             </div>
-                            <div class="car-actions">
-                                <a href="/catalog/byd-song" class="car-button car-button-detail">Подробнее</a>
-                                <button class="car-button car-button-test">Тест-драйв</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Карточка автомобиля 4 -->
-                    <div class="car-card">
-                        <div class="car-badge new">Новинка</div>
-                        <img src="https://via.placeholder.com/600x400/1a2a3a/ffffff?text=Haval+Jolion" alt="Haval Jolion" class="car-image">
-                        <div class="car-info">
-                            <h3 class="car-title">Haval Jolion 2024</h3>
-                            <div class="car-price">от 1 990 000 ₽</div>
-                            <div class="car-specs">
-                                <div class="car-spec"><i class="fas fa-gas-pump"></i> 1.5 л, 150 л.с.</div>
-                                <div class="car-spec"><i class="fas fa-cog"></i> Бензин</div>
-                                <div class="car-spec"><i class="fas fa-tachometer-alt"></i> Вариатор</div>
-                                <div class="car-spec"><i class="fas fa-car"></i> Передний привод</div>
-                            </div>
-                            <div class="car-actions">
-                                <a href="/catalog/haval-jolion" class="car-button car-button-detail">Подробнее</a>
-                                <button class="car-button car-button-test">Тест-драйв</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Карточка автомобиля 5 -->
-                    <div class="car-card">
-                        <img src="https://via.placeholder.com/600x400/1a2a3a/ffffff?text=Zeekr+001" alt="Zeekr 001" class="car-image">
-                        <div class="car-info">
-                            <h3 class="car-title">Zeekr 001</h3>
-                            <div class="car-price">от 4 990 000 ₽</div>
-                            <div class="car-specs">
-                                <div class="car-spec"><i class="fas fa-bolt"></i> 544 л.с.</div>
-                                <div class="car-spec"><i class="fas fa-car-battery"></i> 620 км заряд</div>
-                                <div class="car-spec"><i class="fas fa-tachometer-alt"></i> Автомат</div>
-                                <div class="car-spec"><i class="fas fa-car"></i> Полный привод</div>
-                            </div>
-                            <div class="car-actions">
-                                <a href="/catalog/zeekr-001" class="car-button car-button-detail">Подробнее</a>
-                                <button class="car-button car-button-test">Тест-драйв</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Карточка автомобиля 6 -->
-                    <div class="car-card">
-                        <div class="car-badge hit">Хит</div>
-                        <img src="https://via.placeholder.com/600x400/1a2a3a/ffffff?text=Exeed+TX" alt="Exeed TX" class="car-image">
-                        <div class="car-info">
-                            <h3 class="car-title">Exeed TXL</h3>
-                            <div class="car-price">от 3 290 000 ₽</div>
-                            <div class="car-specs">
-                                <div class="car-spec"><i class="fas fa-gas-pump"></i> 2.0 л, 245 л.с.</div>
-                                <div class="car-spec"><i class="fas fa-cog"></i> Бензин</div>
-                                <div class="car-spec"><i class="fas fa-tachometer-alt"></i> Робот</div>
-                                <div class="car-spec"><i class="fas fa-car"></i> Полный привод</div>
-                            </div>
-                            <div class="car-actions">
-                                <a href="/catalog/exeed-txl" class="car-button car-button-detail">Подробнее</a>
-                                <button class="car-button car-button-test">Тест-драйв</button>
+                            <div class="p-4">
+                                <div class="grid grid-cols-2 gap-3 mb-4">
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                        <span x-text="car.engine_type.name"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                        </svg>
+                                        <span x-text="car.drive_type.name"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+                                        </svg>
+                                        <span x-text="car.body_type.name"></span>
+                                    </div>
+                                    <div class="flex items-center text-sm text-gray-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span x-text="car.year"></span>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <a :href="'/cars/' + car.id" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg text-sm font-medium text-center transition-colors duration-300">
+                                        详情
+                                    </a>
+                                    <button @click="showTestDriveModal(car)" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
+                                        试驾
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
 
                 <!-- Пагинация -->
-                <div class="pagination">
-                    <button class="pagination-button"><i class="fas fa-chevron-left"></i></button>
-                    <button class="pagination-button active">1</button>
-                    <button class="pagination-button">2</button>
-                    <button class="pagination-button">3</button>
-                    <button class="pagination-button">4</button>
-                    <button class="pagination-button"><i class="fas fa-chevron-right"></i></button>
-                </div>
+                <template x-if="!loading && totalPages > 1">
+                    <div class="flex justify-center mt-8">
+                        <nav class="inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+                            <button @click="prevPage" :disabled="currentPage === 1" :class="{'opacity-50 cursor-not-allowed': currentPage === 1}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700">
+                                <span class="sr-only">Previous</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                            
+                            <template x-for="page in visiblePages" :key="page">
+                                <button @click="goToPage(page)" :class="{'bg-red-600 text-white': currentPage === page, 'bg-gray-800 text-gray-400 hover:bg-gray-700': currentPage !== page}" class="relative inline-flex items-center px-4 py-2 border border-gray-700 text-sm font-medium">
+                                    <span x-text="page"></span>
+                                </button>
+                            </template>
+                            
+                            <button @click="nextPage" :disabled="currentPage === totalPages" :class="{'opacity-50 cursor-not-allowed': currentPage === totalPages}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-700 bg-gray-800 text-sm font-medium text-gray-400 hover:bg-gray-700">
+                                <span class="sr-only">Next</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                </svg>
+                            </button>
+                        </nav>
+                    </div>
+                </template>
             </div>
         </div>
 
         <!-- SEO блок -->
-        <div class="seo-block">
-            <h2 class="seo-title">Китайские автомобили - современный выбор</h2>
-            <p class="seo-text">В нашем каталоге представлены <span class="seo-highlight">лучшие китайские автомобили 2023-2024 года</span> от ведущих производителей. Китайский автопром за последние годы совершил настоящий прорыв в качестве, технологиях и дизайне.</p>
-            <p class="seo-text">Модели таких брендов как <span class="seo-highlight">Geely, Chery, BYD, Haval</span> сочетают в себе передовые технологии, богатую комплектацию и привлекательную цену. В линейке представлены как экономичные городские автомобили, так и просторные семейные кроссоверы, мощные внедорожники и высокотехнологичные электромобили.</p>
-            <p class="seo-text">Все автомобили проходят предпродажную подготовку и имеют <span class="seo-highlight">официальную гарантию производителя</span>. Мы предлагаем удобные условия покупки: кредит, лизинг, trade-in. Для всех моделей доступен тест-драйв в Москве и других городах России.</p>
+        <div class="mt-16 bg-gray-800 rounded-xl p-8 border border-gray-700">
+            <h2 class="text-2xl font-bold text-white mb-4">中国汽车 - современный выбор</h2>
+            <div class="prose prose-invert max-w-none">
+                <p>В нашем каталоге представлены <span class="text-red-400 font-semibold">лучшие китайские автомобили 2023-2024 года</span> от ведущих производителей. Китайский автопром за последние годы совершил настоящий прорыв в качестве, технологиях и дизайне.</p>
+                <p>Модели таких брендов как <span class="text-red-400 font-semibold">Geely, Chery, BYD, Haval</span> сочетают в себе передовые технологии, богатую комплектацию и привлекательную цену. В линейке представлены как экономичные городские автомобили, так и просторные семейные кроссоверы, мощные внедорожники и высокотехнологичные электромобили.</p>
+                <p>Все автомобили проходят предпродажную подготовку и имеют <span class="text-red-400 font-semibold">официальную гарантию производителя</span>. Мы предлагаем удобные условия покупки: кредит, лизинг, trade-in. Для всех моделей доступен тест-драйв в Москве и других городах России.</p>
+            </div>
         </div>
 
         <!-- CTA блок -->
-        <div class="cta-block">
-            <h3 class="cta-title">Не уверены в выборе?</h3>
-            <p class="cta-text">Получите консультацию — мы подберём авто под ваши задачи и бюджет, расскажем о специальных предложениях и условиях покупки</p>
-            <button class="cta-button">
-                <i class="fas fa-car"></i> Получить персональное предложение
-            </button>
+        <div class="mt-8 bg-gradient-to-r from-gray-900 to-red-900/50 rounded-xl p-8 border border-red-900/30">
+            <div class="max-w-3xl mx-auto text-center">
+                <h3 class="text-2xl font-bold text-white mb-2">不确定选择？</h3>
+                <p class="text-gray-300 mb-6">Получите консультацию — мы подберём авто под ваши задачи и бюджет, расскажем о специальных предложениях и условиях покупки</p>
+                <button class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-gray-900 bg-yellow-500 hover:bg-yellow-600 shadow-lg shadow-yellow-900/30 transition-colors duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                        <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                    </svg>
+                    Получить персональное предложение
+                </button>
+            </div>
+        </div>
+
+        <!-- Модальное окно тест-драйва -->
+        <div x-show="testDriveModalOpen" x-transition.opacity class="fixed inset-0 z-50 overflow-y-auto">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+                <div x-show="testDriveModalOpen" x-transition.opacity class="fixed inset-0 transition-opacity" aria-hidden="true">
+                    <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-sm"></div>
+                </div>
+                
+                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+                
+                <div x-show="testDriveModalOpen" x-transition
+                     @click.away="testDriveModalOpen = false"
+                     class="inline-block align-bottom bg-gray-800 rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-700">
+                    <div class="px-6 py-4">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-medium text-white">Запись на тест-драйв</h3>
+                            <button @click="testDriveModalOpen = false" class="text-gray-400 hover:text-gray-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-300 mb-4">Выбранный автомобиль: <span x-text="selectedCar.name" class="font-medium text-white"></span></p>
+                            
+                            <form @submit.prevent="submitTestDriveRequest" class="space-y-4">
+                                <div>
+                                    <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Ваше имя</label>
+                                    <input type="text" id="name" x-model="testDriveForm.name" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-red-500 focus:border-red-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="phone" class="block text-sm font-medium text-gray-300 mb-1">Телефон</label>
+                                    <input type="tel" id="phone" x-model="testDriveForm.phone" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-red-500 focus:border-red-500">
+                                </div>
+                                
+                                <div>
+                                    <label for="date" class="block text-sm font-medium text-gray-300 mb-1">Желаемая дата</label>
+                                    <input type="date" id="date" x-model="testDriveForm.date" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-red-500 focus:border-red-500">
+                                </div>
+                                
+                                <div class="pt-2">
+                                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center">
+                                        <svg x-show="!testDriveSubmitting" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                        </svg>
+                                        <svg x-show="testDriveSubmitting" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        <span x-text="testDriveSubmitting ? 'Отправка...' : 'Записаться на тест-драйв'"></span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
 
     <script>
-        // Мобильное меню фильтров
-        const filterToggle = document.getElementById('filterToggle');
-        const filtersContainer = document.getElementById('filtersContainer');
-
-        filterToggle.addEventListener('click', () => {
-            filterToggle.classList.toggle('active');
-            filtersContainer.classList.toggle('active');
-        });
-
-        // Имитация фильтрации
-        const filterOptions = document.querySelectorAll('.filter-options input');
-        filterOptions.forEach(option => {
-            option.addEventListener('change', () => {
-                // Здесь будет логика фильтрации (AJAX или фильтрация на клиенте)
-                console.log('Фильтры изменены');
-            });
-        });
-
-        // Имитация сортировки
-        const sortSelect = document.querySelector('.sort-select');
-        sortSelect.addEventListener('change', () => {
-            console.log('Сортировка изменена:', sortSelect.value);
-        });
-
-        // Обработчики для кнопок тест-драйва
-        const testDriveButtons = document.querySelectorAll('.car-button-test');
-        testDriveButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                alert('Открывается форма записи на тест-драйв');
-                // Здесь можно добавить код для открытия модального окна
-            });
-        });
-
-        // Обработчик для CTA кнопки
-        const ctaButton = document.querySelector('.cta-button');
-        ctaButton.addEventListener('click', () => {
-            alert('Открывается форма персонального предложения');
-        });
-
-        // Анимация появления карточек при скролле
-        const observerOptions = {
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        function catalog() {
+            return {
+                mobileFiltersOpen: false,
+                loading: true,
+                cars: [],
+                totalCars: 0,
+                currentPage: 1,
+                perPage: 9,
+                totalPages: 1,
+                visiblePages: [],
+                minPrice: {{ $minPrice }},
+                maxPrice: {{ $maxPrice }},
+                testDriveModalOpen: false,
+                testDriveSubmitting: false,
+                selectedCar: null,
+                testDriveForm: {
+                    name: '',
+                    phone: '',
+                    date: ''
+                },
+                filters: {
+                    body_types: [],
+                    brands: [],
+                    engine_types: [],
+                    drive_types: [],
+                    status: [],
+                    min_price: {{ $minPrice }},
+                    max_price: {{ $maxPrice }},
+                },
+                sortBy: 'price_asc',
+                
+                init() {
+                    this.applyFilters();
+                    
+                    // Инициализация фильтров из URL
+                    const urlParams = new URLSearchParams(window.location.search);
+                    if (urlParams.has('body_types')) {
+                        this.filters.body_types = urlParams.get('body_types').split(',').map(Number);
+                    }
+                    if (urlParams.has('brands')) {
+                        this.filters.brands = urlParams.get('brands').split(',').map(Number);
+                    }
+                    if (urlParams.has('engine_types')) {
+                        this.filters.engine_types = urlParams.get('engine_types').split(',').map(Number);
+                    }
+                    if (urlParams.has('drive_types')) {
+                        this.filters.drive_types = urlParams.get('drive_types').split(',').map(Number);
+                    }
+                    if (urlParams.has('status')) {
+                        this.filters.status = urlParams.get('status').split(',');
+                    }
+                    if (urlParams.has('min_price')) {
+                        this.filters.min_price = parseInt(urlParams.get('min_price'));
+                    }
+                    if (urlParams.has('max_price')) {
+                        this.filters.max_price = parseInt(urlParams.get('max_price'));
+                    }
+                    if (urlParams.has('sort')) {
+                        this.sortBy = urlParams.get('sort');
+                    }
+                    if (urlParams.has('page')) {
+                        this.currentPage = parseInt(urlParams.get('page'));
+                    }
+                },
+                
+                isMobile() {
+                    return window.innerWidth < 1024;
+                },
+                
+                applyFilters() {
+                    this.loading = true;
+                    this.currentPage = 1;
+                    
+                    // Обновляем URL с параметрами фильтрации
+                    const urlParams = new URLSearchParams();
+                    
+                    if (this.filters.body_types.length > 0) {
+                        urlParams.set('body_types', this.filters.body_types.join(','));
+                    }
+                    if (this.filters.brands.length > 0) {
+                        urlParams.set('brands', this.filters.brands.join(','));
+                    }
+                    if (this.filters.engine_types.length > 0) {
+                        urlParams.set('engine_types', this.filters.engine_types.join(','));
+                    }
+                    if (this.filters.drive_types.length > 0) {
+                        urlParams.set('drive_types', this.filters.drive_types.join(','));
+                    }
+                    if (this.filters.status.length > 0) {
+                        urlParams.set('status', this.filters.status.join(','));
+                    }
+                    if (this.filters.min_price !== this.minPrice) {
+                        urlParams.set('min_price', this.filters.min_price);
+                    }
+                    if (this.filters.max_price !== this.maxPrice) {
+                        urlParams.set('max_price', this.filters.max_price);
+                    }
+                    if (this.sortBy !== 'price_asc') {
+                        urlParams.set('sort', this.sortBy);
+                    }
+                    
+                    window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+                    
+                    this.fetchCars();
+                },
+                
+                fetchCars() {
+                    const params = {
+                        body_types: this.filters.body_types,
+                        brands: this.filters.brands,
+                        engine_types: this.filters.engine_types,
+                        drive_types: this.filters.drive_types,
+                        status: this.filters.status,
+                        min_price: this.filters.min_price,
+                        max_price: this.filters.max_price,
+                        sort: this.sortBy,
+                        page: this.currentPage,
+                        per_page: this.perPage
+                    };
+                    
+                    fetch('/api/cars?' + new URLSearchParams(params))
+                        .then(response => response.json())
+                        .then(data => {
+                            this.cars = data.data;
+                            this.totalCars = data.meta.total;
+                            this.currentPage = data.meta.current_page;
+                            this.perPage = data.meta.per_page;
+                            this.totalPages = data.meta.last_page;
+                            this.updateVisiblePages();
+                            this.loading = false;
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            this.loading = false;
+                        });
+                },
+                
+                updateVisiblePages() {
+                    const range = 2; // Количество страниц по бокам от текущей
+                    let start = Math.max(1, this.currentPage - range);
+                    let end = Math.min(this.totalPages, this.currentPage + range);
+                    
+                    // Если мы в начале, показываем больше страниц справа
+                    if (this.currentPage - range <= 1) {
+                        end = Math.min(1 + range * 2, this.totalPages);
+                    }
+                    
+                    // Если мы в конце, показываем больше страниц слева
+                    if (this.currentPage + range >= this.totalPages) {
+                        start = Math.max(this.totalPages - range * 2, 1);
+                    }
+                    
+                    this.visiblePages = [];
+                    for (let i = start; i <= end; i++) {
+                        this.visiblePages.push(i);
+                    }
+                },
+                
+                goToPage(page) {
+                    if (page < 1 || page > this.totalPages || page === this.currentPage) return;
+                    this.currentPage = page;
+                    this.fetchCars();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+                
+                prevPage() {
+                    this.goToPage(this.currentPage - 1);
+                },
+                
+                nextPage() {
+                    this.goToPage(this.currentPage + 1);
+                },
+                
+                resetFilter(filterType) {
+                    this.filters[filterType] = [];
+                    this.applyFilters();
+                },
+                
+                resetAllFilters() {
+                    this.filters = {
+                        body_types: [],
+                        brands: [],
+                        engine_types: [],
+                        drive_types: [],
+                        status: [],
+                        min_price: this.minPrice,
+                        max_price: this.maxPrice,
+                    };
+                    this.sortBy = 'price_asc';
+                    this.applyFilters();
+                },
+                
+                formatPrice(price) {
+                    return new Intl.NumberFormat('ru-RU').format(price);
+                },
+                
+                showTestDriveModal(car) {
+                    this.selectedCar = car;
+                    this.testDriveForm = {
+                        name: '',
+                        phone: '',
+                        date: ''
+                    };
+                    this.testDriveModalOpen = true;
+                },
+                
+                submitTestDriveRequest() {
+                    this.testDriveSubmitting = true;
+                    
+                    // Здесь будет AJAX-запрос на сервер
+                    setTimeout(() => {
+                        this.testDriveSubmitting = false;
+                        this.testDriveModalOpen = false;
+                        alert('Ваша заявка на тест-драйв успешно отправлена! Мы свяжемся с вами для подтверждения.');
+                    }, 1500);
                 }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.car-card').forEach((card, index) => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = `all 0.5s ease ${index * 0.1}s`;
-            observer.observe(card);
-        });
+            };
+        }
+        
+        function rangeSlider(min, max) {
+            return {
+                minValue: min,
+                maxValue: max,
+                minPercent: 0,
+                maxPercent: 100,
+                dragging: null,
+                minLimit: min,
+                maxLimit: max,
+                
+                init() {
+                    this.minPercent = ((this.minValue - this.minLimit) / (this.maxLimit - this.minLimit)) * 100;
+                    this.maxPercent = ((this.maxValue - this.minLimit) / (this.maxLimit - this.minLimit)) * 100;
+                    
+                    window.addEventListener('mousemove', this.handleDrag.bind(this));
+                    window.addEventListener('mouseup', this.stopDrag.bind(this));
+                    window.addEventListener('touchmove', this.handleDrag.bind(this));
+                    window.addEventListener('touchend', this.stopDrag.bind(this));
+                },
+                
+                startDrag(type, e) {
+                    this.dragging = type;
+                    e.preventDefault();
+                },
+                
+                handleDrag(e) {
+                    if (!this.dragging) return;
+                    
+                    const slider = this.$el.querySelector('.relative');
+                    const rect = slider.getBoundingClientRect();
+                    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+                    let percent = ((clientX - rect.left) / rect.width) * 100;
+                    percent = Math.max(0, Math.min(100, percent));
+                    
+                    if (this.dragging === 'min') {
+                        this.minPercent = Math.min(percent, this.maxPercent - 1);
+                        this.minValue = Math.round(this.minLimit + (this.maxLimit - this.minLimit) * this.minPercent / 100);
+                    } else {
+                        this.maxPercent = Math.max(percent, this.minPercent + 1);
+                        this.maxValue = Math.round(this.minLimit + (this.maxLimit - this.minLimit) * this.maxPercent / 100);
+                    }
+                },
+                
+                stopDrag() {
+                    this.dragging = null;
+                },
+                
+                formatPrice(price) {
+                    return new Intl.NumberFormat('ru-RU').format(price);
+                }
+            };
+        }
     </script>
 </body>
 @include('footer')
