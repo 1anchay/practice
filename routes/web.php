@@ -29,11 +29,12 @@ Route::prefix('catalog')->group(function () {
 });
 
 // Группа маршрутов для моделей автомобилей
-Route::prefix('models')->name('models.')->group(function () {
-    Route::get('/zeekr', [CarModelController::class, 'zeekr'])->name('zeekr');
-    Route::get('/byd-yangwang-u8', [CarModelController::class, 'bydYangwangU8'])->name('byd_yangwang_u8');
-    // Добавьте другие модели по аналогии
-});
+Route::get('/zeekr', function () {
+    return view('car_model.zeekr');
+})->name('zeekr');
+Route::get('/byd_yangwang_u8', function () {
+    return view('car_model.byd_yangwang_u8');
+})->name('byd_yangwang_u8');
 
 // Группа маршрутов для страниц
 Route::controller(PageController::class)->group(function () {

@@ -12,17 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cars', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->foreignId('body_type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('brand_id')->constrained()->onDelete('cascade');
-            $table->foreignId('engine_type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('drive_type_id')->constrained()->onDelete('cascade');
-            $table->decimal('price', 12, 2);
-            $table->enum('status', ['new', 'in_stock', 'on_order'])->default('in_stock');
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
+    $table->id();
+    $table->foreignId('brand_id')->constrained();
+    $table->foreignId('body_type_id')->constrained();
+    $table->foreignId('engine_type_id')->constrained();
+    $table->foreignId('drive_type_id')->constrained();
+    $table->string('name');
+    $table->text('description');
+    $table->decimal('price', 12, 2);
+    $table->integer('year');
+    $table->string('status')->default('in_stock');
+    $table->integer('views')->default(0);
+    $table->timestamps();
+});
     }
 
     /**
