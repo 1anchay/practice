@@ -255,7 +255,7 @@
                     © 2025 EMAX. Все права защищены.
                 </div>
                 <div class="flex flex-wrap justify-center gap-4 md:gap-6">
-                    <a href="/politika" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Политика конфиденциальности</a>
+                    <a href="{{ route('policy') }}" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Политика конфиденциальности</a>
                     <a href="/agreement" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Пользовательское соглашение</a>
                     <a href="/sitemap" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Карта сайта</a>
                 </div>

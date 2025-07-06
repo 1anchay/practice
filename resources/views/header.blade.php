@@ -23,12 +23,15 @@
                     },
                     fontFamily: {
                         'exo': ['"Exo 2"', 'sans-serif'],
-                        'montserrat': ['Montserrat', 'sans-serif']
+                        'montserrat': ['Montserrat', 'sans-serif'],
+                        'noto-sans-sc': ['"Noto Sans SC"', 'sans-serif']
                     },
                     animation: {
                         'eye-glow': 'eyeGlow 3s infinite',
                         'pulse-light': 'pulseLight 4s infinite',
-                        'float': 'float 6s infinite ease-in-out'
+                        'float': 'float 6s infinite ease-in-out',
+                        'fade-in': 'fadeIn 0.5s ease-in',
+                        'pulse-slow': 'pulse 5s infinite'
                     },
                     keyframes: {
                         eyeGlow: {
@@ -42,6 +45,10 @@
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' }
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
                         }
                     }
                 }
@@ -53,7 +60,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@600;700;800&family=Montserrat:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Heroicons -->
+    <script src="https://unpkg.com/@heroicons/react@1.0.6/outline.js" defer></script>
     
     <style>
         :root {
@@ -62,7 +71,7 @@
             --emax-dark: #0f172a;
             --emax-blue: #3b82f6;
             --emax-white: #ffffff;
-            --emax-light: #f8fafc;
+            --emax-light: #f8fafc
         }
         
         body {
@@ -158,6 +167,56 @@
         .theme-switcher {
             @apply p-2 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors;
         }
+        
+        /* Стили для кнопки админ-панели */
+        .admin-btn {
+            @apply hidden md:inline-block p-2 rounded-full hover:bg-emax-purple/20 transition-colors relative;
+        }
+        .admin-btn .admin-badge {
+            @apply absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red-500 animate-pulse;
+        }
+        
+        /* Стили для скрытой кнопки регистрации */
+        .secret-admin-btn {
+            @apply hidden md:flex items-center justify-center;
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 700;
+            width: 32px;
+            height: 32px;
+            opacity: 0.2;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+        .secret-admin-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+            text-shadow: 0 0 8px rgba(168, 85, 247, 0.6);
+        }
+        
+        /* Улучшенные анимации */
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        /* Эффект при наведении на навигацию */
+        .nav-link-hover {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .nav-link-hover:hover {
+            transform: translateY(-2px);
+            color: var(--emax-lightpurple);
+        }
+        
+        /* Улучшенный дракончик */
+        .dragon-mark {
+            filter: drop-shadow(0 0 4px rgba(168, 85, 247, 0.4));
+            transition: all 0.3s ease;
+        }
+        .dragon-mark:hover {
+            filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.6));
+            transform: rotate(5deg) scale(1.05);
+        }
     </style>
 </head>
 <body x-data="{ 
@@ -182,7 +241,7 @@
       "
       :class="{ 'dark': darkMode }">
     <!-- Хедер -->
-    <header x-ref="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect dark:glass-effect border-b border-slate-800 dark:border-slate-700 h-21">
+    <header x-ref="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-effect dark:glass-effect border-b border-slate-800 dark:border-slate-700 h-21 shadow-lg">
         <!-- Хвост дракона -->
         <div class="dragon-tail animate-tail-wave">
             <svg width="140" height="40" viewBox="0 0 140 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +268,7 @@
             <!-- Логотип - глаз дракона -->
             <a href="/" class="logo flex items-center group" aria-label="EMAX - Премиальные автомобили из Китая">
                 <div class="logo-mark mr-3 relative">
-                    <svg class="w-10 h-10 dragon-eye animate-eye-glow" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-10 h-10 dragon-eye animate-eye-glow dragon-mark" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <!-- Внешний круг глаза -->
                         <circle cx="25" cy="25" r="18" fill="url(#eye-outer)" stroke="var(--emax-blue)" stroke-width="1.2"/>
                         
@@ -258,7 +317,7 @@
             <!-- Основная навигация (десктоп) -->
             <nav class="hidden lg:flex items-center space-x-8">
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
-                    <button @click="open = !open" class="nav-item flex items-center space-x-1 text-white hover:text-emax-lightpurple transition-colors">
+                    <button @click="open = !open" class="nav-item flex items-center space-x-1 text-white hover:text-emax-lightpurple transition-colors nav-link-hover">
                         <span>Автомобили</span>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" :class="{'rotate-180': open}" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
@@ -271,7 +330,7 @@
                          x-transition:leave="transition ease-in duration-150"
                          x-transition:leave-start="opacity-100 translate-y-0"
                          x-transition:leave-end="opacity-0 translate-y-1"
-                         class="absolute left-0 mt-2 w-56 origin-top-left rounded-lg shadow-lg bg-slate-800 dark:bg-slate-700 ring-1 ring-slate-700 dark:ring-slate-600 focus:outline-none z-50">
+                         class="absolute left-0 mt-2 w-56 origin-top-left rounded-lg shadow-lg bg-slate-800 dark:bg-slate-700 ring-1 ring-slate-700 dark:ring-slate-600 focus:outline-none z-50 animate-fade-in">
                         <div class="py-1">
                             <a href="/catalog/sedans" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700 dark:hover:bg-slate-600 hover:text-emax-lightpurple transition-colors">Седаны</a>
                             <a href="/catalog/crossovers" class="block px-4 py-2 text-sm text-slate-200 hover:bg-slate-700 dark:hover:bg-slate-600 hover:text-emax-lightpurple transition-colors">Кроссоверы</a>
@@ -283,13 +342,33 @@
                     </div>
                 </div>
                 
-                <a href="/test-drive" class="nav-item text-white hover:text-emax-lightpurple transition-colors">Тест-драйв</a>
-                <a href="/tradein" class="nav-item text-white hover:text-emax-lightpurple transition-colors">Trade-In</a>
-                <a href="/onas" class="nav-item text-white hover:text-emax-lightpurple transition-colors">О компании</a>
+                <a href="/test-drive" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">Тест-драйв</a>
+                <a href="/tradein" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">Trade-In</a>
+                <a href="{{ route('about') }}" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">О компании</a>
             </nav>
 
             <!-- Правая часть хедера -->
             <div class="flex items-center space-x-4 md:space-x-6">
+                <!-- Кнопка админ-панели (только для админов) -->
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ route('admin.dashboard') }}" class="admin-btn text-white" title="Админ-панель">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                            <span class="admin-badge"></span>
+                        </a>
+                    @endif
+                @endauth
+
+                <!-- Скрытая кнопка регистрации админа (китайский символ дракона) -->
+                <a href="{{ route('register') }}" 
+                   class="secret-admin-btn text-white" 
+                   title="Регистрация администратора">
+                    龙
+                </a>
+
                 <div class="hidden lg:flex items-center space-x-6">
                     <!-- Переключатель темы -->
                     <button @click="darkMode = !darkMode" class="theme-switcher" aria-label="Переключить тему">
@@ -364,6 +443,25 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                 </button>
+                
+                <!-- Кнопка админ-панели в мобильном меню -->
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <a href="{{ route('admin.dashboard') }}" class="p-2 rounded-full hover:bg-emax-purple/20 transition-colors text-white" title="Админ-панель">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                        </a>
+                    @endif
+                @endauth
+                
+                <!-- Скрытая кнопка регистрации админа в мобильном меню -->
+                <a href="{{ route('register') }}" 
+                   class="p-2 rounded-full hover:bg-emax-purple/20 transition-colors text-white opacity-50 hover:opacity-100"
+                   title="Регистрация администратора">
+                    <span class="font-noto-sans-sc font-bold" style="font-size: 1.2rem;">龙</span>
+                </a>
             </div>
             <button @click="mobileMenuOpen = false" class="p-2 rounded-full hover:bg-slate-800 transition-colors text-white" aria-label="Закрыть меню">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

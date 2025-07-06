@@ -37,7 +37,10 @@ class User extends Authenticatable
      * Get the attributes that should be cast.
      *
      * @return array<string, string>
-     */
+     */public function isAdmin()
+{
+    return $this->is_admin; // Поле, которое мы добавили ранее
+}
     protected function casts(): array
     {
         return [
