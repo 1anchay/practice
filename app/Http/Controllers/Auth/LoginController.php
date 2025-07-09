@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
@@ -16,6 +17,28 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function login(Request $request)
+    {
+        try {
+            // Валидация входных данных
+            $request->validate([
+                $this->username() => 'required|string',
+                'password' => 'required|string',
+            ]);
+
+            // Попытка аутентификации
+            if ($this->attemptLogin($request)) {
+                return $this->sendLoginResponse($request);
+            }
+
+            return $this->sendFailedLoginResponse($request);
+
+        } catch (\Exception $e) {
+            Log::error('Login error: '.$e->getMessage());
+            return back()->with('error', 'Ошибка сервера при входе. Пожалуйста, попробуйте позже.');
+        }
     }
 
     protected function authenticated(Request $request, $user)
@@ -31,7 +54,7 @@ class LoginController extends Controller
         return redirect()->back()
             ->withInput($request->only($this->username(), 'remember'))
             ->withErrors([
-                $this->username() => [trans('auth.failed')],
+                $this->username() => 'Неверные учетные данные',
             ]);
     }
 }
