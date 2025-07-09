@@ -1,57 +1,47 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CatalogController;
-use App\Http\Controllers\CarModelController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\{
+    CatalogController,
+    CarModelController,
+    PageController
+};
+use App\Http\Controllers\Auth\{
+    LoginController,
+    RegisterController
+};
+use App\Http\Controllers\Admin\{
+    DashboardController,
+    UserController,
+    PostController,
+    SettingsController,
+    CarController
+};
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-// Главная страница
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Главная
+Route::view('/', 'welcome')->name('home');
 
 // Аутентификация
 Route::middleware('guest')->group(function () {
     Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [LoginController::class, 'login']);
-    
-    // Маршруты регистрации (если нужно оставить)
-    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-    Route::post('register', [RegisterController::class, 'register']);
 });
 
-// Выход (только для аутентифицированных)
-Route::middleware('auth')->group(function () {
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('logout', [LoginController::class, 'logout'])
+    ->middleware('auth')
+    ->name('logout');
+
+// Каталог
+Route::prefix('catalog')->name('catalog.')->group(function () {
+    Route::get('/', [CatalogController::class, 'index'])->name('index');
+    Route::get('/filters', [CatalogController::class, 'getFilters'])->name('filters');
+    Route::get('/api/cars', [CatalogController::class, 'getCars'])->name('api');
 });
 
-// Группа маршрутов для каталога
-Route::prefix('catalog')->group(function () {
-    Route::get('/', [CatalogController::class, 'index'])->name('catalog');
-    Route::get('/filters', [CatalogController::class, 'getFilters'])->name('catalog.filters');
-    Route::get('/api/cars', [CatalogController::class, 'getCars'])->name('catalog.api');
-});
+// Модели авто
+Route::view('/zeekr', 'car_model.zeekr')->name('zeekr');
+Route::view('/byd_yangwang_u8', 'car_model.byd_yangwang_u8')->name('byd_yangwang_u8');
 
-// Страница модели Lisan (из папки car_model)
-Route::get('/zeekr', function () {
-    return view('car_model.zeekr');
-})->name('zeekr');
-Route::get('/byd_yangwang_u8', function () {
-    return view('car_model.byd_yangwang_u8');
-})->name('byd_yangwang_u8');
 // Статические страницы
 Route::controller(PageController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
@@ -59,16 +49,28 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/contacts', 'contacts')->name('contacts');
 });
 
-// Админ-панель (только для админов)
-Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
-    Route::get('/', function () {
-        return view('admin.dashboard');
-    })->name('admin.dashboard');
-    
-    // Дополнительные админ-маршруты можно добавить здесь
-});
+// Отключение регистрации
+Auth::routes(['register' => false]);
 
-// Fallback route для 404 страницы
-Route::fallback(function () {
-    return view('errors.404', [], 404);
-});
+// Админ-панель
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+        
+        Route::resource('users', UserController::class)
+            ->only(['index', 'show', 'edit', 'update', 'destroy']);
+            
+        Route::resource('posts', PostController::class)
+            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+            
+        Route::resource('cars', CarController::class)
+            ->except(['show']);
+            
+        Route::get('settings', [SettingsController::class, 'index'])->name('settings');
+        Route::post('settings', [SettingsController::class, 'update'])->name('settings.update');
+    });
+
+// Обработка 404
+Route::fallback(fn () => response()->view('errors.404', [], 404));

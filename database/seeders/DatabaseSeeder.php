@@ -3,37 +3,71 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\BodyType;
-use App\Models\Brand;
-use App\Models\EngineType;
-use App\Models\DriveType;
+use App\Models\{
+    BodyType,
+    Brand,
+    EngineType,
+    DriveType,
+    User
+};
 
 class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        // Типы кузова
-        $bodyTypes = ['Седан', 'Кроссовер', 'Внедорожник', 'Хэтчбек'];
-        foreach ($bodyTypes as $type) {
-            BodyType::create(['name' => $type]);
+        // Создаем администратора
+        $this->createAdminUser();
+
+        // Заполняем справочники
+        $this->seedBodyTypes();
+        $this->seedBrands();
+        $this->seedEngineTypes();
+        $this->seedDriveTypes();
+    }
+
+    protected function createAdminUser()
+    {
+        if (!User::where('email', 'admin@example.com')->exists()) {
+            User::create([
+                'name' => 'Admin',
+                'email' => 'admin@example.com',
+                'password' => bcrypt('SecurePassword123!'),
+                'is_admin' => true,
+                'email_verified_at' => now()
+            ]);
+            $this->command->info('Администратор создан: admin@example.com / SecurePassword123!');
         }
-        
-        // Бренды
+    }
+
+    protected function seedBodyTypes()
+    {
+        $types = ['Седан', 'Кроссовер', 'Внедорожник', 'Хэтчбек'];
+        foreach ($types as $type) {
+            BodyType::firstOrCreate(['name' => $type]);
+        }
+    }
+
+    protected function seedBrands()
+    {
         $brands = ['Chery', 'Geely', 'BYD', 'Haval', 'Zeekr', 'Exeed'];
         foreach ($brands as $brand) {
-            Brand::create(['name' => $brand]);
+            Brand::firstOrCreate(['name' => $brand]);
         }
-        
-        // Типы двигателя
-        $engineTypes = ['Бензин', 'Гибрид', 'Электромобиль'];
-        foreach ($engineTypes as $type) {
-            EngineType::create(['name' => $type]);
+    }
+
+    protected function seedEngineTypes()
+    {
+        $types = ['Бензин', 'Гибрид', 'Электромобиль'];
+        foreach ($types as $type) {
+            EngineType::firstOrCreate(['name' => $type]);
         }
-        
-        // Типы привода
-        $driveTypes = ['Передний', 'Полный', 'Задний'];
-        foreach ($driveTypes as $type) {
-            DriveType::create(['name' => $type]);
+    }
+
+    protected function seedDriveTypes()
+    {
+        $types = ['Передний', 'Полный', 'Задний'];
+        foreach ($types as $type) {
+            DriveType::firstOrCreate(['name' => $type]);
         }
     }
 }

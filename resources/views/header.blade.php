@@ -363,11 +363,14 @@
                 @endauth
 
                 <!-- Скрытая кнопка регистрации админа (китайский символ дракона) -->
-                <a href="{{ route('register') }}" 
-                   class="secret-admin-btn text-white" 
-                   title="Регистрация администратора">
-                    龙
-                </a>
+               @guest
+    <a href="{{ route('login') }}" class="secret-admin-btn">龙</a>
+@endguest
+
+@auth
+    <a href="{{ route('admin.dashboard') }}" class="secret-admin-btn">龙</a>
+@endauth
+
 
                 <div class="hidden lg:flex items-center space-x-6">
                     <!-- Переключатель темы -->
@@ -457,7 +460,8 @@
                 @endauth
                 
                 <!-- Скрытая кнопка регистрации админа в мобильном меню -->
-                <a href="{{ route('register') }}" 
+                <a href="{{ route('login') }}
+" 
                    class="p-2 rounded-full hover:bg-emax-purple/20 transition-colors text-white opacity-50 hover:opacity-100"
                    title="Регистрация администратора">
                     <span class="font-noto-sans-sc font-bold" style="font-size: 1.2rem;">龙</span>
