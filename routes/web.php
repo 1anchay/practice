@@ -7,8 +7,7 @@ use App\Http\Controllers\{
     PageController
 };
 use App\Http\Controllers\Auth\{
-    LoginController,
-    RegisterController
+    LoginController
 };
 use App\Http\Controllers\Admin\{
     DashboardController,
@@ -48,9 +47,6 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/policy', 'policy')->name('policy');
     Route::get('/contacts', 'contacts')->name('contacts');
 });
-
-// Отключение регистрации
-Auth::routes(['register' => false]);
 
 // Админ-панель
 Route::prefix('admin')
