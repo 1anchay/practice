@@ -11,33 +11,27 @@ class LoginController extends Controller
 {
     use AuthenticatesUsers;
 
-    /**
-     * Переопределяем редирект после успешной авторизации.
-     */
-    protected function redirectTo()
-    {
-        if (Auth::check() && Auth::user()->is_admin) {
-            return route('admin.dashboard');
-        }
+    protected $redirectTo = '/';
 
-        return route('home');
-    }
-
-    /**
-     * Конструктор — определяем middleware.
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
 
-    /**
-     * Переопределяем метод для вывода сообщения при неудачной попытке входа.
-     */
+    protected function authenticated(Request $request, $user)
+    {
+        if ($user->is_admin) {
+            return redirect()->route('admin.dashboard');
+        }
+        return redirect()->route('home');
+    }
+
     protected function sendFailedLoginResponse(Request $request)
     {
         return redirect()->back()
-            ->withInput($request->only('email'))
-            ->with('error', 'Неверный email или пароль.');
+            ->withInput($request->only($this->username(), 'remember'))
+            ->withErrors([
+                $this->username() => [trans('auth.failed')],
+            ]);
     }
 }
