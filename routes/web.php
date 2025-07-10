@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\{
     CatalogController,
     CarModelController,
@@ -67,32 +69,46 @@ Route::prefix('admin')
         Route::get('settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
-// Тестовые маршруты
-Route::get('/test-session', function() {
-    try {
-        session(['test_value' => now()]);
+
+// Диагностические маршруты
+Route::prefix('_debug')->group(function () {
+    Route::get('/session', function() {
+        try {
+            session(['debug_time' => now()]);
+            return response()->json([
+                'session_id' => session()->getId(),
+                'session_data' => session()->all(),
+                'user' => auth()->user(),
+                'session_status' => 'active'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    });
+
+    Route::get('/db', function() {
+        try {
+            return response()->json([
+                'db_status' => 'connected',
+                'session_table' => Schema::hasTable('sessions'),
+                'users_table' => Schema::hasTable('users'),
+                'users_count' => DB::table('users')->count(),
+                'last_user' => DB::table('users')->latest()->first(['id', 'name', 'email', 'is_admin']),
+                'sessions_count' => DB::table('sessions')->count()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    });
+
+    Route::get('/auth', function() {
         return response()->json([
-            'session_id' => session()->getId(),
-            'session_data' => session('test_value'),
+            'authenticated' => auth()->check(),
             'user' => auth()->user(),
-            'session_status' => 'active'
+            'is_admin' => optional(auth()->user())->is_admin
         ]);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
+    });
 });
 
-Route::get('/test-db', function() {
-    try {
-        return response()->json([
-            'db_status' => 'connected',
-            'session_table_exists' => Schema::hasTable('sessions'),
-            'users_count' => DB::table('users')->count(),
-            'last_user' => DB::table('users')->latest()->first(['id', 'email', 'is_admin'])
-        ]);
-    } catch (\Exception $e) {
-        return response()->json(['error' => $e->getMessage()], 500);
-    }
-});
 // Обработка 404
 Route::fallback(fn () => response()->view('errors.404', [], 404));

@@ -1,27 +1,32 @@
-@extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <h2>Вход в систему</h2>
-
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+</head>
+<body>
+    @if($errors->any())
+        <div class="alert alert-danger">
+            {{ $errors->first() }}
+        </div>
     @endif
 
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
-        <div class="mb-3">
-            <label for="email">Email</label>
-            <input id="email" type="email" name="email" required autofocus class="form-control">
+        <div>
+            <label>Email:</label>
+            <input type="email" name="email" required autofocus>
         </div>
-
-        <div class="mb-3">
-            <label for="password">Пароль</label>
-            <input id="password" type="password" name="password" required class="form-control">
+        <div>
+            <label>Password:</label>
+            <input type="password" name="password" required>
         </div>
-
-        <button type="submit" class="btn btn-primary">Войти</button>
+        <div>
+            <label>
+                <input type="checkbox" name="remember"> Remember Me
+            </label>
+        </div>
+        <button type="submit">Login</button>
     </form>
-</div>
-@endsection
+</body>
+</html>
