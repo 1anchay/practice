@@ -67,6 +67,32 @@ Route::prefix('admin')
         Route::get('settings', [SettingsController::class, 'index'])->name('settings');
         Route::post('settings', [SettingsController::class, 'update'])->name('settings.update');
     });
+// Тестовые маршруты
+Route::get('/test-session', function() {
+    try {
+        session(['test_value' => now()]);
+        return response()->json([
+            'session_id' => session()->getId(),
+            'session_data' => session('test_value'),
+            'user' => auth()->user(),
+            'session_status' => 'active'
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
 
+Route::get('/test-db', function() {
+    try {
+        return response()->json([
+            'db_status' => 'connected',
+            'session_table_exists' => Schema::hasTable('sessions'),
+            'users_count' => DB::table('users')->count(),
+            'last_user' => DB::table('users')->latest()->first(['id', 'email', 'is_admin'])
+        ]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()], 500);
+    }
+});
 // Обработка 404
 Route::fallback(fn () => response()->view('errors.404', [], 404));
