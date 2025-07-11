@@ -76,7 +76,7 @@
                 <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
                     <div class="p-6">
                         <div class="flex items-center">
-                            <div class="p-3 rounded-full bg-{{ $stat['color'] }}-100 text-{{ $stat['color'] }-600 mr-4">
+                            <div class="p-3 rounded-full bg-{{ $stat['color'] }}-100 text-{{ $stat['color'] }}-600 mr-4">
                                 <i class="fas fa-{{ $stat['icon'] }} fa-lg"></i>
                             </div>
                             <div>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
                     <div class="bg-gray-50 px-6 py-4 flex justify-between items-center">
-                        <a href="{{ route($stat['route']) }}" class="text-sm font-medium text-{{ $stat['color'] }-600 hover:text-{{ $stat['color'] }-500">
+                        <a href="{{ route($stat['route']) }}" class="text-sm font-medium text-{{ $stat['color'] }}-600 hover:text-{{ $stat['color'] }}-500">
                             Подробнее →
                         </a>
                         @if($stat['route'] !== 'admin.users.index' || auth()->user()->isAdmin())
