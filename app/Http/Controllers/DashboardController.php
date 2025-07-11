@@ -12,7 +12,12 @@ class DashboardController extends Controller
             'usersCount' => User::count(),
             'carsCount' => Car::count(),
             'brandsCount' => Brand::count(),
-            'latestCars' => Car::with('brand')->latest()->take(5)->get()
+            'bodyTypesCount' => BodyType::count(),
+            'driveTypesCount' => DriveType::count(),
+            'engineTypesCount' => EngineType::count(),
+            'latestUsers' => User::latest()->take(5)->get(),
+            'latestCars' => Car::with(['brand', 'bodyType', 'images'])->latest()->take(5)->get(),
+            'isAdmin' => auth()->check() && auth()->user()->is_admin
         ]);
     }
 }
