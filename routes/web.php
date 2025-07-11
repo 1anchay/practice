@@ -55,7 +55,7 @@ Route::prefix('admin')
     ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
-        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         
         Route::resource('users', UserController::class)
             ->only(['index', 'show', 'edit', 'update', 'destroy']);
