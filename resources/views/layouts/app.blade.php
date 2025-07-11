@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Heroicons -->
-    <script src="https://unpkg.com/heroicons@2.0.13/dist/heroicons.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -31,7 +29,7 @@
         <!-- Sidebar -->
         <div class="sidebar sidebar-expanded bg-indigo-700 text-white flex flex-col">
             <div class="p-4 flex items-center justify-between border-b border-indigo-600">
-                <span class="text-xl font-bold whitespace-nowrap">Admin</span>
+                <span class="text-xl font-bold whitespace-nowrap">{{ config('app.name', 'Laravel') }}</span>
                 <button id="toggleSidebar" class="text-white hover:text-indigo-200">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -42,7 +40,7 @@
             <nav class="flex-1 overflow-y-auto p-4">
                 <ul class="space-y-2">
                     <li>
-                        <a href="{{ route('admin.dashboard') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('admin.dashboard') ? 'active-menu' : '' }}">
+                        <a href="{{ route('dashboard') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('dashboard') ? 'active-menu' : '' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
@@ -50,14 +48,28 @@
                         </a>
                     </li>
 
-                    @if(auth()->user()->isAdmin())
+                    @if(auth()->user()->is_admin)
                     <li>
-                        <a href="{{ route('admin.users.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('admin.users.*') ? 'active-menu' : '' }}">
+                        <a href="{{ route('users.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('users.*') ? 'active-menu' : '' }}">
                             <i class="fas fa-users w-5 h-5"></i>
                             <span class="ml-3">Users</span>
                         </a>
                     </li>
                     @endif
+
+                    <li>
+                        <a href="{{ route('cars.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('cars.*') ? 'active-menu' : '' }}">
+                            <i class="fas fa-car w-5 h-5"></i>
+                            <span class="ml-3">Cars</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('brands.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('brands.*') ? 'active-menu' : '' }}">
+                            <i class="fas fa-tag w-5 h-5"></i>
+                            <span class="ml-3">Brands</span>
+                        </a>
+                    </li>
 
                     <li>
                         <a href="/" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors">
@@ -79,7 +91,7 @@
                     <div class="ml-3">
                         <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
                         <p class="text-xs text-indigo-200">
-                            {{ auth()->user()->isAdmin() ? 'Administrator' : 'Moderator' }}
+                            {{ auth()->user()->is_admin ? 'Administrator' : 'User' }}
                         </p>
                     </div>
                 </div>
@@ -119,7 +131,7 @@
         <div class="max-w-md w-full space-y-8 p-8 bg-white rounded-xl shadow-md">
             <div class="text-center">
                 <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
-                    Admin Login
+                    {{ __('Login') }}
                 </h2>
             </div>
             <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
