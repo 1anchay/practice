@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     public function isAdmin(): bool
-    {
-        return $this->is_admin;
-    }
+{
+    return $this->is_admin === 1; // или (bool)$this->is_admin
+}
 }

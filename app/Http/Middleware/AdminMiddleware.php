@@ -8,16 +8,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-    public function handle(Request $request, Closure $next): Response
-    {
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        if (!auth()->user()->isAdmin()) { // Используем метод isAdmin()
-            abort(403, 'Доступ запрещён');
-        }
-
-        return $next($request);
+   public function handle(Request $request, Closure $next): Response
+{
+    if (!auth()->check()) {
+        return redirect()->guest(route('login'));
     }
+
+    if (!auth()->user()->isAdmin()) {
+        abort(403, 'Доступ запрещён. Требуются права администратора.');
+    }
+
+    return $next($request);
+}
 }
