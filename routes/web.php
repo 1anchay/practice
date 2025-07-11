@@ -72,45 +72,31 @@ Route::post('logout', [LoginController::class, 'logout'])
 |--------------------------------------------------------------------------
 */
 
-// Публичный доступ к dashboard (только просмотр)
 Route::prefix('admin')
     ->name('admin.')
     ->group(function () {
+        // Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
-        Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
-    });
-
-// Защищенные роуты (только для авторизованных администраторов)
-Route::prefix('admin')
-    ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
-    ->name('admin.')
-    ->group(function () {
-        // Пользователи
-        Route::resource('users', UserController::class)
-            ->except(['create', 'store', 'show']);
         
-        // Автомобили (полный CRUD кроме show, который уже есть в публичных)
-        Route::resource('cars', CarController::class)
-            ->except(['index', 'show']);
+        // Пользователи (полный CRUD)
+        Route::resource('users', UserController::class);
+        
+        // Автомобили (полный CRUD)
+        Route::resource('cars', CarController::class);
         
         // Бренды
-        Route::resource('brands', BrandController::class)
-            ->except(['show']);
+        Route::resource('brands', BrandController::class);
         
         // Типы кузова
         Route::resource('body-types', BodyTypeController::class)
-            ->except(['show'])
             ->parameters(['body-types' => 'bodyType']);
         
         // Типы привода
         Route::resource('drive-types', DriveTypeController::class)
-            ->except(['show'])
             ->parameters(['drive-types' => 'driveType']);
         
         // Типы двигателя
         Route::resource('engine-types', EngineTypeController::class)
-            ->except(['show'])
             ->parameters(['engine-types' => 'engineType']);
         
         // Управление изображениями автомобилей
@@ -119,7 +105,6 @@ Route::prefix('admin')
         Route::delete('cars/{car}/images/{image}', [CarController::class, 'deleteImage'])
             ->name('cars.images.destroy');
     });
-
 /*
 |--------------------------------------------------------------------------
 | Debug Routes (Для отладки)
