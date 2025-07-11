@@ -14,8 +14,10 @@ use App\Http\Controllers\Auth\{
 use App\Http\Controllers\Admin\{
     DashboardController,
     UserController,
-    PostController,
-    SettingsController,
+    BrandController,
+    BodyTypeController,
+    DriveTypeController,
+    EngineTypeController,
     CarController
 };
 
@@ -50,23 +52,20 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/contacts', 'contacts')->name('contacts');
 });
 
-// Админ-панель
+
+
 // Админ-панель
 Route::prefix('admin')
     ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
-        // Дашборд
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         
-        // Пользователи
         Route::resource('users', UserController::class)
             ->except(['create', 'store']);
             
-        // Автомобили
         Route::resource('cars', CarController::class);
         
-        // Справочники
         Route::resource('brands', BrandController::class)
             ->except(['show']);
             
