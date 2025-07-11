@@ -6,12 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Http\Controllers\{
     CatalogController,
     CarModelController,
-    PageController
-};
-use App\Http\Controllers\Auth\{
-    LoginController
-};
-use App\Http\Controllers\Admin\{
+    PageController,
     DashboardController,
     UserController,
     CarController,
@@ -20,6 +15,7 @@ use App\Http\Controllers\Admin\{
     DriveTypeController,
     EngineTypeController
 };
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,43 +64,78 @@ Route::post('logout', [LoginController::class, 'logout'])
 
 /*
 |--------------------------------------------------------------------------
-| Admin Routes (Административная панель)
+| Resource Routes (Общедоступные ресурсы)
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('admin')
-    ->name('admin.')
+// Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Пользователи
+Route::prefix('users')
+    ->name('users.')
     ->group(function () {
-        // Dashboard
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        
-        // Пользователи (полный CRUD)
-        Route::resource('users', UserController::class);
-        
-        // Автомобили (полный CRUD)
-        Route::resource('cars', CarController::class);
-        
-        // Бренды
-        Route::resource('brands', BrandController::class);
-        
-        // Типы кузова
-        Route::resource('body-types', BodyTypeController::class)
-            ->parameters(['body-types' => 'bodyType']);
-        
-        // Типы привода
-        Route::resource('drive-types', DriveTypeController::class)
-            ->parameters(['drive-types' => 'driveType']);
-        
-        // Типы двигателя
-        Route::resource('engine-types', EngineTypeController::class)
-            ->parameters(['engine-types' => 'engineType']);
-        
-        // Управление изображениями автомобилей
-        Route::post('cars/{car}/images', [CarController::class, 'uploadImage'])
-            ->name('cars.images.store');
-        Route::delete('cars/{car}/images/{image}', [CarController::class, 'deleteImage'])
-            ->name('cars.images.destroy');
+        Route::get('/', [UserController::class, 'index'])->name('index');
+        Route::put('/{user}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
+
+// Автомобили
+Route::prefix('cars')
+    ->name('cars.')
+    ->group(function () {
+        Route::get('/', [CarController::class, 'index'])->name('index');
+        Route::get('/create', [CarController::class, 'create'])->name('create');
+        Route::post('/', [CarController::class, 'store'])->name('store');
+        Route::get('/{car}/edit', [CarController::class, 'edit'])->name('edit');
+        Route::put('/{car}', [CarController::class, 'update'])->name('update');
+        Route::delete('/{car}', [CarController::class, 'destroy'])->name('destroy');
+        
+        // Изображения автомобилей
+        Route::post('/{car}/images', [CarController::class, 'uploadImage'])->name('images.store');
+        Route::delete('/{car}/images/{image}', [CarController::class, 'deleteImage'])->name('images.destroy');
+    });
+
+// Бренды
+Route::prefix('brands')
+    ->name('brands.')
+    ->group(function () {
+        Route::get('/', [BrandController::class, 'index'])->name('index');
+        Route::post('/', [BrandController::class, 'store'])->name('store');
+        Route::put('/{brand}', [BrandController::class, 'update'])->name('update');
+        Route::delete('/{brand}', [BrandController::class, 'destroy'])->name('destroy');
+    });
+
+// Типы кузова
+Route::prefix('body-types')
+    ->name('body-types.')
+    ->group(function () {
+        Route::get('/', [BodyTypeController::class, 'index'])->name('index');
+        Route::post('/', [BodyTypeController::class, 'store'])->name('store');
+        Route::put('/{bodyType}', [BodyTypeController::class, 'update'])->name('update');
+        Route::delete('/{bodyType}', [BodyTypeController::class, 'destroy'])->name('destroy');
+    });
+
+// Типы привода
+Route::prefix('drive-types')
+    ->name('drive-types.')
+    ->group(function () {
+        Route::get('/', [DriveTypeController::class, 'index'])->name('index');
+        Route::post('/', [DriveTypeController::class, 'store'])->name('store');
+        Route::put('/{driveType}', [DriveTypeController::class, 'update'])->name('update');
+        Route::delete('/{driveType}', [DriveTypeController::class, 'destroy'])->name('destroy');
+    });
+
+// Типы двигателя
+Route::prefix('engine-types')
+    ->name('engine-types.')
+    ->group(function () {
+        Route::get('/', [EngineTypeController::class, 'index'])->name('index');
+        Route::post('/', [EngineTypeController::class, 'store'])->name('store');
+        Route::put('/{engineType}', [EngineTypeController::class, 'update'])->name('update');
+        Route::delete('/{engineType}', [EngineTypeController::class, 'destroy'])->name('destroy');
+    });
+
 /*
 |--------------------------------------------------------------------------
 | Debug Routes (Для отладки)
