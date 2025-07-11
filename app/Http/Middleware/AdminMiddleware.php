@@ -8,25 +8,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
 {
-  public function handle(Request $request, Closure $next): Response
-{
-    if (!auth()->check()) {
-        return redirect()->route('login')->with('error', 'Требуется авторизация');
+    public function handle(Request $request, Closure $next): Response
+    {
+        // Разрешаем GET-запросы всем
+        if ($request->isMethod('GET')) {
+            return $next($request);
+        }
+
+        // Для всех остальных методов проверяем авторизацию
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Требуется авторизация');
+        }
+
+        // Проверка прав администратора
+        if (!auth()->user()->isAdmin()) {
+            abort(403, 'Доступ запрещён. Требуются права администратора.');
+        }
+
+        return $next($request);
     }
-
-    $user = auth()->user();
-    
-    \Log::info('Admin access check', [
-        'user_id' => $user->id,
-        'email' => $user->email,
-        'is_admin' => $user->is_admin
-    ]);
-
-    if (!$user->isAdmin()) {
-        \Log::warning('Admin access denied', ['user' => $user]);
-        abort(403, 'Доступ запрещён. Требуются права администратора.');
-    }
-
-    return $next($request);
-}
 }

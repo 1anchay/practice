@@ -14,122 +14,162 @@ use App\Http\Controllers\Auth\{
 use App\Http\Controllers\Admin\{
     DashboardController,
     UserController,
+    CarController,
     BrandController,
     BodyTypeController,
     DriveTypeController,
-    EngineTypeController,
-    CarController
+    EngineTypeController
 };
 
-// Главная
+/*
+|--------------------------------------------------------------------------
+| Public Routes (Доступны всем пользователям)
+|--------------------------------------------------------------------------
+*/
+
+// Главная страница
 Route::view('/', 'welcome')->name('home');
 
-// Аутентификация
-Route::middleware('guest')->group(function () {
-    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
-    Route::post('login', [LoginController::class, 'login']);
-});
+// Каталог автомобилей
+Route::prefix('catalog')
+    ->name('catalog.')
+    ->group(function () {
+        Route::get('/', [CatalogController::class, 'index'])->name('index');
+        Route::get('/filters', [CatalogController::class, 'getFilters'])->name('filters');
+        Route::get('/api/cars', [CatalogController::class, 'getCars'])->name('api');
+    });
+
+// Страницы моделей автомобилей
+Route::view('/zeekr', 'car_model.zeekr')->name('zeekr');
+Route::view('/byd_yangwang_u8', 'car_model.byd_yangwang_u8')->name('byd_yangwang_u8');
+
+// Статические страницы
+Route::controller(PageController::class)
+    ->group(function () {
+        Route::get('/about', 'about')->name('about');
+        Route::get('/policy', 'policy')->name('policy');
+        Route::get('/contacts', 'contacts')->name('contacts');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| Authentication Routes (Аутентификация)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('guest')
+    ->group(function () {
+        Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+        Route::post('login', [LoginController::class, 'login']);
+    });
 
 Route::post('logout', [LoginController::class, 'logout'])
     ->middleware('auth')
     ->name('logout');
 
-// Каталог
-Route::prefix('catalog')->name('catalog.')->group(function () {
-    Route::get('/', [CatalogController::class, 'index'])->name('index');
-    Route::get('/filters', [CatalogController::class, 'getFilters'])->name('filters');
-    Route::get('/api/cars', [CatalogController::class, 'getCars'])->name('api');
-});
+/*
+|--------------------------------------------------------------------------
+| Admin Routes (Административная панель)
+|--------------------------------------------------------------------------
+*/
 
-// Модели авто
-Route::view('/zeekr', 'car_model.zeekr')->name('zeekr');
-Route::view('/byd_yangwang_u8', 'car_model.byd_yangwang_u8')->name('byd_yangwang_u8');
+// Публичный доступ к dashboard (только просмотр)
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+        Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
+    });
 
-// Статические страницы
-Route::controller(PageController::class)->group(function () {
-    Route::get('/about', 'about')->name('about');
-    Route::get('/policy', 'policy')->name('policy');
-    Route::get('/contacts', 'contacts')->name('contacts');
-});
-
-
-
+// Защищенные роуты (только для авторизованных администраторов)
 Route::prefix('admin')
     ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
-        // Dashboard
-        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        // Пользователи
+        Route::resource('users', UserController::class)
+            ->except(['create', 'store', 'show']);
         
-        // Users
-        Route::resource('users', UserController::class)->except(['create', 'store']);
+        // Автомобили (полный CRUD кроме show, который уже есть в публичных)
+        Route::resource('cars', CarController::class)
+            ->except(['index', 'show']);
         
-        // Cars
-        Route::resource('cars', CarController::class);
+        // Бренды
+        Route::resource('brands', BrandController::class)
+            ->except(['show']);
         
-        // Brands
-        Route::resource('brands', BrandController::class)->except(['show']);
-        
-        // Body Types
+        // Типы кузова
         Route::resource('body-types', BodyTypeController::class)
             ->except(['show'])
             ->parameters(['body-types' => 'bodyType']);
         
-        // Drive Types
+        // Типы привода
         Route::resource('drive-types', DriveTypeController::class)
             ->except(['show'])
             ->parameters(['drive-types' => 'driveType']);
         
-        // Engine Types
+        // Типы двигателя
         Route::resource('engine-types', EngineTypeController::class)
             ->except(['show'])
             ->parameters(['engine-types' => 'engineType']);
-              
-        // Для работы с изображениями
+        
+        // Управление изображениями автомобилей
         Route::post('cars/{car}/images', [CarController::class, 'uploadImage'])
             ->name('cars.images.store');
         Route::delete('cars/{car}/images/{image}', [CarController::class, 'deleteImage'])
             ->name('cars.images.destroy');
     });
-// Диагностические маршруты
-Route::prefix('_debug')->group(function () {
-    Route::get('/session', function() {
-        try {
-            session(['debug_time' => now()]);
+
+/*
+|--------------------------------------------------------------------------
+| Debug Routes (Для отладки)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('_debug')
+    ->group(function () {
+        Route::get('/session', function () {
+            try {
+                session(['debug_time' => now()]);
+                return response()->json([
+                    'session_id' => session()->getId(),
+                    'session_data' => session()->all(),
+                    'user' => auth()->user(),
+                    'session_status' => 'active'
+                ]);
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        });
+
+        Route::get('/db', function () {
+            try {
+                return response()->json([
+                    'db_status' => 'connected',
+                    'session_table' => Schema::hasTable('sessions'),
+                    'users_table' => Schema::hasTable('users'),
+                    'users_count' => DB::table('users')->count(),
+                    'last_user' => DB::table('users')->latest()->first(['id', 'name', 'email', 'is_admin']),
+                    'sessions_count' => DB::table('sessions')->count()
+                ]);
+            } catch (\Exception $e) {
+                return response()->json(['error' => $e->getMessage()], 500);
+            }
+        });
+
+        Route::get('/auth', function () {
             return response()->json([
-                'session_id' => session()->getId(),
-                'session_data' => session()->all(),
+                'authenticated' => auth()->check(),
                 'user' => auth()->user(),
-                'session_status' => 'active'
+                'is_admin' => optional(auth()->user())->is_admin
             ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        });
     });
 
-    Route::get('/db', function() {
-        try {
-            return response()->json([
-                'db_status' => 'connected',
-                'session_table' => Schema::hasTable('sessions'),
-                'users_table' => Schema::hasTable('users'),
-                'users_count' => DB::table('users')->count(),
-                'last_user' => DB::table('users')->latest()->first(['id', 'name', 'email', 'is_admin']),
-                'sessions_count' => DB::table('sessions')->count()
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
-    });
-
-    Route::get('/auth', function() {
-        return response()->json([
-            'authenticated' => auth()->check(),
-            'user' => auth()->user(),
-            'is_admin' => optional(auth()->user())->is_admin
-        ]);
-    });
+/*
+|--------------------------------------------------------------------------
+| Fallback Route (Для несуществующих страниц)
+|--------------------------------------------------------------------------
+*/
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
 });
-
-// Обработка 404
-Route::fallback(fn () => response()->view('errors.404', [], 404));
