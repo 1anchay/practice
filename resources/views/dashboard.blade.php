@@ -29,7 +29,8 @@
                 'icon' => 'users',
                 'color' => 'blue',
                 'route' => 'users.index',
-                'can' => $isAdmin ?? false
+                'can' => $isAdmin ?? false,
+                'can_create' => $isAdmin ?? false
             ],
             [
                 'title' => 'Автомобили',
@@ -37,7 +38,8 @@
                 'icon' => 'car',
                 'color' => 'purple',
                 'route' => 'cars.index',
-                'can' => true
+                'can' => true,
+                'can_create' => true
             ],
             [
                 'title' => 'Бренды',
@@ -45,7 +47,8 @@
                 'icon' => 'tag',
                 'color' => 'red',
                 'route' => 'brands.index',
-                'can' => true
+                'can' => true,
+                'can_create' => true
             ],
             [
                 'title' => 'Типы кузова',
@@ -53,7 +56,8 @@
                 'icon' => 'car-side',
                 'color' => 'yellow',
                 'route' => 'body-types.index',
-                'can' => true
+                'can' => true,
+                'can_create' => true
             ],
             [
                 'title' => 'Типы привода',
@@ -61,7 +65,8 @@
                 'icon' => 'cogs',
                 'color' => 'green',
                 'route' => 'drive-types.index',
-                'can' => true
+                'can' => true,
+                'can_create' => true
             ],
             [
                 'title' => 'Типы двигателя',
@@ -69,7 +74,8 @@
                 'icon' => 'oil-can',
                 'color' => 'indigo',
                 'route' => 'engine-types.index',
-                'can' => true
+                'can' => true,
+                'can_create' => true
             ]
         ] as $stat)
             @if($stat['can'])
@@ -89,11 +95,13 @@
                         <a href="{{ route($stat['route']) }}" class="text-sm font-medium text-{{ $stat['color'] }}-600 hover:text-{{ $stat['color'] }}-500">
                             Подробнее →
                         </a>
-                        @if(auth()->check() && ($stat['route'] !== 'users.index' || $isAdmin))
-                            <a href="{{ route(str_replace('.index', '.create', $stat['route'])) }}" 
-                               class="text-sm font-medium text-green-600 hover:text-green-500">
-                                <i class="fas fa-plus mr-1"></i> Добавить
-                            </a>
+                        @if(auth()->check() && $stat['can_create'])
+                            @if(Route::has($stat['route'].'.create'))
+                                <a href="{{ route($stat['route'].'.create') }}" 
+                                   class="text-sm font-medium text-green-600 hover:text-green-500">
+                                    <i class="fas fa-plus mr-1"></i> Добавить
+                                </a>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -108,9 +116,11 @@
             <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
                 <h3 class="text-lg font-medium text-gray-900">Последние автомобили</h3>
                 @auth
-                    <a href="{{ route('cars.create') }}" class="text-sm text-indigo-600 hover:text-indigo-500">
-                        <i class="fas fa-plus mr-1"></i> Добавить
-                    </a>
+                    @if(Route::has('cars.create'))
+                        <a href="{{ route('cars.create') }}" class="text-sm text-indigo-600 hover:text-indigo-500">
+                            <i class="fas fa-plus mr-1"></i> Добавить
+                        </a>
+                    @endif
                 @endauth
             </div>
             <div class="divide-y divide-gray-200">
@@ -171,9 +181,9 @@
                                 </div>
                                 <div class="ml-4 flex-1">
                                     <div class="flex items-center justify-between">
-                                        <span class="text-sm font-medium text-gray-900">
+                                        <a href="{{ route('users.edit', $user->id) }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                                             {{ $user->name }}
-                                        </span>
+                                        </a>
                                         <span class="text-xs font-semibold {{ $user->is_admin ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800' }} px-2 py-1 rounded-full">
                                             {{ $user->is_admin ? 'Администратор' : 'Пользователь' }}
                                         </span>
@@ -193,11 +203,16 @@
                         </div>
                     @endforelse
                 </div>
-                <div class="bg-gray-50 px-6 py-3 text-right">
-                    <a href="{{ route('users.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
-                        Все пользователи →
-                    </a>
-                </div>
+                @if(Route::has('users.create'))
+                    <div class="bg-gray-50 px-6 py-3 flex justify-between items-center">
+                        <a href="{{ route('users.create') }}" class="text-sm font-medium text-green-600 hover:text-green-500">
+                            <i class="fas fa-plus mr-1"></i> Добавить пользователя
+                        </a>
+                        <a href="{{ route('users.index') }}" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
+                            Все пользователи →
+                        </a>
+                    </div>
+                @endif
             </div>
         @endif
     </div>

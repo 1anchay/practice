@@ -61,8 +61,8 @@ Route::post('logout', [LoginController::class, 'logout'])
 // Dashboard
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// Пользователи
-Route::resource('users', UserController::class)->except(['create', 'store']);
+// Пользователи (разрешаем все методы)
+Route::resource('users', UserController::class);
 
 // Автомобили
 Route::resource('cars', CarController::class);
