@@ -51,8 +51,9 @@ Route::controller(PageController::class)->group(function () {
 });
 
 // Админ-панель
+// Админ-панель
 Route::prefix('admin')
-    ->middleware(['auth', AdminMiddleware::class])
+    ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
         // Дашборд
@@ -81,7 +82,6 @@ Route::prefix('admin')
             ->except(['show'])
             ->parameters(['engine-types' => 'engineType']);
     });
-
 // Диагностические маршруты
 Route::prefix('_debug')->group(function () {
     Route::get('/session', function() {
