@@ -30,8 +30,8 @@ class CarController extends Controller
         $validated = $request->validate([
             'brand_id' => 'required|exists:brands,id',
             'model' => 'required|string|max:255',
-            'year' => 'required|integer',
-            'price' => 'required|numeric',
+            'year' => 'required|integer|min:1900|max:'.(date('Y')+1),
+            'price' => 'required|numeric|min:0',
             'body_type_id' => 'required|exists:body_types,id',
             'engine_type_id' => 'required|exists:engine_types,id',
             'drive_type_id' => 'required|exists:drive_types,id',
@@ -66,8 +66,8 @@ class CarController extends Controller
         $validated = $request->validate([
             'brand_id' => 'required|exists:brands,id',
             'model' => 'required|string|max:255',
-            'year' => 'required|integer',
-            'price' => 'required|numeric',
+            'year' => 'required|integer|min:1900|max:'.(date('Y')+1),
+            'price' => 'required|numeric|min:0',
             'body_type_id' => 'required|exists:body_types,id',
             'engine_type_id' => 'required|exists:engine_types,id',
             'drive_type_id' => 'required|exists:drive_types,id',

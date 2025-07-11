@@ -7,7 +7,7 @@
     <form action="{{ route('cars.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         
-        @include('admin.cars._form')
+        @include('cars._form')
         
         <div class="mt-6 flex justify-end">
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
