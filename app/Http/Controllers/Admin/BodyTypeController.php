@@ -8,59 +8,43 @@ use Illuminate\Http\Request;
 
 class BodyTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $bodyTypes = BodyType::orderBy('name')->get();
+        return view('admin.body-types.index', compact('bodyTypes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.body-types.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required|string|max:255|unique:body_types']);
+        
+        BodyType::create($request->only('name'));
+        return redirect()->route('admin.body-types.index')->with('success', 'Тип кузова добавлен');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(BodyType $bodyType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(BodyType $bodyType)
     {
-        //
+        return view('admin.body-types.edit', compact('bodyType'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, BodyType $bodyType)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:body_types,name,'.$bodyType->id
+        ]);
+        
+        $bodyType->update($request->only('name'));
+        return redirect()->route('admin.body-types.index')->with('success', 'Тип кузова обновлён');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(BodyType $bodyType)
     {
-        //
+        $bodyType->delete();
+        return redirect()->route('admin.body-types.index')->with('success', 'Тип кузова удалён');
     }
 }

@@ -8,59 +8,43 @@ use Illuminate\Http\Request;
 
 class DriveTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $driveTypes = DriveType::orderBy('name')->get();
+        return view('admin.drive-types.index', compact('driveTypes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.drive-types.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required|string|max:255|unique:drive_types']);
+        
+        DriveType::create($request->only('name'));
+        return redirect()->route('admin.drive-types.index')->with('success', 'Тип привода добавлен');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(DriveType $driveType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(DriveType $driveType)
     {
-        //
+        return view('admin.drive-types.edit', compact('driveType'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, DriveType $driveType)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:drive_types,name,'.$driveType->id
+        ]);
+        
+        $driveType->update($request->only('name'));
+        return redirect()->route('admin.drive-types.index')->with('success', 'Тип привода обновлён');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(DriveType $driveType)
     {
-        //
+        $driveType->delete();
+        return redirect()->route('admin.drive-types.index')->with('success', 'Тип привода удалён');
     }
 }

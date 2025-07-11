@@ -54,29 +54,33 @@ Route::controller(PageController::class)->group(function () {
 
 
 
-// Админ-панель
 Route::prefix('admin')
     ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
+        // Dashboard
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         
-        Route::resource('users', UserController::class)
-            ->except(['create', 'store']);
-            
+        // Users
+        Route::resource('users', UserController::class)->except(['create', 'store']);
+        
+        // Cars
         Route::resource('cars', CarController::class);
         
-        Route::resource('brands', BrandController::class)
-            ->except(['show']);
-            
+        // Brands
+        Route::resource('brands', BrandController::class)->except(['show']);
+        
+        // Body Types
         Route::resource('body-types', BodyTypeController::class)
             ->except(['show'])
             ->parameters(['body-types' => 'bodyType']);
-            
+        
+        // Drive Types
         Route::resource('drive-types', DriveTypeController::class)
             ->except(['show'])
             ->parameters(['drive-types' => 'driveType']);
-            
+        
+        // Engine Types
         Route::resource('engine-types', EngineTypeController::class)
             ->except(['show'])
             ->parameters(['engine-types' => 'engineType']);

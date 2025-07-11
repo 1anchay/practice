@@ -8,59 +8,43 @@ use Illuminate\Http\Request;
 
 class EngineTypeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $engineTypes = EngineType::orderBy('name')->get();
+        return view('admin.engine-types.index', compact('engineTypes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.engine-types.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['name' => 'required|string|max:255|unique:engine_types']);
+        
+        EngineType::create($request->only('name'));
+        return redirect()->route('admin.engine-types.index')->with('success', 'Тип двигателя добавлен');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(EngineType $engineType)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(EngineType $engineType)
     {
-        //
+        return view('admin.engine-types.edit', compact('engineType'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, EngineType $engineType)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:engine_types,name,'.$engineType->id
+        ]);
+        
+        $engineType->update($request->only('name'));
+        return redirect()->route('admin.engine-types.index')->with('success', 'Тип двигателя обновлён');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(EngineType $engineType)
     {
-        //
+        $engineType->delete();
+        return redirect()->route('admin.engine-types.index')->with('success', 'Тип двигателя удалён');
     }
 }
