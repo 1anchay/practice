@@ -3,11 +3,17 @@
 @section('content')
 <div class="container mx-auto px-4 py-6 ml-64">
     <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Управление брендами</h1>
-        <a href="{{ route('admin.brands.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Добавить бренд
+        <h1 class="text-2xl font-bold">Управление типами привода</h1>
+        <a href="{{ route('admin.drive-types.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Добавить тип
         </a>
     </div>
+
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <div class="bg-white shadow rounded-lg overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
@@ -18,15 +24,15 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach($brands as $brand)
+                @foreach($driveTypes as $driveType)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $brand->name }}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">{{ $driveType->name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('admin.brands.edit', $brand->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать</a>
-                        <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" class="inline">
+                        <a href="{{ route('admin.drive-types.edit', $driveType->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать</a>
+                        <form action="{{ route('admin.drive-types.destroy', $driveType->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Удалить бренд?')">Удалить</button>
+                            <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Удалить тип привода?')">Удалить</button>
                         </form>
                     </td>
                 </tr>
