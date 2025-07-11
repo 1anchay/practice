@@ -9,8 +9,14 @@ class EngineTypeController extends Controller
 {
     public function index()
     {
-        $engineTypes = EngineType::orderBy('name')->get();
-        return view('engine-types.index', compact('engineTypes'));
+        return view('engine-types.index', [
+            'engineTypes' => EngineType::orderBy('name')->get()
+        ]);
+    }
+
+    public function create()
+    {
+        return view('engine-types.create');
     }
 
     public function store(Request $request)
@@ -20,9 +26,12 @@ class EngineTypeController extends Controller
         ]);
         
         EngineType::create($request->only('name'));
-        
-        return back()
-            ->with('success', 'Тип двигателя успешно добавлен');
+        return redirect()->route('engine-types.index')->with('success', 'Тип двигателя добавлен');
+    }
+
+    public function edit(EngineType $engineType)
+    {
+        return view('engine-types.edit', compact('engineType'));
     }
 
     public function update(Request $request, EngineType $engineType)
@@ -32,16 +41,12 @@ class EngineTypeController extends Controller
         ]);
         
         $engineType->update($request->only('name'));
-        
-        return back()
-            ->with('success', 'Тип двигателя успешно обновлён');
+        return redirect()->route('engine-types.index')->with('success', 'Тип двигателя обновлён');
     }
 
     public function destroy(EngineType $engineType)
     {
         $engineType->delete();
-        
-        return back()
-            ->with('success', 'Тип двигателя успешно удалён');
+        return back()->with('success', 'Тип двигателя удалён');
     }
 }

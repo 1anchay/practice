@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
@@ -14,6 +15,11 @@ class BrandController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('brands.create');
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -26,7 +32,12 @@ class BrandController extends Controller
         }
 
         Brand::create($validated);
-        return back()->with('success', 'Бренд добавлен');
+        return redirect()->route('brands.index')->with('success', 'Бренд добавлен');
+    }
+
+    public function edit(Brand $brand)
+    {
+        return view('brands.edit', compact('brand'));
     }
 
     public function update(Request $request, Brand $brand)
@@ -37,7 +48,7 @@ class BrandController extends Controller
         ]);
 
         $brand->update($validated);
-        return back()->with('success', 'Бренд обновлён');
+        return redirect()->route('brands.index')->with('success', 'Бренд обновлён');
     }
 
     public function destroy(Brand $brand)

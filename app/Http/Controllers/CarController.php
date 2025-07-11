@@ -15,6 +15,16 @@ class CarController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        return view('cars.create', [
+            'brands' => Brand::orderBy('name')->get(),
+            'bodyTypes' => BodyType::orderBy('name')->get(),
+            'engineTypes' => EngineType::orderBy('name')->get(),
+            'driveTypes' => DriveType::orderBy('name')->get()
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -37,7 +47,18 @@ class CarController extends Controller
             }
         }
         
-        return back()->with('success', 'Автомобиль добавлен');
+        return redirect()->route('cars.index')->with('success', 'Автомобиль добавлен');
+    }
+
+    public function edit(Car $car)
+    {
+        return view('cars.edit', [
+            'car' => $car,
+            'brands' => Brand::orderBy('name')->get(),
+            'bodyTypes' => BodyType::orderBy('name')->get(),
+            'engineTypes' => EngineType::orderBy('name')->get(),
+            'driveTypes' => DriveType::orderBy('name')->get()
+        ]);
     }
 
     public function update(Request $request, Car $car)
@@ -47,6 +68,9 @@ class CarController extends Controller
             'model' => 'required|string|max:255',
             'year' => 'required|integer',
             'price' => 'required|numeric',
+            'body_type_id' => 'required|exists:body_types,id',
+            'engine_type_id' => 'required|exists:engine_types,id',
+            'drive_type_id' => 'required|exists:drive_types,id',
             'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
@@ -59,7 +83,7 @@ class CarController extends Controller
             }
         }
         
-        return back()->with('success', 'Автомобиль обновлён');
+        return redirect()->route('cars.index')->with('success', 'Автомобиль обновлён');
     }
 
     public function destroy(Car $car)
