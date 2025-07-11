@@ -84,6 +84,12 @@ Route::prefix('admin')
         Route::resource('engine-types', EngineTypeController::class)
             ->except(['show'])
             ->parameters(['engine-types' => 'engineType']);
+              
+        // Для работы с изображениями
+        Route::post('cars/{car}/images', [CarController::class, 'uploadImage'])
+            ->name('cars.images.store');
+        Route::delete('cars/{car}/images/{image}', [CarController::class, 'deleteImage'])
+            ->name('cars.images.destroy');
     });
 // Диагностические маршруты
 Route::prefix('_debug')->group(function () {

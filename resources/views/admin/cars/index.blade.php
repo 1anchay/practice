@@ -9,25 +9,48 @@
         </a>
     </div>
 
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="bg-white shadow rounded-lg overflow-hidden">
         <table class="min-w-full divide-y divide-gray-200">
-            <!-- Заголовки таблицы -->
             <thead class="bg-gray-50">
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Модель</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Бренд</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Год</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Цена</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Статус</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Действия</th>
                 </tr>
             </thead>
-            <!-- Данные -->
             <tbody class="bg-white divide-y divide-gray-200">
-                @foreach($cars as $car)
+                @forelse($cars as $car)
                 <tr>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $car->name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ $car->brand->name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">{{ number_format($car->price, 0, ',', ' ') }} ₽</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            @if($car->images->isNotEmpty())
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <img class="h-10 w-10 rounded-full object-cover" src="{{ asset('storage/' . $car->images->first()->path) }}" alt="">
+                                </div>
+                            @endif
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">{{ $car->model }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $car->brand->name }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $car->year }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ number_format($car->price, 0, ',', ' ') }} ₽</div>
+                    </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 py-1 text-xs rounded-full 
                             {{ $car->status === 'in_stock' ? 'bg-green-100 text-green-800' : 
@@ -36,7 +59,7 @@
                                ($car->status === 'new' ? 'Новинка' : 'Под заказ') }}
                         </span>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                         <a href="{{ route('admin.cars.edit', $car) }}" class="text-blue-500 hover:text-blue-700 mr-3">Редактировать</a>
                         <form action="{{ route('admin.cars.destroy', $car) }}" method="POST" class="inline">
                             @csrf
@@ -45,7 +68,13 @@
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="6" class="px-6 py-4 text-center text-gray-500">
+                        Нет добавленных автомобилей
+                    </td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

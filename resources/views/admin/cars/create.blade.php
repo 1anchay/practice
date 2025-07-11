@@ -9,11 +9,11 @@
         
         @include('admin.cars._form')
         
-        <div class="mt-6">
+        <div class="mt-6 flex justify-end">
             <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
                 Сохранить
             </button>
-            <a href="{{ route('admin.cars.index') }}" class="ml-2 text-gray-500 hover:text-gray-700">
+            <a href="{{ route('admin.cars.index') }}" class="ml-2 bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded">
                 Отмена
             </a>
         </div>

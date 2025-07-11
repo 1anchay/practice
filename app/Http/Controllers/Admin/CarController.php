@@ -22,10 +22,10 @@ class CarController extends Controller
 {
     public function index()
     {
-        $cars = Car::with(['brand', 'bodyType', 'engineType', 'driveType'])
-                 ->latest()
-                 ->paginate(10);
-        
+        $cars = Car::with(['brand', 'images'])
+            ->latest()
+            ->paginate(10);
+            
         return view('admin.cars.index', compact('cars'));
     }
 
@@ -37,17 +37,16 @@ class CarController extends Controller
         $driveTypes = DriveType::orderBy('name')->get();
         
         return view('admin.cars.create', compact(
-            'brands', 
-            'bodyTypes', 
-            'engineTypes', 
+            'brands',
+            'bodyTypes',
+            'engineTypes',
             'driveTypes'
         ));
     }
 
     public function store(StoreCarRequest $request)
     {
-        $validated = $request->validated();
-        $car = Car::create($validated);
+        $car = Car::create($request->validated());
         
         // Обработка изображений
         if ($request->hasFile('images')) {
@@ -82,9 +81,17 @@ class CarController extends Controller
     {
         $car->update($request->validated());
         
+        // Обработка новых изображений
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('cars', 'public');
+                $car->images()->create(['path' => $path]);
+            }
+        }
+        
         return redirect()
             ->route('admin.cars.index')
-            ->with('success', 'Данные автомобиля обновлены');
+            ->with('success', 'Автомобиль успешно обновлен');
     }
 
     public function destroy(Car $car)
@@ -99,9 +106,9 @@ class CarController extends Controller
         
         return redirect()
             ->route('admin.cars.index')
-            ->with('success', 'Автомобиль удален');
+            ->with('success', 'Автомобиль успешно удален');
     }
-    
+
     public function uploadImage(Request $request, Car $car)
     {
         $request->validate([
@@ -111,14 +118,14 @@ class CarController extends Controller
         $path = $request->file('image')->store('cars', 'public');
         $car->images()->create(['path' => $path]);
         
-        return back()->with('success', 'Изображение загружено');
+        return back()->with('success', 'Изображение успешно загружено');
     }
-    
-    public function deleteImage(CarImage $image)
+
+    public function deleteImage(Car $car, CarImage $image)
     {
         Storage::delete('public/' . $image->path);
         $image->delete();
         
-        return back()->with('success', 'Изображение удалено');
+        return back()->with('success', 'Изображение успешно удалено');
     }
 }
