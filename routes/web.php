@@ -52,22 +52,34 @@ Route::controller(PageController::class)->group(function () {
 
 // Админ-панель
 Route::prefix('admin')
-    ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
+    ->middleware(['auth', AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
-        Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
+        // Дашборд
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         
+        // Пользователи
         Route::resource('users', UserController::class)
-            ->only(['index', 'show', 'edit', 'update', 'destroy']);
+            ->except(['create', 'store']);
             
-        Route::resource('posts', PostController::class)
-            ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-            
-        Route::resource('cars', CarController::class)
+        // Автомобили
+        Route::resource('cars', CarController::class);
+        
+        // Справочники
+        Route::resource('brands', BrandController::class)
             ->except(['show']);
             
-        Route::get('settings', [SettingsController::class, 'index'])->name('settings');
-        Route::post('settings', [SettingsController::class, 'update'])->name('settings.update');
+        Route::resource('body-types', BodyTypeController::class)
+            ->except(['show'])
+            ->parameters(['body-types' => 'bodyType']);
+            
+        Route::resource('drive-types', DriveTypeController::class)
+            ->except(['show'])
+            ->parameters(['drive-types' => 'driveType']);
+            
+        Route::resource('engine-types', EngineTypeController::class)
+            ->except(['show'])
+            ->parameters(['engine-types' => 'engineType']);
     });
 
 // Диагностические маршруты

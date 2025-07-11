@@ -4,21 +4,25 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\Post;
 use App\Models\Car;
-use App\Models\ActivityLog;
+use App\Models\Brand;
+use App\Models\BodyType;
+use App\Models\DriveType;
+use App\Models\EngineType;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $stats = [
+        return view('admin.dashboard', [
             'usersCount' => User::count(),
-            'postsCount' => Post::count(),
             'carsCount' => Car::count(),
-            'recentActivities' => ActivityLog::latest()->take(5)->get()
-        ];
-
-        return view('admin.dashboard', $stats);
+            'brandsCount' => Brand::count(),
+            'bodyTypesCount' => BodyType::count(),
+            'driveTypesCount' => DriveType::count(),
+            'engineTypesCount' => EngineType::count(),
+            'latestUsers' => User::latest()->take(5)->get(),
+            'latestCars' => Car::with(['brand', 'bodyType'])->latest()->take(5)->get()
+        ]);
     }
 }
