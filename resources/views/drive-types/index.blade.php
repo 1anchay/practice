@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6 ml-64">
+<div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">Управление типами привода</h1>
-        <a href="{{ route('admin.drive-types.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{{ route('drive-types.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Добавить тип
         </a>
     </div>
@@ -28,8 +28,8 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $driveType->name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('admin.drive-types.edit', $driveType->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать</a>
-                        <form action="{{ route('admin.drive-types.destroy', $driveType->id) }}" method="POST" class="inline">
+                        <a href="{{ route('drive-types.edit', $driveType->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать</a>
+                        <form action="{{ route('drive-types.destroy', $driveType->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Удалить тип привода?')">Удалить</button>

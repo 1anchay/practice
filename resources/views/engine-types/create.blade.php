@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6 ml-64">
+<div class="container mx-auto px-4 py-6">
     <h1 class="text-2xl font-bold mb-6">Добавить новый тип двигателя</h1>
 
-    <form action="{{ route('admin.engine-types.store') }}" method="POST">
+    <form action="{{ route('engine-types.store') }}" method="POST">
         @csrf
         <div class="bg-white shadow rounded-lg p-6">
             <div class="mb-4">

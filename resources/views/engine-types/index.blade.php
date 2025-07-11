@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6 ml-64">
+<div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">Управление типами двигателя</h1>
-        <a href="{{ route('admin.engine-types.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <a href="{{ route('engine-types.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
             Добавить тип
         </a>
     </div>
@@ -28,8 +28,8 @@
                 <tr>
                     <td class="px-6 py-4 whitespace-nowrap">{{ $engineType->name }}</td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('admin.engine-types.edit', $engineType->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать</a>
-                        <form action="{{ route('admin.engine-types.destroy', $engineType->id) }}" method="POST" class="inline">
+                        <a href="{{ route('engine-types.edit', $engineType->id) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редактировать</a>
+                        <form action="{{ route('engine-types.destroy', $engineType->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Удалить тип двигателя?')">Удалить</button>

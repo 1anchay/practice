@@ -208,7 +208,7 @@
         <script>
             function deleteImage(imageId) {
                 if (confirm('Удалить изображение?')) {
-                    fetch(`/admin/cars/{{ $car->id }}/images/${imageId}`, {
+                    fetch(`/cars/{{ $car->id }}/images/${imageId}`, {
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',

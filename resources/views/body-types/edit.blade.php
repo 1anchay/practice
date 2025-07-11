@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6 ml-64">
+<div class="container mx-auto px-4 py-6">
     <h1 class="text-2xl font-bold mb-6">Редактировать тип кузова</h1>
 
-    <form action="{{ route('admin.body-types.update', $bodyType->id) }}" method="POST">
+    <form action="{{ route('body-types.update', $bodyType->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="bg-white shadow rounded-lg p-6">

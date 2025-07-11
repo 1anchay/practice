@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 py-6 ml-64">
+<div class="container mx-auto px-4 py-6">
     <h1 class="text-2xl font-bold mb-6">Редактировать бренд</h1>
 
-    <form action="{{ route('admin.brands.update', $brand->id) }}" method="POST">
+    <form action="{{ route('brands.update', $brand->id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="bg-white shadow rounded-lg p-6">
@@ -13,6 +13,15 @@
                 <input type="text" name="name" id="name" value="{{ old('name', $brand->name) }}" required
                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 @error('name')
+                    <p class="text-red-500 text-xs italic">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="mb-4">
+                <label for="slug" class="block text-gray-700 text-sm font-bold mb-2">Slug</label>
+                <input type="text" name="slug" id="slug" value="{{ old('slug', $brand->slug) }}"
+                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                @error('slug')
                     <p class="text-red-500 text-xs italic">{{ $message }}</p>
                 @enderror
             </div>

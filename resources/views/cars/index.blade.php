@@ -1,10 +1,10 @@
-@extends('admin.layouts.app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <h1 class="text-2xl font-bold">Список автомобилей</h1>
-        <a href="{{ route('admin.cars.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+        <a href="{{ route('cars.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
             Добавить автомобиль
         </a>
     </div>
@@ -60,8 +60,8 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('admin.cars.edit', $car) }}" class="text-blue-500 hover:text-blue-700 mr-3">Редактировать</a>
-                        <form action="{{ route('admin.cars.destroy', $car) }}" method="POST" class="inline">
+                        <a href="{{ route('cars.edit', $car) }}" class="text-blue-500 hover:text-blue-700 mr-3">Редактировать</a>
+                        <form action="{{ route('cars.destroy', $car) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700" onclick="return confirm('Удалить автомобиль?')">Удалить</button>
