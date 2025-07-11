@@ -52,7 +52,7 @@ Route::controller(PageController::class)->group(function () {
 
 // Админ-панель
 Route::prefix('admin')
-    ->middleware(['auth', 'admin'])
+    ->middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])
     ->name('admin.')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'dashboard'])->name('dashboard');
