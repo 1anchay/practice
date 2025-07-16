@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    @include('header')
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Каталог китайских автомобилей | NeoAuto</title>
@@ -114,12 +113,14 @@
                             <button @click="resetFilter('body_types')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
                         </div>
                         <div class="space-y-2">
-                            @foreach($bodyTypes as $bodyType)
                             <div class="flex items-center">
-                                <input x-model="filters.body_types" value="{{ $bodyType->id }}" id="body-type-{{ $bodyType->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
-                                <label for="body-type-{{ $bodyType->id }}" class="ml-3 text-sm text-gray-300">{{ $bodyType->name }} <span class="text-gray-500">({{ $bodyType->cars_count }})</span></label>
+                                <input x-model="filters.body_types" value="1" id="body-type-1" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="body-type-1" class="ml-3 text-sm text-gray-300">Внедорожник</label>
                             </div>
-                            @endforeach
+                            <div class="flex items-center">
+                                <input x-model="filters.body_types" value="2" id="body-type-2" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="body-type-2" class="ml-3 text-sm text-gray-300">Кроссовер</label>
+                            </div>
                         </div>
                     </div>
 
@@ -130,12 +131,14 @@
                             <button @click="resetFilter('brands')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
                         </div>
                         <div class="space-y-2">
-                            @foreach($brands as $brand)
                             <div class="flex items-center">
-                                <input x-model="filters.brands" value="{{ $brand->id }}" id="brand-{{ $brand->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
-                                <label for="brand-{{ $brand->id }}" class="ml-3 text-sm text-gray-300">{{ $brand->name }} <span class="text-gray-500">({{ $brand->cars_count }})</span></label>
+                                <input x-model="filters.brands" value="1" id="brand-1" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="brand-1" class="ml-3 text-sm text-gray-300">Zeekr</label>
                             </div>
-                            @endforeach
+                            <div class="flex items-center">
+                                <input x-model="filters.brands" value="2" id="brand-2" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="brand-2" class="ml-3 text-sm text-gray-300">Li Auto</label>
+                            </div>
                         </div>
                     </div>
 
@@ -146,12 +149,14 @@
                             <button @click="resetFilter('engine_types')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
                         </div>
                         <div class="space-y-2">
-                            @foreach($engineTypes as $engineType)
                             <div class="flex items-center">
-                                <input x-model="filters.engine_types" value="{{ $engineType->id }}" id="engine-type-{{ $engineType->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
-                                <label for="engine-type-{{ $engineType->id }}" class="ml-3 text-sm text-gray-300">{{ $engineType->name }} <span class="text-gray-500">({{ $engineType->cars_count }})</span></label>
+                                <input x-model="filters.engine_types" value="1" id="engine-type-1" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="engine-type-1" class="ml-3 text-sm text-gray-300">Электрический</label>
                             </div>
-                            @endforeach
+                            <div class="flex items-center">
+                                <input x-model="filters.engine_types" value="2" id="engine-type-2" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="engine-type-2" class="ml-3 text-sm text-gray-300">Гибридный</label>
+                            </div>
                         </div>
                     </div>
 
@@ -162,12 +167,10 @@
                             <button @click="resetFilter('drive_types')" class="text-sm text-red-400 hover:text-red-300">Сбросить</button>
                         </div>
                         <div class="space-y-2">
-                            @foreach($driveTypes as $driveType)
                             <div class="flex items-center">
-                                <input x-model="filters.drive_types" value="{{ $driveType->id }}" id="drive-type-{{ $driveType->id }}" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
-                                <label for="drive-type-{{ $driveType->id }}" class="ml-3 text-sm text-gray-300">{{ $driveType->name }} <span class="text-gray-500">({{ $driveType->cars_count }})</span></label>
+                                <input x-model="filters.drive_types" value="1" id="drive-type-1" type="checkbox" class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
+                                <label for="drive-type-1" class="ml-3 text-sm text-gray-300">Полный</label>
                             </div>
-                            @endforeach
                         </div>
                     </div>
 
@@ -175,7 +178,7 @@
                     <div class="space-y-3">
                         <h3 class="font-semibold text-lg">Цена, ₽</h3>
                         <div class="px-2">
-                            <div x-data="rangeSlider(minPrice, maxPrice)" class="space-y-4">
+                            <div x-data="rangeSlider(minPrice, maxPrice)" x-init="init()" class="space-y-4">
                                 <div class="relative h-1 bg-gray-700 rounded-full">
                                     <div class="absolute h-1 bg-red-500 rounded-full" :style="`left: ${minPercent}%; right: ${100 - maxPercent}%`"></div>
                                     <div class="absolute h-4 w-4 bg-red-500 rounded-full -mt-1.5 -ml-2 cursor-pointer drag-handle" 
@@ -264,21 +267,11 @@
                     <template x-for="car in cars" :key="car.id">
                         <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-red-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-red-900/10 group">
                             <div class="relative overflow-hidden">
-                                <img :src="car.image_url || 'https://via.placeholder.com/600x400/1f2937/9ca3af?text=' + car.name" :alt="car.name" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
-                                <template x-if="car.status === 'new'">
-                                    <div class="absolute top-3 left-3 bg-yellow-500 text-gray-900 px-2 py-1 rounded text-xs font-bold">
-                                       Подробности
-                                    </div>
-                                </template>
-                                <template x-if="car.status === 'in_stock'">
-                                    <div class="absolute top-3 left-3 bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">
-                                        有
-                                    </div>
-                                </template>
+                                <img :src="car.images[0] || 'https://via.placeholder.com/600x400/1f2937/9ca3af?text=' + car.brand.name + ' ' + car.model" :alt="car.brand.name + ' ' + car.model" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
                                 <div class="absolute bottom-0 left-0 p-4">
-                                    <h3 class="text-xl font-bold text-white" x-text="car.name"></h3>
-                                    <div class="text-red-400 font-semibold text-lg" x-text="'от ' + formatPrice(car.price) + ' ₽'"></div>
+                                    <h3 class="text-xl font-bold text-white" x-text="car.brand.name + ' ' + car.model"></h3>
+                                    <div class="text-red-400 font-semibold text-lg" x-text="formatPrice(car.price) + ' ₽'"></div>
                                 </div>
                             </div>
                             <div class="p-4">
@@ -355,7 +348,7 @@
             <h2 class="text-2xl font-bold text-white mb-4">中国汽车 - современный выбор</h2>
             <div class="prose prose-invert max-w-none">
                 <p>В нашем каталоге представлены <span class="text-red-400 font-semibold">лучшие китайские автомобили 2023-2024 года</span> от ведущих производителей. Китайский автопром за последние годы совершил настоящий прорыв в качестве, технологиях и дизайне.</p>
-                <p>Модели таких брендов как <span class="text-red-400 font-semibold">Geely, Chery, BYD, Haval</span> сочетают в себе передовые технологии, богатую комплектацию и привлекательную цену. В линейке представлены как экономичные городские автомобили, так и просторные семейные кроссоверы, мощные внедорожники и высокотехнологичные электромобили.</p>
+                <p>Модели таких брендов как <span class="text-red-400 font-semibold">Zeekr, Li Auto</span> сочетают в себе передовые технологии, богатую комплектацию и привлекательную цену. В линейке представлены как экономичные городские автомобили, так и просторные семейные кроссоверы, мощные внедорожники и высокотехнологичные электромобили.</p>
                 <p>Все автомобили проходят предпродажную подготовку и имеют <span class="text-red-400 font-semibold">официальную гарантию производителя</span>. Мы предлагаем удобные условия покупки: кредит, лизинг, trade-in. Для всех моделей доступен тест-драйв в Москве и других городах России.</p>
             </div>
         </div>
@@ -374,62 +367,64 @@
                 </button>
             </div>
         </div>
-<!-- Вставьте этот блок после CTA блока (перед модальным окном тест-драйва) -->
-<div class="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700">
-    <h3 class="text-xl font-bold text-white mb-4">Калькулятор комиссии</h3>
-    <div class="grid md:grid-cols-2 gap-6">
-        <div>
-            <label for="commission" class="block text-sm font-medium text-gray-300 mb-2">Процент комиссии (%)</label>
-            <input type="number" id="commission" x-model="commissionRate" min="0" max="50" step="0.5" 
-                   class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500">
+
+        <!-- Калькулятор комиссии -->
+        <div class="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700">
+            <h3 class="text-xl font-bold text-white mb-4">Калькулятор комиссии</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label for="commission" class="block text-sm font-medium text-gray-300 mb-2">Процент комиссии (%)</label>
+                    <input type="number" id="commission" x-model="commissionRate" min="0" max="50" step="0.5" 
+                           class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500">
+                </div>
+                <div class="flex items-end">
+                    <button @click="calculateCommission" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
+                        Рассчитать
+                    </button>
+                </div>
+            </div>
+            
+            <div x-show="showCommissionResults" class="mt-6">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Модель</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Цена</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Комиссия</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Итого</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-800 divide-y divide-gray-700">
+                            <template x-for="car in commissionCars" :key="car.id">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white" x-text="car.name"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(car.price) + ' ₽'"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(car.commission) + ' ₽'"></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-400" x-text="formatPrice(car.total) + ' ₽'"></td>
+                                </tr>
+                            </template>
+                            <tr class="bg-gray-900">
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">Всего</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(totalPrice) + ' ₽'"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(totalCommission) + ' ₽'"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-400" x-text="formatPrice(totalSum) + ' ₽'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="mt-4 flex justify-end">
+                    <button @click="updateCarPrices" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                        </svg>
+                        Обновить цены на автомобили
+                    </button>
+                </div>
+            </div>
         </div>
-        <div class="flex items-end">
-            <button @click="calculateCommission" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                Рассчитать
-            </button>
-        </div>
-    </div>
-    
-    <div x-show="showCommissionResults" class="mt-6">
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-700">
-                <thead class="bg-gray-700">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Модель</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Цена</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Комиссия</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Итого</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-gray-800 divide-y divide-gray-700">
-                    <template x-for="car in commissionCars" :key="car.id">
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white" x-text="car.name"></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(car.price) + ' ₽'"></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(car.commission) + ' ₽'"></td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-400" x-text="formatPrice(car.total) + ' ₽'"></td>
-                        </tr>
-                    </template>
-                    <tr class="bg-gray-900">
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">Всего</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(totalPrice) + ' ₽'"></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(totalCommission) + ' ₽'"></td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-red-400" x-text="formatPrice(totalSum) + ' ₽'"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="mt-4 flex justify-end">
-            <button @click="updateCarPrices" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Обновить цены на автомобили
-            </button>
-        </div>
-    </div>
-</div>
+
         <!-- Модальное окно тест-драйва -->
         <div x-show="testDriveModalOpen" x-transition.opacity class="fixed inset-0 z-50 overflow-y-auto">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -452,7 +447,7 @@
                             </button>
                         </div>
                         <div class="mt-4">
-                            <p class="text-sm text-gray-300 mb-4">Выбранный автомобиль: <span x-text="selectedCar.name" class="font-medium text-white"></span></p>
+                            <p class="text-sm text-gray-300 mb-4">Выбранный автомобиль: <span x-text="selectedCar.brand.name + ' ' + selectedCar.model" class="font-medium text-white"></span></p>
                             
                             <form @submit.prevent="submitTestDriveRequest" class="space-y-4">
                                 <div>
@@ -493,422 +488,351 @@
     <script>
         function catalog() {
             const staticCars = [
-        {
-            id: 1,
-            brand: { id: 1, name: 'Zeekr' },
-            model: '001',
-            price: 4500000,
-            year: 2023,
-            mileage: 0,
-            body_type: { id: 1, name: 'Внедорожник' },
-            engine_type: { id: 1, name: 'Электрический' },
-            drive_type: { id: 1, name: 'Полный' },
-            images: ['/images/zeekr-001.jpg'],
-            status: 'available'
-        },
-        {
-            id: 2,
-            brand: { id: 1, name: 'Zeekr' },
-            model: 'X',
-            price: 3800000,
-            year: 2023,
-            mileage: 0,
-            body_type: { id: 2, name: 'Кроссовер' },
-            engine_type: { id: 1, name: 'Электрический' },
-            drive_type: { id: 1, name: 'Полный' },
-            images: ['/images/zeekr-x.jpg'],
-            status: 'available'
-        },
-        {
-            id: 3,
-            brand: { id: 2, name: 'Li Auto' },
-            model: 'L7',
-            price: 5200000,
-            year: 2023,
-            mileage: 0,
-            body_type: { id: 1, name: 'Внедорожник' },
-            engine_type: { id: 2, name: 'Гибридный' },
-            drive_type: { id: 1, name: 'Полный' },
-            images: ['/images/li-l7.jpg'],
-            status: 'available'
-        }
-    ]
-    return {
-        // Состояние UI
-        mobileFiltersOpen: false,
-        loading: true,
-        testDriveModalOpen: false,
-        testDriveSubmitting: false,
-        showCommissionResults: false,
-        
-        // Данные каталога
-        cars: [],
-        commissionCars: [
-            {
-                id: 1,
-                name: 'Zeekr 001',
-                price: 4500000,
-                commission: 0,
-                total: 0
-            },
-            {
-                id: 2,
-                name: 'Zeekr X',
-                price: 3800000,
-                commission: 0,
-                total: 0
-            },
-            {
-                id: 3,
-                name: 'Li Auto L7',
-                price: 5200000,
-                commission: 0,
-                total: 0
-            },
-            {
-                id: 4,
-                name: 'Li Auto L8',
-                price: 5800000,
-                commission: 0,
-                total: 0
-            },
-            {
-                id: 5,
-                name: 'Li Auto L9',
-                price: 6500000,
-                commission: 0,
-                total: 0
-            }
-        ],
-        
-        // Пагинация
-        currentPage: 1,
-        perPage: 9,
-        totalCars: 0,
-        totalPages: 1,
-        visiblePages: [],
-        
-        // Фильтры
-        minPrice: {{ $minPrice }},
-        maxPrice: {{ $maxPrice }},
-        filters: {
-            body_types: [],
-            brands: [],
-            engine_types: [],
-            drive_types: [],
-            status: [],
-            min_price: {{ $minPrice }},
-            max_price: {{ $maxPrice }},
-        },
-        sortBy: 'price_asc',
-        
-        // Комиссия
-        commissionRate: 5,
-        totalPrice: 0,
-        totalCommission: 0,
-        totalSum: 0,
-        
-        // Формы
-        selectedCar: null,
-        testDriveForm: {
-            name: '',
-            phone: '',
-            date: ''
-        },
-        
-        // Инициализация
-        init() {
-            this.applyFilters();
-            this.initFiltersFromURL();
-        },
-        
-        // Методы фильтрации и сортировки
-        applyFilters() {
-    this.loading = true;
-    this.currentPage = 1;
-    this.updateURL();
-    
-    // Всегда используем статические данные
-    this.cars = staticCars.filter(car => this.filterCar(car));
-    this.sortCars();
-    this.totalCars = this.cars.length;
-    this.totalPages = Math.ceil(this.totalCars / this.perPage);
-    this.loading = false;
-    this.updateVisiblePages();
-},
-        
-        initFiltersFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const filterMappings = {
-                'body_types': { type: 'array', target: 'body_types', transform: Number },
-                'brands': { type: 'array', target: 'brands', transform: Number },
-                'engine_types': { type: 'array', target: 'engine_types', transform: Number },
-                'drive_types': { type: 'array', target: 'drive_types', transform: Number },
-                'status': { type: 'array', target: 'status' },
-                'min_price': { type: 'value', target: 'min_price', transform: parseInt },
-                'max_price': { type: 'value', target: 'max_price', transform: parseInt },
-                'sort': { type: 'value', target: 'sortBy' }
-            };
-            
-            for (const [param, config] of Object.entries(filterMappings)) {
-                if (urlParams.has(param)) {
-                    if (config.type === 'array') {
-                        const value = urlParams.get(param).split(',');
-                        this.filters[config.target] = config.transform 
-                            ? value.map(config.transform) 
-                            : value;
-                    } else {
-                        const value = urlParams.get(param);
-                        this[config.target] = config.transform 
-                            ? config.transform(value) 
-                            : value;
-                    }
+                {
+                    id: 1,
+                    brand: { id: 1, name: 'Zeekr' },
+                    model: '001',
+                    price: 4500000,
+                    year: 2023,
+                    mileage: 0,
+                    body_type: { id: 1, name: 'Внедорожник' },
+                    engine_type: { id: 1, name: 'Электрический' },
+                    drive_type: { id: 1, name: 'Полный' },
+                    images: ['/images/zeekr-001.jpg'],
+                    status: 'available'
+                },
+                {
+                    id: 2,
+                    brand: { id: 1, name: 'Zeekr' },
+                    model: 'X',
+                    price: 3800000,
+                    year: 2023,
+                    mileage: 0,
+                    body_type: { id: 2, name: 'Кроссовер' },
+                    engine_type: { id: 1, name: 'Электрический' },
+                    drive_type: { id: 1, name: 'Полный' },
+                    images: ['/images/zeekr-x.jpg'],
+                    status: 'available'
+                },
+                {
+                    id: 3,
+                    brand: { id: 2, name: 'Li Auto' },
+                    model: 'L7',
+                    price: 5200000,
+                    year: 2023,
+                    mileage: 0,
+                    body_type: { id: 1, name: 'Внедорожник' },
+                    engine_type: { id: 2, name: 'Гибридный' },
+                    drive_type: { id: 1, name: 'Полный' },
+                    images: ['/images/li-l7.jpg'],
+                    status: 'available'
                 }
-            }
+            ];
             
-            if (urlParams.has('page')) {
-                this.currentPage = parseInt(urlParams.get('page'));
-            }
-        },
-        
-        updateURL() {
-            const urlParams = new URLSearchParams();
-            
-            // Добавляем фильтры
-            if (this.filters.body_types.length > 0) {
-                urlParams.set('body_types', this.filters.body_types.join(','));
-            }
-            if (this.filters.brands.length > 0) {
-                urlParams.set('brands', this.filters.brands.join(','));
-            }
-            if (this.filters.engine_types.length > 0) {
-                urlParams.set('engine_types', this.filters.engine_types.join(','));
-            }
-            if (this.filters.drive_types.length > 0) {
-                urlParams.set('drive_types', this.filters.drive_types.join(','));
-            }
-            if (this.filters.status.length > 0) {
-                urlParams.set('status', this.filters.status.join(','));
-            }
-            if (this.filters.min_price !== this.minPrice) {
-                urlParams.set('min_price', this.filters.min_price);
-            }
-            if (this.filters.max_price !== this.maxPrice) {
-                urlParams.set('max_price', this.filters.max_price);
-            }
-            
-            // Добавляем сортировку
-            if (this.sortBy !== 'price_asc') {
-                urlParams.set('sort', this.sortBy);
-            }
-            
-            // Обновляем URL без перезагрузки страницы
-            window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-        },
-        
-        // Работа с API
-        fetchCars() {
-    const params = {
-        ...this.filters,
-        sort: this.sortBy,
-        page: this.currentPage,
-        per_page: this.perPage
-    };
-    
-    fetch('/api/cars?' + new URLSearchParams(params))
-        .then(response => response.json())
-        .then(data => {
-            // Если API вернуло данные - используем их
-            if (data.data && data.data.length > 0) {
-                this.cars = data.data;
-                this.totalCars = data.meta.total;
-                this.currentPage = data.meta.current_page;
-                this.perPage = data.meta.per_page;
-                this.totalPages = data.meta.last_page;
-            } else {
-                // Если API не вернуло данные - используем статические
-                this.cars = staticCars.filter(car => this.filterCar(car));
-                this.totalCars = this.cars.length;
-                this.totalPages = Math.ceil(this.totalCars / this.perPage);
-                this.currentPage = 1;
-            }
-            
-            this.updateVisiblePages();
-            this.loading = false;
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            // При ошибке тоже используем статические данные
-            this.cars = staticCars.filter(car => this.filterCar(car));
-            this.totalCars = this.cars.length;
-            this.totalPages = Math.ceil(this.totalCars / this.perPage);
-            this.currentPage = 1;
-            this.updateVisiblePages();
-            this.loading = false;
-        });
-},
-
-// Вспомогательный метод для фильтрации статических автомобилей
-filterCar(car) {
-    // Фильтрация по цене
-    if (car.price < this.filters.min_price || car.price > this.filters.max_price) {
-        return false;
-    }
-    
-    // Фильтрация по типу кузова
-    if (this.filters.body_types.length > 0 && !this.filters.body_types.includes(car.body_type.id)) {
-        return false;
-    }
-    
-    // Фильтрация по бренду
-    if (this.filters.brands.length > 0 && !this.filters.brands.includes(car.brand.id)) {
-        return false;
-    }
-    
-    // Фильтрация по типу двигателя
-    if (this.filters.engine_types.length > 0 && !this.filters.engine_types.includes(car.engine_type.id)) {
-        return false;
-    }
-    
-    // Фильтрация по типу привода
-    if (this.filters.drive_types.length > 0 && !this.filters.drive_types.includes(car.drive_type.id)) {
-        return false;
-    }
-    
-    // Фильтрация по статусу (в ваших данных используется 'available', а в фильтрах 'in_stock' и др.)
-    // Можно добавить соответствие между статусами в данных и фильтрах
-    if (this.filters.status.length > 0) {
-        // Если в фильтрах выбран 'in_stock', а в данных статус 'available'
-        if (this.filters.status.includes('in_stock') && car.status !== 'available') {
-            return false;
-        }
-        // Другие соответствия статусов можно добавить здесь
-    }
-    
-    return true;
-}
-    sortCars() {
-    if (this.sortBy === 'price_asc') {
-        this.cars.sort((a, b) => a.price - b.price);
-    } else if (this.sortBy === 'price_desc') {
-        this.cars.sort((a, b) => b.price - a.price);
-    } else if (this.sortBy === 'year_asc') {
-        this.cars.sort((a, b) => a.year - b.year);
-    } else if (this.sortBy === 'year_desc') {
-        this.cars.sort((a, b) => b.year - a.year);
-    } else if (this.sortBy === 'popular') {
-        // Поскольку у нас нет данных о популярности, можно сортировать по цене
-        this.cars.sort((a, b) => a.price - b.price);
-    }
-}   
-        // Пагинация
-        updateVisiblePages() {
-            const range = 2;
-            let start = Math.max(1, this.currentPage - range);
-            let end = Math.min(this.totalPages, this.currentPage + range);
-            
-            if (this.currentPage - range <= 1) {
-                end = Math.min(1 + range * 2, this.totalPages);
-            }
-            
-            if (this.currentPage + range >= this.totalPages) {
-                start = Math.max(this.totalPages - range * 2, 1);
-            }
-            
-            this.visiblePages = Array.from(
-                { length: end - start + 1 },
-                (_, i) => start + i
-            );
-        },
-        
-        goToPage(page) {
-            if (page < 1 || page > this.totalPages || page === this.currentPage) return;
-            this.currentPage = page;
-            this.fetchCars();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        },
-        
-        prevPage() {
-            this.goToPage(this.currentPage - 1);
-        },
-        
-        nextPage() {
-            this.goToPage(this.currentPage + 1);
-        },
-        
-        // Работа с комиссией
-        calculateCommission() {
-            this.commissionCars = this.commissionCars.map(car => {
-                const commission = car.price * this.commissionRate / 100;
-                return {
-                    ...car,
-                    commission: commission,
-                    total: car.price + commission
-                };
-            });
-            
-            this.totalPrice = this.commissionCars.reduce((sum, car) => sum + car.price, 0);
-            this.totalCommission = this.commissionCars.reduce((sum, car) => sum + car.commission, 0);
-            this.totalSum = this.totalPrice + this.totalCommission;
-            this.showCommissionResults = true;
-        },
-        
-        updateCarPrices() {
-            this.calculateCommission();
-            alert('Цены на автомобили успешно обновлены!');
-        },
-        
-        // Вспомогательные методы
-        resetFilter(filterType) {
-            this.filters[filterType] = [];
-            this.applyFilters();
-        },
-        
-        resetAllFilters() {
-            this.filters = {
-                body_types: [],
-                brands: [],
-                engine_types: [],
-                drive_types: [],
-                status: [],
-                min_price: this.minPrice,
-                max_price: this.maxPrice,
+            return {
+                // Состояние UI
+                mobileFiltersOpen: false,
+                loading: true,
+                testDriveModalOpen: false,
+                testDriveSubmitting: false,
+                showCommissionResults: false,
+                
+                // Данные каталога
+                cars: [],
+                commissionCars: [
+                    { id: 1, name: 'Zeekr 001', price: 4500000, commission: 0, total: 0 },
+                    { id: 2, name: 'Zeekr X', price: 3800000, commission: 0, total: 0 },
+                    { id: 3, name: 'Li Auto L7', price: 5200000, commission: 0, total: 0 },
+                    { id: 4, name: 'Li Auto L8', price: 5800000, commission: 0, total: 0 },
+                    { id: 5, name: 'Li Auto L9', price: 6500000, commission: 0, total: 0 }
+                ],
+                
+                // Пагинация
+                currentPage: 1,
+                perPage: 9,
+                totalCars: 0,
+                totalPages: 1,
+                visiblePages: [],
+                
+                // Фильтры
+                minPrice: 3000000,
+                maxPrice: 7000000,
+                filters: {
+                    body_types: [],
+                    brands: [],
+                    engine_types: [],
+                    drive_types: [],
+                    status: [],
+                    min_price: 3000000,
+                    max_price: 7000000,
+                },
+                sortBy: 'price_asc',
+                
+                // Комиссия
+                commissionRate: 5,
+                totalPrice: 0,
+                totalCommission: 0,
+                totalSum: 0,
+                
+                // Формы
+                selectedCar: null,
+                testDriveForm: {
+                    name: '',
+                    phone: '',
+                    date: ''
+                },
+                
+                // Инициализация
+                init() {
+                    this.applyFilters();
+                    this.initFiltersFromURL();
+                },
+                
+                // Методы фильтрации и сортировки
+                applyFilters() {
+                    this.loading = true;
+                    this.currentPage = 1;
+                    this.updateURL();
+                    
+                    // Всегда используем статические данные
+                    this.cars = staticCars.filter(car => this.filterCar(car));
+                    this.sortCars();
+                    this.totalCars = this.cars.length;
+                    this.totalPages = Math.ceil(this.totalCars / this.perPage);
+                    this.loading = false;
+                    this.updateVisiblePages();
+                },
+                
+                initFiltersFromURL() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const filterMappings = {
+                        'body_types': { type: 'array', target: 'body_types', transform: Number },
+                        'brands': { type: 'array', target: 'brands', transform: Number },
+                        'engine_types': { type: 'array', target: 'engine_types', transform: Number },
+                        'drive_types': { type: 'array', target: 'drive_types', transform: Number },
+                        'status': { type: 'array', target: 'status' },
+                        'min_price': { type: 'value', target: 'min_price', transform: parseInt },
+                        'max_price': { type: 'value', target: 'max_price', transform: parseInt },
+                        'sort': { type: 'value', target: 'sortBy' }
+                    };
+                    
+                    for (const [param, config] of Object.entries(filterMappings)) {
+                        if (urlParams.has(param)) {
+                            if (config.type === 'array') {
+                                const value = urlParams.get(param).split(',');
+                                this.filters[config.target] = config.transform 
+                                    ? value.map(config.transform) 
+                                    : value;
+                            } else {
+                                const value = urlParams.get(param);
+                                this[config.target] = config.transform 
+                                    ? config.transform(value) 
+                                    : value;
+                            }
+                        }
+                    }
+                    
+                    if (urlParams.has('page')) {
+                        this.currentPage = parseInt(urlParams.get('page'));
+                    }
+                },
+                
+                updateURL() {
+                    const urlParams = new URLSearchParams();
+                    
+                    // Добавляем фильтры
+                    if (this.filters.body_types.length > 0) {
+                        urlParams.set('body_types', this.filters.body_types.join(','));
+                    }
+                    if (this.filters.brands.length > 0) {
+                        urlParams.set('brands', this.filters.brands.join(','));
+                    }
+                    if (this.filters.engine_types.length > 0) {
+                        urlParams.set('engine_types', this.filters.engine_types.join(','));
+                    }
+                    if (this.filters.drive_types.length > 0) {
+                        urlParams.set('drive_types', this.filters.drive_types.join(','));
+                    }
+                    if (this.filters.status.length > 0) {
+                        urlParams.set('status', this.filters.status.join(','));
+                    }
+                    if (this.filters.min_price !== this.minPrice) {
+                        urlParams.set('min_price', this.filters.min_price);
+                    }
+                    if (this.filters.max_price !== this.maxPrice) {
+                        urlParams.set('max_price', this.filters.max_price);
+                    }
+                    
+                    // Добавляем сортировку
+                    if (this.sortBy !== 'price_asc') {
+                        urlParams.set('sort', this.sortBy);
+                    }
+                    
+                    // Обновляем URL без перезагрузки страницы
+                    window.history.pushState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+                },
+                
+                // Вспомогательный метод для фильтрации статических автомобилей
+                filterCar(car) {
+                    // Фильтрация по цене
+                    if (car.price < this.filters.min_price || car.price > this.filters.max_price) {
+                        return false;
+                    }
+                    
+                    // Фильтрация по типу кузова
+                    if (this.filters.body_types.length > 0 && !this.filters.body_types.includes(car.body_type.id)) {
+                        return false;
+                    }
+                    
+                    // Фильтрация по бренду
+                    if (this.filters.brands.length > 0 && !this.filters.brands.includes(car.brand.id)) {
+                        return false;
+                    }
+                    
+                    // Фильтрация по типу двигателя
+                    if (this.filters.engine_types.length > 0 && !this.filters.engine_types.includes(car.engine_type.id)) {
+                        return false;
+                    }
+                    
+                    // Фильтрация по типу привода
+                    if (this.filters.drive_types.length > 0 && !this.filters.drive_types.includes(car.drive_type.id)) {
+                        return false;
+                    }
+                    
+                    // Фильтрация по статусу
+                    if (this.filters.status.length > 0) {
+                        // Если в фильтрах выбран 'in_stock', а в данных статус 'available'
+                        if (this.filters.status.includes('in_stock') && car.status !== 'available') {
+                            return false;
+                        }
+                    }
+                    
+                    return true;
+                },
+                
+                sortCars() {
+                    if (this.sortBy === 'price_asc') {
+                        this.cars.sort((a, b) => a.price - b.price);
+                    } else if (this.sortBy === 'price_desc') {
+                        this.cars.sort((a, b) => b.price - a.price);
+                    } else if (this.sortBy === 'year_asc') {
+                        this.cars.sort((a, b) => a.year - b.year);
+                    } else if (this.sortBy === 'year_desc') {
+                        this.cars.sort((a, b) => b.year - a.year);
+                    } else if (this.sortBy === 'popular') {
+                        // Поскольку у нас нет данных о популярности, можно сортировать по цене
+                        this.cars.sort((a, b) => a.price - b.price);
+                    }
+                },
+                
+                // Пагинация
+                updateVisiblePages() {
+                    const range = 2;
+                    let start = Math.max(1, this.currentPage - range);
+                    let end = Math.min(this.totalPages, this.currentPage + range);
+                    
+                    if (this.currentPage - range <= 1) {
+                        end = Math.min(1 + range * 2, this.totalPages);
+                    }
+                    
+                    if (this.currentPage + range >= this.totalPages) {
+                        start = Math.max(this.totalPages - range * 2, 1);
+                    }
+                    
+                    this.visiblePages = Array.from(
+                        { length: end - start + 1 },
+                        (_, i) => start + i
+                    );
+                },
+                
+                goToPage(page) {
+                    if (page < 1 || page > this.totalPages || page === this.currentPage) return;
+                    this.currentPage = page;
+                    this.applyFilters();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                },
+                
+                prevPage() {
+                    this.goToPage(this.currentPage - 1);
+                },
+                
+                nextPage() {
+                    this.goToPage(this.currentPage + 1);
+                },
+                
+                // Работа с комиссией
+                calculateCommission() {
+                    this.commissionCars = this.commissionCars.map(car => {
+                        const commission = car.price * this.commissionRate / 100;
+                        return {
+                            ...car,
+                            commission: commission,
+                            total: car.price + commission
+                        };
+                    });
+                    
+                    this.totalPrice = this.commissionCars.reduce((sum, car) => sum + car.price, 0);
+                    this.totalCommission = this.commissionCars.reduce((sum, car) => sum + car.commission, 0);
+                    this.totalSum = this.totalPrice + this.totalCommission;
+                    this.showCommissionResults = true;
+                },
+                
+                updateCarPrices() {
+                    this.calculateCommission();
+                    alert('Цены на автомобили успешно обновлены!');
+                },
+                
+                // Вспомогательные методы
+                resetFilter(filterType) {
+                    this.filters[filterType] = [];
+                    this.applyFilters();
+                },
+                
+                resetAllFilters() {
+                    this.filters = {
+                        body_types: [],
+                        brands: [],
+                        engine_types: [],
+                        drive_types: [],
+                        status: [],
+                        min_price: this.minPrice,
+                        max_price: this.maxPrice,
+                    };
+                    this.sortBy = 'price_asc';
+                    this.applyFilters();
+                },
+                
+                formatPrice(price) {
+                    return new Intl.NumberFormat('ru-RU').format(price);
+                },
+                
+                isMobile() {
+                    return window.innerWidth < 1024;
+                },
+                
+                // Методы для тест-драйва
+                showTestDriveModal(car) {
+                    this.selectedCar = car;
+                    this.testDriveForm = {
+                        name: '',
+                        phone: '',
+                        date: ''
+                    };
+                    this.testDriveModalOpen = true;
+                },
+                
+                submitTestDriveRequest() {
+                    this.testDriveSubmitting = true;
+                    
+                    // Здесь будет AJAX-запрос на сервер
+                    setTimeout(() => {
+                        this.testDriveSubmitting = false;
+                        this.testDriveModalOpen = false;
+                        alert('Ваша заявка на тест-драйв успешно отправлена! Мы свяжемся с вами для подтверждения.');
+                    }, 1500);
+                }
             };
-            this.sortBy = 'price_asc';
-            this.applyFilters();
-        },
-        
-        formatPrice(price) {
-            return new Intl.NumberFormat('ru-RU').format(price);
-        },
-        
-        isMobile() {
-            return window.innerWidth < 1024;
-        },
-        
-        // Методы для тест-драйва
-        showTestDriveModal(car) {
-            this.selectedCar = car;
-            this.testDriveForm = {
-                name: '',
-                phone: '',
-                date: ''
-            };
-            this.testDriveModalOpen = true;
-        },
-        
-        submitTestDriveRequest() {
-            this.testDriveSubmitting = true;
-            
-            // Здесь будет AJAX-запрос на сервер
-            setTimeout(() => {
-                this.testDriveSubmitting = false;
-                this.testDriveModalOpen = false;
-                alert('Ваша заявка на тест-драйв успешно отправлена! Мы свяжемся с вами для подтверждения.');
-            }, 1500);
         }
-    };
-}
         
         function rangeSlider(min, max) {
             return {
@@ -964,5 +888,4 @@ filterCar(car) {
         }
     </script>
 </body>
-@include('footer')
 </html>
