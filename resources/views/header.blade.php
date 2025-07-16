@@ -343,7 +343,7 @@
                 </div>
                 
                 <a href="/test-drive" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">Тест-драйв</a>
-                <a href="/tradein" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">Trade-In</a>
+                <a href="{{ route('tradein') }}" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">Trade-In</a>
                 <a href="{{ route('about') }}" class="nav-item text-white hover:text-emax-lightpurple transition-colors nav-link-hover">О компании</a>
             </nav>
 
@@ -499,7 +499,7 @@
                     </svg>
                 </div>
             </a>
-            <a href="/tradein" class="mobile-menu-item text-xl font-medium text-white hover:text-emax-lightpurple">
+            <a href="{{ route('tradein') }}" class="mobile-menu-item text-xl font-medium text-white hover:text-emax-lightpurple">
                 <div class="flex items-center justify-between">
                     <span>Trade-In</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
