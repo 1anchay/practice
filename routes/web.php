@@ -68,7 +68,7 @@ Route::resource('users', UserController::class);
 
 // Автомобили
 Route::resource('cars', CarController::class);
-
+Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
 // Бренды
 Route::resource('brands', BrandController::class);
 

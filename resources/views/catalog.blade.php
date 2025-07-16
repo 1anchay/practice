@@ -267,7 +267,7 @@
                                 <img :src="car.image_url || 'https://via.placeholder.com/600x400/1f2937/9ca3af?text=' + car.name" :alt="car.name" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
                                 <template x-if="car.status === 'new'">
                                     <div class="absolute top-3 left-3 bg-yellow-500 text-gray-900 px-2 py-1 rounded text-xs font-bold">
-                                        新
+                                       Подробности
                                     </div>
                                 </template>
                                 <template x-if="car.status === 'in_stock'">
@@ -310,7 +310,7 @@
                                 </div>
                                 <div class="flex gap-2">
                                     <a :href="'/cars/' + car.id" class="flex-1 bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg text-sm font-medium text-center transition-colors duration-300">
-                                        详情
+                                        Подробности
                                     </a>
                                     <button @click="showTestDriveModal(car)" class="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm font-medium transition-colors duration-300">
                                         试驾

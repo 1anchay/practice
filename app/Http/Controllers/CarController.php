@@ -15,6 +15,19 @@ class CarController extends Controller
         ]);
     }
 
+    public function show(Car $car)
+    {
+        return view('cars.show', [
+            'car' => $car->load(['brand', 'bodyType', 'engineType', 'driveType', 'images']),
+            'similarCars' => Car::where('brand_id', $car->brand_id)
+                                ->where('id', '!=', $car->id)
+                                ->with(['brand', 'images'])
+                                ->inRandomOrder()
+                                ->limit(3)
+                                ->get()
+        ]);
+    }
+
     public function create()
     {
         return view('cars.create', [
