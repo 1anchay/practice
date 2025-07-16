@@ -15,4 +15,8 @@ public function policy()
 {
     return view('politika');
 }
+public function agreement()
+{
+    return view('agreement');
+}
 }
