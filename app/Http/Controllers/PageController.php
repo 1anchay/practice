@@ -19,4 +19,8 @@ public function agreement()
 {
     return view('agreement');
 }
+public function tradein()
+{
+    return view('tradein');
+}
 }

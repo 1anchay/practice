@@ -41,6 +41,7 @@ Route::controller(PageController::class)->group(function () {
     Route::get('/policy', 'policy')->name('policy');
     Route::get('/agreement', 'agreement')->name('agreement');
     Route::get('/contacts', 'contacts')->name('contacts');
+    Route::get('/tradein', 'tradein')->name('tradein');
 });
 
 // Аутентификация
