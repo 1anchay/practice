@@ -34,6 +34,7 @@ Route::prefix('catalog')->name('catalog.')->group(function () {
 // Страницы моделей
 Route::view('/zeekr', 'car_model.zeekr')->name('zeekr');
 Route::view('/byd_yangwang_u8', 'car_model.byd_yangwang_u8')->name('byd_yangwang_u8');
+Route::view('/car1', 'car_model.car1')->name('car1');
 
 // Статические страницы
 Route::controller(PageController::class)->group(function () {
