@@ -65,14 +65,60 @@
     <!-- Main Content -->
     <main class="container mx-auto px-6 py-16 max-w-4xl">
         <!-- Header -->
-        <header class="privacy-header py-20 mb-16">
-            <div class="container mx-auto px-6 text-center relative z-10">
-                <div class="max-w-3xl mx-auto">
-                    <h1 class="text-4xl md:text-5xl font-bold mb-6">Политика конфиденциальности</h1>
-                    <p class="text-xl text-red-300">Как мы защищаем и используем ваши данные</p>
-                </div>
+       <header class="privacy-header py-20 mb-16 bg-gradient-to-r from-red-800 to-red-600 relative overflow-hidden">
+    <!-- Декоративные китайские элементы -->
+    <div class="absolute top-0 left-0 w-full h-full opacity-10">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="5,5"/>
+            <!-- Китайские узоры -->
+            <path d="M20,20 Q30,10 40,20 T60,20 T80,20" fill="none" stroke="#FECACA" stroke-width="1"/>
+            <path d="M20,80 Q30,90 40,80 T60,80 T80,80" fill="none" stroke="#FECACA" stroke-width="1"/>
+        </svg>
+    </div>
+    
+    <!-- Иконки из Heroicons -->
+    <div class="absolute top-10 left-10 opacity-20">
+        <svg class="w-16 h-16 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15l8-8m0 0l-8-8m8 8H4"/>
+        </svg>
+    </div>
+    <div class="absolute bottom-10 right-10 opacity-20">
+        <svg class="w-16 h-16 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+    </div>
+
+    <div class="container mx-auto px-6 text-center relative z-10">
+        <div class="max-w-3xl mx-auto">
+            <!-- Китайский стиль шрифта -->
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 font-[ 'Noto Sans SC', sans-serif ] text-white tracking-wide">
+                <span class="inline-block transform rotate-3">隐</span>
+                <span class="inline-block transform -rotate-2">私</span>
+                <span class="inline-block transform rotate-1">政</span>
+                <span class="inline-block">策</span>
+            </h1>
+            
+            <div class="flex justify-center items-center mb-6">
+                <div class="h-1 w-16 bg-red-300 mx-4"></div>
+                <svg class="w-8 h-8 text-red-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+                <div class="h-1 w-16 bg-red-300 mx-4"></div>
             </div>
-        </header>
+            
+            <p class="text-xl text-red-200 font-light italic">
+                我们如何保护和利用您的数据
+            </p>
+            
+            <!-- Декоративный элемент внизу -->
+            <div class="mt-10">
+                <svg class="w-24 h-6 mx-auto text-red-300" viewBox="0 0 100 20">
+                    <path d="M0,10 Q25,20 50,10 T100,10" fill="none" stroke="currentColor" stroke-width="1"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+</header>
 
         <!-- Introduction -->
         <section class="mb-16 bg-gray-800 rounded-xl p-8 shadow-lg">

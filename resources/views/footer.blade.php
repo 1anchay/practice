@@ -256,7 +256,7 @@
                 </div>
                 <div class="flex flex-wrap justify-center gap-4 md:gap-6">
                     <a href="{{ route('policy') }}" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Политика конфиденциальности</a>
-                    <a href="{{ route('agreement')" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Пользовательское соглашение</a>
+                    <a href="{{ route('agreement')}}" class="footer-link text-slate-400 hover:text-white transition-colors duration-300 text-sm">Пользовательское соглашение</a>
                 </div>
                 <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hidden md:flex items-center justify-center w-10 h-10 bg-slate-800 hover:bg-purple-600 rounded-full transition-all duration-300 mt-4 md:mt-0 hover:shadow-lg hover:-translate-y-1">
                     <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
