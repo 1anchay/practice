@@ -39,6 +39,7 @@ Route::view('/byd_yangwang_u8', 'car_model.byd_yangwang_u8')->name('byd_yangwang
 Route::controller(PageController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
     Route::get('/policy', 'policy')->name('policy');
+    Route::get('/agreement', 'agreement')->name('agreement');
     Route::get('/contacts', 'contacts')->name('contacts');
 });
 
