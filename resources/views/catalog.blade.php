@@ -425,64 +425,7 @@
             </div>
         </div>
 
-        <!-- Модальное окно тест-драйва -->
-        <div x-show="testDriveModalOpen" x-transition.opacity class="fixed inset-0 z-50 overflow-y-auto">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                <div x-show="testDriveModalOpen" x-transition.opacity class="fixed inset-0 transition-opacity" aria-hidden="true">
-                    <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-sm"></div>
-                </div>
-                
-                <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-                
-                <div x-show="testDriveModalOpen" x-transition
-                     @click.away="testDriveModalOpen = false"
-                     class="inline-block align-bottom bg-gray-800 rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-700">
-                    <div class="px-6 py-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-lg font-medium text-white">Запись на тест-драйв</h3>
-                            <button @click="testDriveModalOpen = false" class="text-gray-400 hover:text-gray-300">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="mt-4">
-                            <p class="text-sm text-gray-300 mb-4">Выбранный автомобиль: <span x-text="selectedCar.brand.name + ' ' + selectedCar.model" class="font-medium text-white"></span></p>
-                            
-                            <form @submit.prevent="submitTestDriveRequest" class="space-y-4">
-                                <div>
-                                    <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Ваше имя</label>
-                                    <input type="text" id="name" x-model="testDriveForm.name" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-red-500 focus:border-red-500">
-                                </div>
-                                
-                                <div>
-                                    <label for="phone" class="block text-sm font-medium text-gray-300 mb-1">Телефон</label>
-                                    <input type="tel" id="phone" x-model="testDriveForm.phone" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-red-500 focus:border-red-500">
-                                </div>
-                                
-                                <div>
-                                    <label for="date" class="block text-sm font-medium text-gray-300 mb-1">Желаемая дата</label>
-                                    <input type="date" id="date" x-model="testDriveForm.date" required class="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white focus:ring-red-500 focus:border-red-500">
-                                </div>
-                                
-                                <div class="pt-2">
-                                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center">
-                                        <svg x-show="!testDriveSubmitting" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                        </svg>
-                                        <svg x-show="testDriveSubmitting" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                        </svg>
-                                        <span x-text="testDriveSubmitting ? 'Отправка...' : 'Записаться на тест-драйв'"></span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
     </main>
 
     <script>
