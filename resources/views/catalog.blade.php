@@ -492,6 +492,47 @@
 
     <script>
         function catalog() {
+            const staticCars = [
+        {
+            id: 1,
+            brand: { id: 1, name: 'Zeekr' },
+            model: '001',
+            price: 4500000,
+            year: 2023,
+            mileage: 0,
+            body_type: { id: 1, name: 'Внедорожник' },
+            engine_type: { id: 1, name: 'Электрический' },
+            drive_type: { id: 1, name: 'Полный' },
+            images: ['/images/zeekr-001.jpg'],
+            status: 'available'
+        },
+        {
+            id: 2,
+            brand: { id: 1, name: 'Zeekr' },
+            model: 'X',
+            price: 3800000,
+            year: 2023,
+            mileage: 0,
+            body_type: { id: 2, name: 'Кроссовер' },
+            engine_type: { id: 1, name: 'Электрический' },
+            drive_type: { id: 1, name: 'Полный' },
+            images: ['/images/zeekr-x.jpg'],
+            status: 'available'
+        },
+        {
+            id: 3,
+            brand: { id: 2, name: 'Li Auto' },
+            model: 'L7',
+            price: 5200000,
+            year: 2023,
+            mileage: 0,
+            body_type: { id: 1, name: 'Внедорожник' },
+            engine_type: { id: 2, name: 'Гибридный' },
+            drive_type: { id: 1, name: 'Полный' },
+            images: ['/images/li-l7.jpg'],
+            status: 'available'
+        }
+    ]
     return {
         // Состояние UI
         mobileFiltersOpen: false,
@@ -583,11 +624,23 @@
         
         // Методы фильтрации и сортировки
         applyFilters() {
-            this.loading = true;
-            this.currentPage = 1;
-            this.updateURL();
-            this.fetchCars();
-        },
+    this.loading = true;
+    this.currentPage = 1;
+    this.updateURL();
+    
+    if (this.cars.length === 0 || this.cars === staticCars) {
+        // Если используем статические данные
+        this.cars = staticCars.filter(car => this.filterCar(car));
+        this.sortCars();
+        this.totalCars = this.cars.length;
+        this.totalPages = Math.ceil(this.totalCars / this.perPage);
+        this.loading = false;
+        this.updateVisiblePages();
+    } else {
+        // Если есть данные из API
+        this.fetchCars();
+    }
+},
         
         initFiltersFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -660,30 +713,91 @@
         
         // Работа с API
         fetchCars() {
-            const params = {
-                ...this.filters,
-                sort: this.sortBy,
-                page: this.currentPage,
-                per_page: this.perPage
-            };
+    const params = {
+        ...this.filters,
+        sort: this.sortBy,
+        page: this.currentPage,
+        per_page: this.perPage
+    };
+    
+    fetch('/api/cars?' + new URLSearchParams(params))
+        .then(response => response.json())
+        .then(data => {
+            // Если API вернуло данные - используем их
+            if (data.data && data.data.length > 0) {
+                this.cars = data.data;
+                this.totalCars = data.meta.total;
+                this.currentPage = data.meta.current_page;
+                this.perPage = data.meta.per_page;
+                this.totalPages = data.meta.last_page;
+            } else {
+                // Если API не вернуло данные - используем статические
+                this.cars = staticCars.filter(car => this.filterCar(car));
+                this.totalCars = this.cars.length;
+                this.totalPages = Math.ceil(this.totalCars / this.perPage);
+                this.currentPage = 1;
+            }
             
-            fetch('/api/cars?' + new URLSearchParams(params))
-                .then(response => response.json())
-                .then(data => {
-                    this.cars = data.data;
-                    this.totalCars = data.meta.total;
-                    this.currentPage = data.meta.current_page;
-                    this.perPage = data.meta.per_page;
-                    this.totalPages = data.meta.last_page;
-                    this.updateVisiblePages();
-                    this.loading = false;
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    this.loading = false;
-                });
-        },
-        
+            this.updateVisiblePages();
+            this.loading = false;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // При ошибке тоже используем статические данные
+            this.cars = staticCars.filter(car => this.filterCar(car));
+            this.totalCars = this.cars.length;
+            this.totalPages = Math.ceil(this.totalCars / this.perPage);
+            this.currentPage = 1;
+            this.updateVisiblePages();
+            this.loading = false;
+        });
+},
+
+// Вспомогательный метод для фильтрации статических автомобилей
+filterCar(car) {
+    // Фильтрация по цене
+    if (car.price < this.filters.min_price || car.price > this.filters.max_price) {
+        return false;
+    }
+    
+    // Фильтрация по типу кузова
+    if (this.filters.body_types.length > 0 && !this.filters.body_types.includes(car.body_type.id)) {
+        return false;
+    }
+    
+    // Фильтрация по бренду
+    if (this.filters.brands.length > 0 && !this.filters.brands.includes(car.brand.id)) {
+        return false;
+    }
+    
+    // Фильтрация по типу двигателя
+    if (this.filters.engine_types.length > 0 && !this.filters.engine_types.includes(car.engine_type.id)) {
+        return false;
+    }
+    
+    // Фильтрация по типу привода
+    if (this.filters.drive_types.length > 0 && !this.filters.drive_types.includes(car.drive_type.id)) {
+        return false;
+    }
+    
+    // Фильтрация по статусу
+    if (this.filters.status.length > 0 && !this.filters.status.includes(car.status)) {
+        return false;
+    }
+    
+    return true;
+},
+    sortCars() {
+    if (this.sortBy === 'price_asc') {
+        this.cars.sort((a, b) => a.price - b.price);
+    } else if (this.sortBy === 'price_desc') {
+        this.cars.sort((a, b) => b.price - a.price);
+    } else if (this.sortBy === 'year_asc') {
+        this.cars.sort((a, b) => a.year - b.year);
+    } else if (this.sortBy === 'year_desc') {
+        this.cars.sort((a, b) => b.year - a.year);
+    }
+},    
         // Пагинация
         updateVisiblePages() {
             const range = 2;
