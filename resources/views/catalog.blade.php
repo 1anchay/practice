@@ -628,18 +628,13 @@
     this.currentPage = 1;
     this.updateURL();
     
-    if (this.cars.length === 0 || this.cars === staticCars) {
-        // Если используем статические данные
-        this.cars = staticCars.filter(car => this.filterCar(car));
-        this.sortCars();
-        this.totalCars = this.cars.length;
-        this.totalPages = Math.ceil(this.totalCars / this.perPage);
-        this.loading = false;
-        this.updateVisiblePages();
-    } else {
-        // Если есть данные из API
-        this.fetchCars();
-    }
+    // Всегда используем статические данные
+    this.cars = staticCars.filter(car => this.filterCar(car));
+    this.sortCars();
+    this.totalCars = this.cars.length;
+    this.totalPages = Math.ceil(this.totalCars / this.perPage);
+    this.loading = false;
+    this.updateVisiblePages();
 },
         
         initFiltersFromURL() {
@@ -780,13 +775,18 @@ filterCar(car) {
         return false;
     }
     
-    // Фильтрация по статусу
-    if (this.filters.status.length > 0 && !this.filters.status.includes(car.status)) {
-        return false;
+    // Фильтрация по статусу (в ваших данных используется 'available', а в фильтрах 'in_stock' и др.)
+    // Можно добавить соответствие между статусами в данных и фильтрах
+    if (this.filters.status.length > 0) {
+        // Если в фильтрах выбран 'in_stock', а в данных статус 'available'
+        if (this.filters.status.includes('in_stock') && car.status !== 'available') {
+            return false;
+        }
+        // Другие соответствия статусов можно добавить здесь
     }
     
     return true;
-},
+}
     sortCars() {
     if (this.sortBy === 'price_asc') {
         this.cars.sort((a, b) => a.price - b.price);
@@ -796,8 +796,11 @@ filterCar(car) {
         this.cars.sort((a, b) => a.year - b.year);
     } else if (this.sortBy === 'year_desc') {
         this.cars.sort((a, b) => b.year - a.year);
+    } else if (this.sortBy === 'popular') {
+        // Поскольку у нас нет данных о популярности, можно сортировать по цене
+        this.cars.sort((a, b) => a.price - b.price);
     }
-},    
+}   
         // Пагинация
         updateVisiblePages() {
             const range = 2;
