@@ -296,7 +296,7 @@
             </a>
             
             <model-viewer 
-                src="car/mazda.glb" 
+                src="{{ asset('car/mazda.glb') }}" 
                 alt="3D модель Mazda MX-5 2024"
                 auto-rotate
                 camera-controls
