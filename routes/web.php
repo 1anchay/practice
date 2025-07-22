@@ -35,9 +35,9 @@ Route::prefix('catalog')->name('catalog.')->group(function () {
 Route::view('/zeekr', 'car_model.zeekr')->name('zeekr');
 Route::view('/byd_yangwang_u8', 'car_model.byd_yangwang_u8')->name('byd_yangwang_u8');
 Route::view('/changanuni-k', 'car_model.changanuni-k')->name('changanuni-k');
-Route::view('/1', 'cars.1')->name('1');
-Route::view('/2', 'cars.2')->name('2');
-Route::view('/3', 'cars.3')->name('3');
+Route::view('/cars/1', 'cars.1')->name('cars.1');
+Route::view('/cars/2', 'cars.2')->name('cars.2');
+Route::view('/cars/3', 'cars.3')->name('cars.3');
 // Статические страницы
 Route::controller(PageController::class)->group(function () {
     Route::get('/about', 'about')->name('about');
