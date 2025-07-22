@@ -22,53 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans">
-    <!-- Hero Section -->
-    <header class="relative bg-gradient-to-br from-gray-800 to-gray-900 overflow-hidden">
-        <!-- Китайские декоративные элементы -->
-        <div class="absolute inset-0 opacity-20">
-            <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="url(#gradient)" stroke-width="2" stroke-dasharray="5,5"/>
-                <defs>
-                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#dc2626" />
-                        <stop offset="50%" stop-color="#7e22ce" />
-                        <stop offset="100%" stop-color="#16a34a" />
-                    </linearGradient>
-                </defs>
-                <!-- Китайские узоры -->
-                <path d="M10,10 Q20,5 30,10 T50,10 T70,10" fill="none" stroke="#dc2626" stroke-width="0.5"/>
-                <path d="M10,90 Q20,95 30,90 T50,90 T70,90" fill="none" stroke="#7e22ce" stroke-width="0.5"/>
-            </svg>
-        </div>
-        
-        <!-- Иероглифы как декоративный элемент -->
-        <div class="absolute top-10 right-10 text-6xl opacity-10 text-primary">车</div>
-        <div class="absolute bottom-10 left-10 text-6xl opacity-10 text-secondary">换</div>
-        
-        <div class="container mx-auto px-6 py-24 text-center relative z-10">
-            <div class="max-w-4xl mx-auto">
-                <h1 class="text-4xl md:text-5xl font-bold mb-6">
-                    <span class="text-primary">TRADE-IN</span> <span class="text-accent">您的汽车</span>
-                </h1>
-                
-                <div class="flex justify-center items-center mb-8">
-                    <div class="h-1 w-16 bg-gradient-to-r from-primary to-secondary mx-4"></div>
-                    <svg class="w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                    <div class="h-1 w-16 bg-gradient-to-r from-secondary to-accent mx-4"></div>
-                </div>
-                
-                <p class="text-xl text-gray-300 mb-8">
-                    Обменяйте ваш текущий автомобиль на новый китайский автомобиль по выгодной цене
-                </p>
-                
-                <a href="#form" class="inline-block px-8 py-3 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white font-medium rounded-md transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl shadow-primary/20">
-                    Оставить заявку
-                </a>
-            </div>
-        </div>
-    </header>
+    
 
     <!DOCTYPE html>
 <html lang="ru">
@@ -398,16 +352,7 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="py-16 bg-gradient-to-r from-primary to-secondary">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-bold mb-6 text-white">Готовы обменять свой автомобиль?</h2>
-            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Оставьте заявку прямо сейчас и получите дополнительную скидку 5% на новый китайский автомобиль</p>
-            <a href="#form" class="inline-block px-8 py-3 bg-white text-primary font-bold rounded-md hover:bg-gray-100 transition duration-300 shadow-lg hover:shadow-xl">
-                Получить оценку авто
-            </a>
-        </div>
-    </section>
+    
 
     @include('footer')
 </body>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Просмотр - Chery Tiggo 7 Pro | EMAX</title>
+    <title>3D Просмотр - Zeekr 7X 2025 | EMAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
@@ -296,8 +296,8 @@
             </a>
             
             <model-viewer 
-                src="models/zeekr.glb" 
-                alt="3D модель Chery Tiggo 7 Pro"
+                src="models/zeekr_7x.glb" 
+                alt="3D модель Zeekr 7X 2025"
                 auto-rotate
                 camera-controls
                 ar
@@ -326,48 +326,53 @@
             </button>
             
             <div class="panel-header fade-in">
-                <h1 class="panel-title">Chery Tiggo 7 Pro</h1>
+                <h1 class="panel-title">Zeekr 7X 2025</h1>
             </div>
             
             <p class="car-description fade-in delay-1">
-                Премиальный кроссовер с современным дизайном и передовыми технологиями. 
-                Идеальное сочетание комфорта, мощности и безопасности.
+                Инновационный электрический кроссовер премиум-класса с передовыми технологиями 
+                и футуристичным дизайном. Высокая производительность, умные системы 
+                и экологичность нового поколения.
             </p>
             
             <ul class="specs-list">
                 <li class="spec-item fade-in delay-1">
                     <span class="spec-name">Год выпуска</span>
-                    <span class="spec-value">2023</span>
+                    <span class="spec-value">2025</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
-                    <span class="spec-name">Двигатель</span>
-                    <span class="spec-value">1.5 Turbo (150 л.с.)</span>
+                    <span class="spec-name">Тип двигателя</span>
+                    <span class="spec-value">Электрический</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
-                    <span class="spec-name">Коробка передач</span>
-                    <span class="spec-value">Вариатор</span>
+                    <span class="spec-name">Мощность</span>
+                    <span class="spec-value">422 л.с.</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
-                    <span class="spec-name">Привод</span>
-                    <span class="spec-value">Передний</span>
+                    <span class="spec-name">Разгон 0-100 км/ч</span>
+                    <span class="spec-value">3.8 сек</span>
                 </li>
                 <li class="spec-item fade-in delay-1">
-                    <span class="spec-name">Расход топлива</span>
-                    <span class="spec-value">7.4 л/100 км</span>
+                    <span class="spec-name">Запас хода</span>
+                    <span class="spec-value">640 км (CLTC)</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
-                    <span class="spec-name">Разгон 0-100 км/ч</span>
-                    <span class="spec-value">9.8 сек</span>
+                    <span class="spec-name">Объем багажника</span>
+                    <span class="spec-value">632 л</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
+                    <span class="spec-name">Быстрая зарядка</span>
+                    <span class="spec-value">10-80% за 15 мин</span>
+                </li>
+                <li class="spec-item fade-in delay-4">
                     <span class="spec-name">Гарантия</span>
-                    <span class="spec-value">5 лет</span>
+                    <span class="spec-value">8 лет/200 000 км</span>
                 </li>
             </ul>
             
             <div class="price-container fade-in delay-4">
                 <div class="price-label">Цена от</div>
-                <div class="price-value">2 190 000 ₽</div>
+                <div class="price-value">5 990 000 ₽</div>
             </div>
             
             <div class="action-buttons">
@@ -376,6 +381,9 @@
                 </button>
                 <button class="action-button secondary-button fade-in delay-2">
                     <i class="fas fa-file-contract"></i> Оставить заявку
+                </button>
+                <button class="action-button secondary-button fade-in delay-3">
+                    <i class="fas fa-bolt"></i> Рассчитать кредит
                 </button>
             </div>
         </div>
