@@ -590,7 +590,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-               <a href="{{ route('changanuni-k.blade') }}" class="btn btn-secondary">Посмотреть модель</a>
+               <a href="{{ route('changanuni-k') }}" class="btn btn-secondary">Посмотреть модель</a>
                 <button class="btn btn-primary">Записаться на тест-драйв</button>
             </div>
         </div>
