@@ -453,29 +453,29 @@
        function catalog() {
     const staticCars = [
         {
-            id: 1,
-            brand: { id: 1, name: 'Zeekr' },
-            model: '001',
-            price: 4500000,
-            year: 2023,
-            mileage: 0,
-            body_type: { id: 1, name: 'Внедорожник' },
-            engine_type: { id: 1, name: 'Электрический' },
-            drive_type: { id: 1, name: 'Полный' },
-            images: ['/images/zeekr-001.jpg'],
-            status: 'available'
+             id: 1,
+    brand: { id: 1, name: 'MAZDA' },
+    model: 'MX-5',
+    price: 3200000, 
+    year: 2023,
+    mileage: 0,
+    body_type: { id: 3, name: 'Родстер' }, 
+    engine_type: { id: 3, name: 'Бензиновый' },
+    drive_type: { id: 2, name: 'Задний' }, 
+    images: ['/images/mazda_mx-5.jpeg'],
+    status: 'available',
         },
         {
             id: 2,
             brand: { id: 1, name: 'Zeekr' },
-            model: 'X',
+            model: 'MIX',
             price: 3800000,
             year: 2023,
             mileage: 0,
             body_type: { id: 2, name: 'Кроссовер' },
             engine_type: { id: 1, name: 'Электрический' },
             drive_type: { id: 1, name: 'Полный' },
-            images: ['/images/zeekr-x.jpg'],
+            images: ['/images/zeekr-mix.jpg'],
             status: 'available'
         },
         {
@@ -488,7 +488,7 @@
             body_type: { id: 1, name: 'Внедорожник' },
             engine_type: { id: 2, name: 'Гибридный' },
             drive_type: { id: 1, name: 'Полный' },
-            images: ['/images/li-l7.jpg'],
+            images: ['/images/Li_Auto_L7.jpg'],
             status: 'available'
         }
     ];
