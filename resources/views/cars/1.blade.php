@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Просмотр - Zeekr X | EMAX</title>
+    <title>3D Просмотр - Mazda MX-5 2024 | EMAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
@@ -11,8 +11,8 @@
         :root {
             --primary: #1a1a1a;
             --secondary: #252525;
-            --accent: #00a8ff;
-            --accent-hover: #0095e0;
+            --accent: #e4000f; /* Красный Mazda */
+            --accent-hover: #c4000d;
             --text: #ffffff;
             --text-secondary: #cccccc;
             --glass-bg: rgba(30, 30, 30, 0.85);
@@ -101,7 +101,7 @@
         .panel-title {
             font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(90deg, var(--accent), #00ffaa);
+            background: linear-gradient(90deg, var(--accent), #ff8c00); /* Градиент красный-оранжевый */
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -147,7 +147,7 @@
         }
 
         .price-container {
-            background: linear-gradient(90deg, rgba(0,168,255,0.2), rgba(0,255,136,0.2));
+            background: linear-gradient(90deg, rgba(228,0,15,0.2), rgba(255,140,0,0.2));
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
@@ -185,13 +185,13 @@
         }
 
         .primary-button {
-            background: linear-gradient(90deg, var(--accent), #00ffaa);
-            color: #000;
+            background: linear-gradient(90deg, var(--accent), #ff8c00);
+            color: #fff;
         }
 
         .primary-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 5px 15px rgba(228, 0, 15, 0.3);
         }
 
         .secondary-button {
@@ -284,25 +284,20 @@
         .fade-in {
             animation: fadeIn 0.6s ease forwards;
         }
-        
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
     <div class="viewer-container">
         <!-- Область 3D модели -->
         <div class="model-section">
-            <a href="/" class="back-button fade-in">
+            <a href="/catalog" class="back-button fade-in">
                 <i class="fas fa-arrow-left"></i>
                 <span>Вернуться в каталог</span>
             </a>
             
             <model-viewer 
-                src="models/zeekrx.glb" 
-                alt="3D модель Zeekr X"
+                src="models/mazda.glb" 
+                alt="3D модель Mazda MX-5 2024"
                 auto-rotate
                 camera-controls
                 ar
@@ -331,52 +326,53 @@
             </button>
             
             <div class="panel-header fade-in">
-                <h1 class="panel-title">Zeekr X</h1>
+                <h1 class="panel-title">Mazda MX-5 2024</h1>
             </div>
             
             <p class="car-description fade-in delay-1">
-                Инновационный электрический кроссовер премиум-класса с ультрасовременным дизайном 
-                и передовыми технологиями. Высокая производительность и экологичность в одном флаконе.
+                Легендарный заднеприводный родстер с идеальным распределением веса 50:50. 
+                Легкий, маневренный и невероятно веселый в управлении. 
+                Чистое удовольствие от вождения в классическом стиле.
             </p>
             
             <ul class="specs-list">
                 <li class="spec-item fade-in delay-1">
                     <span class="spec-name">Год выпуска</span>
-                    <span class="spec-value">2023</span>
+                    <span class="spec-value">2024</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
                     <span class="spec-name">Тип двигателя</span>
-                    <span class="spec-value">Электрический</span>
+                    <span class="spec-value">Бензиновый</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
-                    <span class="spec-name">Мощность</span>
-                    <span class="spec-value">272 л.с. (200 кВт)</span>
+                    <span class="spec-name">Объем двигателя</span>
+                    <span class="spec-value">2.0 л</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
-                    <span class="spec-name">Разгон 0-100 км/ч</span>
-                    <span class="spec-value">5.6 сек</span>
+                    <span class="spec-name">Мощность</span>
+                    <span class="spec-value">184 л.с.</span>
                 </li>
                 <li class="spec-item fade-in delay-1">
-                    <span class="spec-name">Запас хода</span>
-                    <span class="spec-value">440 км (CLTC)</span>
+                    <span class="spec-name">Разгон 0-100 км/ч</span>
+                    <span class="spec-value">6.5 сек</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
-                    <span class="spec-name">Ёмкость батареи</span>
-                    <span class="spec-value">69 кВт·ч</span>
+                    <span class="spec-name">Привод</span>
+                    <span class="spec-value">Задний</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
-                    <span class="spec-name">Привод</span>
-                    <span class="spec-value">Полный (AWD)</span>
+                    <span class="spec-name">Коробка передач</span>
+                    <span class="spec-value">6-ст. механика/автомат</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
-                    <span class="spec-name">Габариты</span>
-                    <span class="spec-value">4450 × 1836 × 1572 мм</span>
+                    <span class="spec-name">Вес</span>
+                    <span class="spec-value">1,065 кг</span>
                 </li>
             </ul>
             
             <div class="price-container fade-in delay-4">
                 <div class="price-label">Цена от</div>
-                <div class="price-value">3 990 000 ₽</div>
+                <div class="price-value">3 290 000 ₽</div>
             </div>
             
             <div class="action-buttons">
@@ -387,7 +383,7 @@
                     <i class="fas fa-file-contract"></i> Оставить заявку
                 </button>
                 <button class="action-button secondary-button fade-in delay-3">
-                    <i class="fas fa-charging-station"></i> Рассчитать зарядку
+                    <i class="fas fa-bolt"></i> Рассчитать кредит
                 </button>
             </div>
         </div>
