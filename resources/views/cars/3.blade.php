@@ -296,7 +296,7 @@
             </a>
             
             <model-viewer 
-                src="models/lil7.glb" 
+                src="car/lil7.glb" 
                 alt="3D модель Li Auto L7 2024"
                 auto-rotate
                 camera-controls

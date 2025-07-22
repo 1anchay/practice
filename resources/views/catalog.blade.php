@@ -498,257 +498,224 @@
         ];
 
         return {
-    // Состояние UI
-    mobileFiltersOpen: false,
-    loading: true,
-    testDriveModalOpen: false,
-    testDriveSubmitting: false,
-    showCommissionResults: false,
-    
-    // Справочники
-    bodyTypes,
-    brands,
-    engineTypes,
-    driveTypes,
-    
-    // Данные каталога
-    cars: [],
-    filteredCars: [],
-    paginatedCars: [],
-    selectedCarsForCommission: [],
-    customPrice: null,
-    
-    // Настройки комиссии
-    commissionRate: 5,
-    commissionType: 'percent',
-    commissionFixedValue: 100000,
-    
-    // Результаты расчета комиссии
-    commissionCars: [],
-    totalPrice: 0,
-    totalCommission: 0,
-    totalSum: 0,
-    
-    // Новые свойства для простого калькулятора
-    selectedCarForCalculator: null,
-    calculatorPercent: 5,
-    calculatorResult: null,
-    
-    // Пагинация
-    currentPage: 1,
-    perPage: 6,
-    totalCars: 0,
-    totalPages: 1,
-    visiblePages: [],
-    
-    // Фильтры
-    minPrice: 3000000,
-    maxPrice: 7000000,
-    filters: {
-        body_types: [],
-        brands: [],
-        engine_types: [],
-        drive_types: [],
-        status: [],
-        min_price: 3000000,
-        max_price: 7000000,
-    },
-    sortBy: 'price_asc',
-    
-    // Формы
-    selectedCar: null,
-    testDriveForm: {
-        name: '',
-        phone: '',
-        date: ''
-    },
-
-    // Инициализация
-    init() {
-        this.cars = staticCars;
-        this.applyFilters();
-        this.initFiltersFromURL();
-    },
-
-    // Методы для простого калькулятора
-    calculateSingleCommission() {
-        if (!this.selectedCarForCalculator) {
-            alert('Пожалуйста, выберите автомобиль');
-            return;
-        }
-
-        const car = this.cars.find(c => c.id == this.selectedCarForCalculator);
-        if (!car) return;
-
-        const commission = car.price * this.calculatorPercent / 100;
-        this.calculatorResult = {
-            carName: `${car.brand.name} ${car.model}`,
-            carPrice: car.price,
-            commissionPercent: this.calculatorPercent,
-            commissionAmount: commission,
-            total: car.price + commission
-        };
-    },
-
-    resetSingleCalculator() {
-        this.selectedCarForCalculator = null;
-        this.calculatorPercent = 5;
-        this.calculatorResult = null;
-    },
-
-    // Существующие методы для работы с комиссией
-    commissionTypeChanged() {
-        this.showCommissionResults = false;
-    },
-
-    addCustomPrice() {
-        if (!this.customPrice || this.customPrice <= 0) return;
-        
-        const newId = this.commissionCars.length > 0 
-            ? Math.max(...this.commissionCars.map(c => c.id)) + 1 
-            : 1;
-        
-        this.commissionCars.push({
-            id: newId,
-            name: 'Ручной ввод',
-            price: parseInt(this.customPrice),
-            commission: 0,
-            total: parseInt(this.customPrice)
-        });
-        
-        this.customPrice = null;
-        this.calculateTotals();
-    },
-
-    calculateCommission() {
-        if (this.commissionType === 'custom') {
-            this.calculateTotals();
-            this.showCommissionResults = true;
-            return;
-        }
-        
-        this.commissionCars = [];
-        
-        this.selectedCarsForCommission.forEach(carId => {
-            const car = this.cars.find(c => c.id === carId);
-            if (car) {
-                let commission = 0;
+            // Состояние UI
+            mobileFiltersOpen: false,
+            loading: true,
+            testDriveModalOpen: false,
+            testDriveSubmitting: false,
+            showCommissionResults: false,
+            
+            // Справочники
+            bodyTypes,
+            brands,
+            engineTypes,
+            driveTypes,
+            
+            // Данные каталога
+            cars: [],
+            filteredCars: [],
+            paginatedCars: [],
+            selectedCarsForCommission: [],
+            customPrice: null,
+            
+            // Настройки комиссии
+            commissionRate: 5,
+            commissionType: 'percent',
+            commissionFixedValue: 100000,
+            
+            // Результаты расчета комиссии
+            commissionCars: [],
+            totalPrice: 0,
+            totalCommission: 0,
+            totalSum: 0,
+            
+            // Пагинация
+            currentPage: 1,
+            perPage: 6,
+            totalCars: 0,
+            totalPages: 1,
+            visiblePages: [],
+            
+            // Фильтры
+            minPrice: 3000000,
+            maxPrice: 7000000,
+            filters: {
+                body_types: [],
+                brands: [],
+                engine_types: [],
+                drive_types: [],
+                status: [],
+                min_price: 3000000,
+                max_price: 7000000,
                 
-                if (this.commissionType === 'percent') {
-                    commission = car.price * this.commissionRate / 100;
-                } else if (this.commissionType === 'fixed') {
-                    commission = parseFloat(this.commissionFixedValue) || 0;
-                }
+            },
+            sortBy: 'price_asc',
+            
+            // Формы
+            selectedCar: null,
+            testDriveForm: {
+                name: '',
+                phone: '',
+                date: ''
+            },
+
+            // Инициализация
+            init() {
+                this.cars = staticCars;
+                this.applyFilters();
+                this.initFiltersFromURL();
+            },
+
+            // Методы для работы с комиссией
+            commissionTypeChanged() {
+                this.showCommissionResults = false;
+            },
+
+            addCustomPrice() {
+                if (!this.customPrice || this.customPrice <= 0) return;
+                
+                const newId = this.commissionCars.length > 0 
+                    ? Math.max(...this.commissionCars.map(c => c.id)) + 1 
+                    : 1;
                 
                 this.commissionCars.push({
-                    id: car.id,
-                    name: car.brand.name + ' ' + car.model,
-                    price: car.price,
-                    commission: commission,
-                    total: car.price + commission
+                    id: newId,
+                    name: 'Ручной ввод',
+                    price: parseInt(this.customPrice),
+                    commission: 0,
+                    total: parseInt(this.customPrice)
                 });
-            }
-        });
-        
-        this.calculateTotals();
-        this.showCommissionResults = true;
-    },
+                
+                this.customPrice = null;
+                this.calculateTotals();
+            },
 
-    calculateTotals() {
-        this.totalPrice = this.commissionCars.reduce((sum, car) => sum + car.price, 0);
-        this.totalCommission = this.commissionCars.reduce((sum, car) => sum + car.commission, 0);
-        this.totalSum = this.totalPrice + this.totalCommission;
-    },
-
-    resetCalculator() {
-        this.commissionRate = 5;
-        this.commissionType = 'percent';
-        this.commissionFixedValue = 100000;
-        this.commissionCars = [];
-        this.selectedCarsForCommission = [];
-        this.customPrice = null;
-        this.showCommissionResults = false;
-    },
-
-    saveCalculation() {
-        const calculationData = {
-            date: new Date().toLocaleString(),
-            type: this.commissionType,
-            rate: this.commissionType === 'percent' ? this.commissionRate : this.commissionFixedValue,
-            total: this.totalSum,
-            cars: this.commissionCars.map(car => ({
-                name: car.name,
-                price: car.price,
-                commission: car.commission,
-                total: car.total
-            }))
-        };
-        
-        console.log('Сохраненный расчет:', calculationData);
-        alert('Расчет успешно сохранен!');
-    },
-
-    // Методы фильтрации и сортировки
-    applyFilters() {
-        this.loading = true;
-        this.currentPage = 1;
-        this.updateURL();
-        
-        this.filteredCars = this.cars.filter(car => this.filterCar(car));
-        this.sortCars();
-        
-        this.totalCars = this.filteredCars.length;
-        this.totalPages = Math.ceil(this.totalCars / this.perPage);
-        this.updatePaginatedCars();
-        this.updateVisiblePages();
-        
-        this.loading = false;
-    },
-
-    filterCar(car) {
-        if (car.price < this.filters.min_price || car.price > this.filters.max_price) {
-            return false;
-        }
-        
-        if (this.filters.body_types.length > 0 && !this.filters.body_types.includes(car.body_type.id)) {
-            return false;
-        }
-        
-        if (this.filters.brands.length > 0 && !this.filters.brands.includes(car.brand.id)) {
-            return false;
-        }
-        
-        if (this.filters.engine_types.length > 0 && !this.filters.engine_types.includes(car.engine_type.id)) {
-            return false;
-        }
-        
-        if (this.filters.drive_types.length > 0 && !this.filters.drive_types.includes(car.drive_type.id)) {
-            return false;
-        }
-        
-        if (this.filters.status.length > 0) {
-            const statusFilters = {
-                'new': car.is_new,
-                'in_stock': car.status === 'in_stock',
-                'on_order': car.status === 'on_order'
-            };
-            
-            let matches = false;
-            for (const status of this.filters.status) {
-                if (statusFilters[status]) {
-                    matches = true;
-                    break;
+            calculateCommission() {
+                if (this.commissionType === 'custom') {
+                    this.calculateTotals();
+                    this.showCommissionResults = true;
+                    return;
                 }
-            }
-            
-            if (!matches) return false;
-        }
-        
-        return true;
-    },
+                
+                this.commissionCars = [];
+                
+                this.selectedCarsForCommission.forEach(carId => {
+                    const car = this.cars.find(c => c.id === carId);
+                    if (car) {
+                        let commission = 0;
+                        
+                        if (this.commissionType === 'percent') {
+                            commission = car.price * this.commissionRate / 100;
+                        } else if (this.commissionType === 'fixed') {
+                            commission = parseFloat(this.commissionFixedValue) || 0;
+                        }
+                        
+                        this.commissionCars.push({
+                            id: car.id,
+                            name: car.brand.name + ' ' + car.model,
+                            price: car.price,
+                            commission: commission,
+                            total: car.price + commission
+                        });
+                    }
+                });
+                
+                this.calculateTotals();
+                this.showCommissionResults = true;
+            },
 
-    // Остальные методы (updatePaginatedCars, updateVisiblePages и т.д.) остаются без изменений
-};
+            calculateTotals() {
+                this.totalPrice = this.commissionCars.reduce((sum, car) => sum + car.price, 0);
+                this.totalCommission = this.commissionCars.reduce((sum, car) => sum + car.commission, 0);
+                this.totalSum = this.totalPrice + this.totalCommission;
+            },
+
+            resetCalculator() {
+                this.commissionRate = 5;
+                this.commissionType = 'percent';
+                this.commissionFixedValue = 100000;
+                this.commissionCars = [];
+                this.selectedCarsForCommission = [];
+                this.customPrice = null;
+                this.showCommissionResults = false;
+            },
+
+            saveCalculation() {
+                const calculationData = {
+                    date: new Date().toLocaleString(),
+                    type: this.commissionType,
+                    rate: this.commissionType === 'percent' ? this.commissionRate : this.commissionFixedValue,
+                    total: this.totalSum,
+                    cars: this.commissionCars.map(car => ({
+                        name: car.name,
+                        price: car.price,
+                        commission: car.commission,
+                        total: car.total
+                    }))
+                };
+                
+                console.log('Сохраненный расчет:', calculationData);
+                alert('Расчет успешно сохранен!');
+            },
+
+            // Методы фильтрации и сортировки
+            applyFilters() {
+                this.loading = true;
+                this.currentPage = 1;
+                this.updateURL();
+                
+                this.filteredCars = this.cars.filter(car => this.filterCar(car));
+                this.sortCars();
+                
+                this.totalCars = this.filteredCars.length;
+                this.totalPages = Math.ceil(this.totalCars / this.perPage);
+                this.updatePaginatedCars();
+                this.updateVisiblePages();
+                
+                this.loading = false;
+            },
+
+            filterCar(car) {
+                if (car.price < this.filters.min_price || car.price > this.filters.max_price) {
+                    return false;
+                }
+                
+                if (this.filters.body_types.length > 0 && !this.filters.body_types.includes(car.body_type.id)) {
+                    return false;
+                }
+                
+                if (this.filters.brands.length > 0 && !this.filters.brands.includes(car.brand.id)) {
+                    return false;
+                }
+                
+                if (this.filters.engine_types.length > 0 && !this.filters.engine_types.includes(car.engine_type.id)) {
+                    return false;
+                }
+                
+                if (this.filters.drive_types.length > 0 && !this.filters.drive_types.includes(car.drive_type.id)) {
+                    return false;
+                }
+                
+                if (this.filters.status.length > 0) {
+                    const statusFilters = {
+                        'new': car.is_new,
+                        'in_stock': car.status === 'in_stock',
+                        'on_order': car.status === 'on_order'
+                    };
+                    
+                    let matches = false;
+                    for (const status of this.filters.status) {
+                        if (statusFilters[status]) {
+                            matches = true;
+                            break;
+                        }
+                    }
+                    
+                    if (!matches) return false;
+                }
+                
+                return true;
+            },
 
             sortCars() {
                 if (this.sortBy === 'price_asc') {
