@@ -10,16 +10,30 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .sidebar {
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            width: 16rem; /* Default width */
         }
-        .sidebar-collapsed {
-            width: 5rem;
+        .sidebar-compact {
+            width: 5rem; /* Compact width */
         }
-        .sidebar-expanded {
-            width: 16rem;
+        .sidebar-compact .nav-text {
+            display: none;
+        }
+        .sidebar-compact .user-info-text {
+            display: none;
+        }
+        .sidebar-compact .logo-text {
+            display: none;
         }
         .active-menu {
             background-color: rgba(255, 255, 255, 0.1);
+        }
+        .main-content {
+            margin-left: 16rem; /* Match default sidebar width */
+            transition: margin 0.3s ease;
+        }
+        .main-content-compact {
+            margin-left: 5rem; /* Match compact sidebar width */
         }
     </style>
 </head>
@@ -27,10 +41,10 @@
     @auth
     <div class="flex h-screen">
         <!-- Sidebar -->
-        <div class="sidebar sidebar-expanded bg-indigo-700 text-white flex flex-col">
-            <div class="p-4 flex items-center justify-between border-b border-indigo-600">
-                <span class="text-xl font-bold whitespace-nowrap">{{ config('app.name', 'Laravel') }}</span>
-                <button id="toggleSidebar" class="text-white hover:text-indigo-200">
+        <div class="sidebar bg-indigo-700 text-white flex flex-col fixed h-full z-10">
+            <div class="p-4 flex items-center justify-center border-b border-indigo-600 h-16">
+                <span class="logo-text text-xl font-bold whitespace-nowrap">{{ config('app.name', 'Laravel') }}</span>
+                <button id="toggleSidebar" class="text-white hover:text-indigo-200 absolute right-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     </svg>
@@ -44,7 +58,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
-                            <span class="ml-3">Dashboard</span>
+                            <span class="nav-text ml-3">Dashboard</span>
                         </a>
                     </li>
 
@@ -52,7 +66,7 @@
                     <li>
                         <a href="{{ route('users.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('users.*') ? 'active-menu' : '' }}">
                             <i class="fas fa-users w-5 h-5"></i>
-                            <span class="ml-3">Users</span>
+                            <span class="nav-text ml-3">Users</span>
                         </a>
                     </li>
                     @endif
@@ -60,14 +74,14 @@
                     <li>
                         <a href="{{ route('cars.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('cars.*') ? 'active-menu' : '' }}">
                             <i class="fas fa-car w-5 h-5"></i>
-                            <span class="ml-3">Cars</span>
+                            <span class="nav-text ml-3">Cars</span>
                         </a>
                     </li>
 
                     <li>
                         <a href="{{ route('brands.index') }}" class="flex items-center p-2 rounded-lg hover:bg-indigo-600 transition-colors {{ request()->routeIs('brands.*') ? 'active-menu' : '' }}">
                             <i class="fas fa-tag w-5 h-5"></i>
-                            <span class="ml-3">Brands</span>
+                            <span class="nav-text ml-3">Brands</span>
                         </a>
                     </li>
 
@@ -76,7 +90,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                             </svg>
-                            <span class="ml-3">Back to Site</span>
+                            <span class="nav-text ml-3">Back to Site</span>
                         </a>
                     </li>
                 </ul>
@@ -84,11 +98,11 @@
 
             <!-- User Info -->
             <div class="p-4 border-t border-indigo-600">
-                <div class="flex items-center">
+                <div class="flex items-center justify-center">
                     <div class="w-10 h-10 rounded-full bg-indigo-500 flex items-center justify-center text-white font-bold">
                         {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                     </div>
-                    <div class="ml-3">
+                    <div class="user-info-text ml-3">
                         <p class="text-sm font-medium">{{ auth()->user()->name }}</p>
                         <p class="text-xs text-indigo-200">
                             {{ auth()->user()->is_admin ? 'Administrator' : 'User' }}
@@ -99,7 +113,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-1 overflow-y-auto">
+        <div class="main-content flex-1 overflow-y-auto">
             <!-- Top Navigation -->
             <header class="bg-white shadow-sm">
                 <div class="flex items-center justify-between p-4">
@@ -111,7 +125,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                 </svg>
-                                Logout
+                                <span class="logout-text">Logout</span>
                             </button>
                         </form>
                     </div>
@@ -173,26 +187,25 @@
     @endauth
 
     <script>
-        // Toggle sidebar
+        // Toggle sidebar between compact and expanded modes
         document.getElementById('toggleSidebar')?.addEventListener('click', function() {
             const sidebar = document.querySelector('.sidebar');
-            sidebar.classList.toggle('sidebar-collapsed');
-            sidebar.classList.toggle('sidebar-expanded');
+            const mainContent = document.querySelector('.main-content');
+            
+            sidebar.classList.toggle('sidebar-compact');
+            mainContent.classList.toggle('main-content-compact');
             
             // Store preference in localStorage
-            const isCollapsed = sidebar.classList.contains('sidebar-collapsed');
-            localStorage.setItem('sidebarCollapsed', isCollapsed);
+            const isCompact = sidebar.classList.contains('sidebar-compact');
+            localStorage.setItem('sidebarCompact', isCompact);
         });
 
-        // Check for saved sidebar state
+        // Check for saved sidebar state on page load
         document.addEventListener('DOMContentLoaded', function() {
-            const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
-            if (isCollapsed) {
-                const sidebar = document.querySelector('.sidebar');
-                if (sidebar) {
-                    sidebar.classList.add('sidebar-collapsed');
-                    sidebar.classList.remove('sidebar-expanded');
-                }
+            const isCompact = localStorage.getItem('sidebarCompact') === 'true';
+            if (isCompact) {
+                document.querySelector('.sidebar')?.classList.add('sidebar-compact');
+                document.querySelector('.main-content')?.classList.add('main-content-compact');
             }
         });
     </script>
