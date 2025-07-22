@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Просмотр - Zeekr 7X 2025 | EMAX</title>
+    <title>3D Просмотр - Changan UNI-K | EMAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
@@ -296,8 +296,8 @@
             </a>
             
             <model-viewer 
-                 src="models/zeekr.glb" 
-                alt="3D модель Zeekr 7X 2025"
+                src="models/uni-k.glb" 
+                alt="3D модель Changan UNI-K"
                 auto-rotate
                 camera-controls
                 ar
@@ -326,53 +326,53 @@
             </button>
             
             <div class="panel-header fade-in">
-                <h1 class="panel-title">Zeekr 7X 2025</h1>
+                <h1 class="panel-title">Changan UNI-K</h1>
             </div>
             
             <p class="car-description fade-in delay-1">
-                Инновационный электрический кроссовер премиум-класса с передовыми технологиями 
-                и футуристичным дизайном. Высокая производительность, умные системы 
-                и экологичность нового поколения.
+                Флагманский кроссовер с космическим дизайном и передовыми технологиями. 
+                Просторный салон премиум-класса, интеллектуальные системы помощи водителю 
+                и мощные двигатели с высокой эффективностью.
             </p>
             
             <ul class="specs-list">
                 <li class="spec-item fade-in delay-1">
                     <span class="spec-name">Год выпуска</span>
-                    <span class="spec-value">2025</span>
+                    <span class="spec-value">2024</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
-                    <span class="spec-name">Тип двигателя</span>
-                    <span class="spec-value">Электрический</span>
+                    <span class="spec-name">Двигатель</span>
+                    <span class="spec-value">2.0 Turbo (233 л.с.)</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
-                    <span class="spec-name">Мощность</span>
-                    <span class="spec-value">422 л.с.</span>
+                    <span class="spec-name">Коробка передач</span>
+                    <span class="spec-value">8-ст. АКПП</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
-                    <span class="spec-name">Разгон 0-100 км/ч</span>
-                    <span class="spec-value">3.8 сек</span>
+                    <span class="spec-name">Привод</span>
+                    <span class="spec-value">Полный (AWD)</span>
                 </li>
                 <li class="spec-item fade-in delay-1">
-                    <span class="spec-name">Запас хода</span>
-                    <span class="spec-value">640 км (CLTC)</span>
+                    <span class="spec-name">Расход топлива</span>
+                    <span class="spec-value">8.5 л/100 км</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
-                    <span class="spec-name">Объем багажника</span>
-                    <span class="spec-value">632 л</span>
+                    <span class="spec-name">Разгон 0-100 км/ч</span>
+                    <span class="spec-value">8.6 сек</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
-                    <span class="spec-name">Быстрая зарядка</span>
-                    <span class="spec-value">10-80% за 15 мин</span>
+                    <span class="spec-name">Колёсная база</span>
+                    <span class="spec-value">2890 мм</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
-                    <span class="spec-name">Гарантия</span>
-                    <span class="spec-value">8 лет/200 000 км</span>
+                    <span class="spec-name">Объём багажника</span>
+                    <span class="spec-value">518 л</span>
                 </li>
             </ul>
             
             <div class="price-container fade-in delay-4">
                 <div class="price-label">Цена от</div>
-                <div class="price-value">5 990 000 ₽</div>
+                <div class="price-value">3 490 000 ₽</div>
             </div>
             
             <div class="action-buttons">
@@ -383,7 +383,7 @@
                     <i class="fas fa-file-contract"></i> Оставить заявку
                 </button>
                 <button class="action-button secondary-button fade-in delay-3">
-                    <i class="fas fa-bolt"></i> Рассчитать кредит
+                    <i class="fas fa-percentage"></i> Рассчитать кредит
                 </button>
             </div>
         </div>
