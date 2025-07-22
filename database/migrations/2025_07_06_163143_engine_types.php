@@ -13,9 +13,18 @@ return new class extends Migration
     {
         Schema::create('engine_types', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique(); // Добавил уникальность
             $table->timestamps();
+            $table->softDeletes(); // Добавил мягкое удаление
         });
+
+        // Можно добавить начальные данные
+        DB::table('engine_types')->insert([
+            ['name' => 'Бензиновый'],
+            ['name' => 'Дизельный'],
+            ['name' => 'Электрический'],
+            ['name' => 'Гибридный'],
+        ]);
     }
 
     /**
