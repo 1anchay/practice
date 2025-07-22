@@ -296,7 +296,7 @@
             </a>
             
             <model-viewer 
-                 src="https://modelviewer.dev/shared-assets/models/Astronaut.glb"
+                src="models/zeekrmix.glb" 
                 alt="3D модель Zeekr Mix 2025"
                 auto-rotate
                 camera-controls
