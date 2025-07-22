@@ -365,113 +365,55 @@
         </div>
 
         <!-- Калькулятор комиссии -->
-        <div class="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700">
-            <h3 class="text-xl font-bold text-white mb-4">Расчет стоимости с комиссией</h3>
-            
-            <div class="grid md:grid-cols-3 gap-6 mb-6">
-                <div>
-                    <label for="commission" class="block text-sm font-medium text-gray-300 mb-2">Процент комиссии (%)</label>
-                    <div class="relative">
-                        <input type="number" id="commission" x-model="commissionRate" min="0" max="50" step="0.5" 
-                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500 pr-12">
-                        <span class="absolute right-3 top-2 text-gray-400">%</span>
-                    </div>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-medium text-gray-300 mb-2">Тип расчета</label>
-                    <select x-model="commissionType" @change="commissionTypeChanged" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500">
-                        <option value="percent">Процент от цены</option>
-                        <option value="fixed">Фиксированная сумма</option>
-                        <option value="custom">Ручной ввод</option>
-                    </select>
-                </div>
-                
-                <div x-show="commissionType === 'fixed'">
-                    <label for="fixed-commission" class="block text-sm font-medium text-gray-300 mb-2">Фиксированная сумма (₽)</label>
-                    <input type="number" id="fixed-commission" x-model="commissionFixedValue" min="0" 
-                           class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500">
-                </div>
-            </div>
-            
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-gray-300 mb-2">Выберите автомобили для расчета</label>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <template x-for="car in cars" :key="car.id">
-                        <div class="flex items-center">
-                            <input x-model="selectedCarsForCommission" :value="car.id" type="checkbox" 
-                                   class="h-4 w-4 rounded border-gray-600 bg-gray-700 text-red-500 focus:ring-red-500 focus:ring-offset-gray-800">
-                            <label class="ml-3 text-sm text-gray-300 flex-1">
-                                <span x-text="car.brand.name + ' ' + car.model"></span>
-                                <span class="block text-xs text-gray-500" x-text="formatPrice(car.price) + ' ₽'"></span>
-                            </label>
-                        </div>
-                    </template>
-                    
-                    <div x-show="commissionType === 'custom'" class="sm:col-span-2">
-                        <label class="block text-sm font-medium text-gray-300 mb-2">Или введите цену вручную</label>
-                        <input type="number" x-model="customPrice" min="0" placeholder="Введите цену автомобиля"
-                               class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500">
-                        <button @click="addCustomPrice" class="mt-2 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300">
-                            Добавить к расчету
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex justify-end">
-                <button @click="calculateCommission" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
-                    Рассчитать
-                </button>
-            </div>
-            
-            <div x-show="showCommissionResults" class="mt-6 space-y-4">
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-700">
-                        <thead class="bg-gray-700">
-                            <tr>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Модель</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Цена</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Комиссия</th>
-                                <th scope="col" class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Итоговая цена</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-gray-800 divide-y divide-gray-700">
-                            <template x-for="(car, index) in commissionCars" :key="car.id">
-                                <tr :class="{'bg-gray-900/50': index % 2 === 0}">
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-white" x-text="car.name"></td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(car.price) + ' ₽'"></td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(car.commission) + ' ₽'"></td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium" :class="{'text-red-400': car.total > car.price, 'text-green-400': car.total <= car.price}" 
-                                        x-text="formatPrice(car.total) + ' ₽'"></td>
-                                </tr>
-                            </template>
-                        </tbody>
-                        <tfoot class="bg-gray-900 font-semibold">
-                            <tr>
-                                <td class="px-4 py-3 whitespace-nowrap text-sm text-white">Итого</td>
-                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(totalPrice) + ' ₽'"></td>
-                                <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-300" x-text="formatPrice(totalCommission) + ' ₽'"></td>
-                                <td class="px-4 py-3 whitespace-nowrap text-sm" :class="{'text-red-400': totalSum > totalPrice, 'text-green-400': totalSum <= totalPrice}" 
-                                    x-text="formatPrice(totalSum) + ' ₽'"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-                
-                <div class="flex flex-col sm:flex-row justify-between gap-4 pt-4">
-                    <button @click="resetCalculator" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-300">
-                        Сбросить расчет
-                    </button>
-                    <button @click="saveCalculation" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 transition-colors duration-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
-                        </svg>
-                        Сохранить расчет
-                    </button>
-                </div>
+<div class="mt-8 bg-gray-800 rounded-xl p-6 border border-gray-700">
+    <h3 class="text-xl font-bold text-white mb-4">Калькулятор комиссии</h3>
+    
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Выберите автомобиль</label>
+            <select x-model="selectedCarId" class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500">
+                <option value="">-- Выберите автомобиль --</option>
+                <template x-for="car in cars" :key="car.id">
+                    <option :value="car.id" x-text="`${car.brand.name} ${car.model} - ${formatPrice(car.price)} ₽`"></option>
+                </template>
+            </select>
+        </div>
+        
+        <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Процент комиссии</label>
+            <div class="relative">
+                <input type="number" x-model="commissionPercent" min="0" max="100" step="0.1" 
+                       class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:ring-red-500 focus:border-red-500 pr-12">
+                <span class="absolute right-3 top-2 text-gray-400">%</span>
             </div>
         </div>
+    </div>
+    
+    <div class="flex justify-end gap-4">
+        <button @click="resetCalculator" class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
+            Сбросить
+        </button>
+        <button @click="calculateCommission" class="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300">
+            Рассчитать
+        </button>
+    </div>
+    
+    <!-- Результаты расчета -->
+    <div x-show="calculatedResult" class="mt-6 bg-gray-900/50 rounded-lg p-4 border border-gray-700">
+        <h4 class="text-lg font-semibold text-white mb-3" x-text="`Расчет для: ${calculatedResult.carName}`"></h4>
+        
+        <div class="grid grid-cols-2 gap-4">
+            <div class="text-gray-300">Цена автомобиля:</div>
+            <div class="text-right font-medium" x-text="`${formatPrice(calculatedResult.carPrice)} ₽`"></div>
+            
+            <div class="text-gray-300">Комиссия (x-text="calculatedResult.commissionPercent + '%'"></div>
+            <div class="text-right font-medium text-red-400" x-text="`${formatPrice(calculatedResult.commissionAmount)} ₽`"></div>
+            
+            <div class="text-gray-300 font-semibold">Итого:</div>
+            <div class="text-right font-bold text-green-400" x-text="`${formatPrice(calculatedResult.total)} ₽`"></div>
+        </div>
+    </div>
+</div>
     </main>
 
     <script>
@@ -596,6 +538,7 @@
                 status: [],
                 min_price: 3000000,
                 max_price: 7000000,
+                
             },
             sortBy: 'price_asc',
             
