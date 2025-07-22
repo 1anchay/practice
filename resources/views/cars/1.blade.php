@@ -296,20 +296,27 @@
             </a>
             
             <model-viewer 
-                src="{{ asset('car/mazda.glb') }}" 
-                alt="3D модель Mazda MX-5 2024"
-                auto-rotate
-                camera-controls
-                ar
-                camera-orbit="0deg 75deg 105%"
-                environment-image="neutral"
-                exposure="0.8"
-                shadow-intensity="1"
-            >
-                <button class="ar-button" slot="ar-button">
-                    <i class="fas fa-vr-cardboard"></i> AR просмотр
-                </button>
-            </model-viewer>
+    src="{{ asset('car/mazda.glb') }}"
+    alt="Mazda MX-5"
+    auto-rotate
+    camera-controls
+    ar
+    animation-name="Take 001" 
+    autoplay 
+    exposure="0.8"
+    shadow-intensity="1"
+>
+    <!-- Кнопка AR -->
+    <button class="ar-button" slot="ar-button">
+        <i class="fas fa-vr-cardboard"></i> AR просмотр
+    </button>
+
+    <!-- Кнопки управления анимациями -->
+    <div class="animation-controls" slot="controls">
+        <button class="animation-button" data-animation="Take 001">Анимация 1</button>
+        <button class="animation-button" data-animation="Take 002">Анимация 2</button>
+    </div>
+</model-viewer>
             
             <button class="fullscreen-button fade-in" id="fullscreenButton">
                 <i class="fas fa-expand"></i>

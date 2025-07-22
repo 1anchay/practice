@@ -296,7 +296,7 @@
             </a>
             
             <model-viewer 
-                src="car/lil7.glb" 
+                src="{{ asset('car/lil7.glb') }}" 
                 alt="3D модель Li Auto L7 2024"
                 auto-rotate
                 camera-controls

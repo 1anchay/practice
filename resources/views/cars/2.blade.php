@@ -296,7 +296,7 @@
             </a>
             
             <model-viewer 
-                src="car/zeekrmix.glb" 
+               src="{{ asset('car/zeekrmix.glb') }}" 
                 alt="3D модель Zeekr Mix 2025"
                 auto-rotate
                 camera-controls
