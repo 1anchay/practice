@@ -535,7 +535,7 @@
                 brand: { id: 2, name: 'Li Auto' },
                 model: 'L7',
                 price: 5200000,
-                year: 2022,
+                year: 2024,
                 mileage: 0,
                 body_type: { id: 1, name: 'Внедорожник' },
                 engine_type: { id: 2, name: 'Гибридный' },

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Просмотр - Zeekr Mix 2025 | EMAX</title>
+    <title>3D Просмотр - Zeekr 7X 2025 | EMAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
     <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
@@ -290,14 +290,14 @@
     <div class="viewer-container">
         <!-- Область 3D модели -->
         <div class="model-section">
-            <a href="/catalog" class="back-button fade-in">
+            <a href="/" class="back-button fade-in">
                 <i class="fas fa-arrow-left"></i>
                 <span>Вернуться в каталог</span>
             </a>
             
             <model-viewer 
-                src="models/zeekrmix.glb" 
-                alt="3D модель Zeekr Mix 2025"
+                 src="models/zeekr.glb" 
+                alt="3D модель Zeekr 7X 2025"
                 auto-rotate
                 camera-controls
                 ar
@@ -326,13 +326,13 @@
             </button>
             
             <div class="panel-header fade-in">
-                <h1 class="panel-title">Zeekr Mix 2025</h1>
+                <h1 class="panel-title">Zeekr 7X 2025</h1>
             </div>
             
             <p class="car-description fade-in delay-1">
-                Революционный электрический минивэн с уникальной поворотной системой сидений 
-                и максимальным комфортом. Просторный салон, инновационные технологии 
-                и премиальное качество исполнения.
+                Инновационный электрический кроссовер премиум-класса с передовыми технологиями 
+                и футуристичным дизайном. Высокая производительность, умные системы 
+                и экологичность нового поколения.
             </p>
             
             <ul class="specs-list">
@@ -346,23 +346,23 @@
                 </li>
                 <li class="spec-item fade-in delay-3">
                     <span class="spec-name">Мощность</span>
-                    <span class="spec-value">536 л.с.</span>
+                    <span class="spec-value">422 л.с.</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
                     <span class="spec-name">Разгон 0-100 км/ч</span>
-                    <span class="spec-value">4.5 сек</span>
+                    <span class="spec-value">3.8 сек</span>
                 </li>
                 <li class="spec-item fade-in delay-1">
                     <span class="spec-name">Запас хода</span>
-                    <span class="spec-value">700 км (CLTC)</span>
+                    <span class="spec-value">640 км (CLTC)</span>
                 </li>
                 <li class="spec-item fade-in delay-2">
-                    <span class="spec-name">Вместимость</span>
-                    <span class="spec-value">6-8 человек</span>
+                    <span class="spec-name">Объем багажника</span>
+                    <span class="spec-value">632 л</span>
                 </li>
                 <li class="spec-item fade-in delay-3">
                     <span class="spec-name">Быстрая зарядка</span>
-                    <span class="spec-value">10-80% за 12 мин</span>
+                    <span class="spec-value">10-80% за 15 мин</span>
                 </li>
                 <li class="spec-item fade-in delay-4">
                     <span class="spec-name">Гарантия</span>
@@ -372,7 +372,7 @@
             
             <div class="price-container fade-in delay-4">
                 <div class="price-label">Цена от</div>
-                <div class="price-value">6 490 000 ₽</div>
+                <div class="price-value">5 990 000 ₽</div>
             </div>
             
             <div class="action-buttons">
